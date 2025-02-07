@@ -12,13 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.3",
+	num: "0.4",
 	name: "",
 }
 
 let changelog = `<h1>更新记录:</h1><br>
+<h3>v0.4</h3><br>
+		- 添加第五劝退点的内容.<br><br>
  <h3>v0.3</h3><br>
 		- 添加第四劝退点的内容.<br><br>
+
     <h3>v0.2</h3><br>
 		- 添加第三劝退点的内容.<br><br>
 	<h3>v0.1</h3><br>
@@ -67,7 +70,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return isUnl(5)
+	return isUnl(9)
 }
 
 
