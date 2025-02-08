@@ -12,11 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4",
+	num: "0.5",
 	name: "",
 }
 
 let changelog = `<h1>更新记录:</h1><br>
+<h3>v0.5</h3><br>
+		- 添加第六劝退点的内容.<br><br>
 <h3>v0.4</h3><br>
 		- 添加第五劝退点的内容.<br><br>
  <h3>v0.3</h3><br>
@@ -56,6 +58,8 @@ function getPointGen() {
 	}
 	gain = gain.mul(layers.esc.effect())
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
+	gain = gain.pow(layers.a.effect())	
+	if(hasMilestone("esc",6)) gain = expPow(gain.mul(10),0.8).div(10)	
 	return gain
 }
 
@@ -65,12 +69,14 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:5劝退点`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:7劝退点`},
+	function(){return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
+	
 
 // Determines when the game "ends"
 function isEndgame() {
-	return isUnl(9)
+	return isUnl(9999999999999999999999)
 }
 
 
