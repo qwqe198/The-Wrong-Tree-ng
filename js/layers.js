@@ -16,6 +16,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         e9:n(0),
     }},
     autoUpgrade(){return hasMilestone("esc",6)},
+ 
     color: "lime",
     resource: "重置点", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -33,6 +34,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasUpgrade("p",51)) mult = mult.mul(upgradeEffect("p",51))
         if(hasUpgrade("p",32)) mult = mult.mul(layers.p.effect())
         if(hasUpgrade("esc",12)) mult = mult.mul(layers.esc.effect())
+            if(hasMilestone("esc",7))  mult = mult.mul(layers.m.effect())	   
         if(hasMilestone("esc",7)) mult = expPow(mult.mul(10),0.8).div(10)	
         if(inChallenge("p",21)) mult = mult.div(player.p.points.mul(player.points.pow(0.1).add(1)).add(1)) 
             if(inChallenge("p",21)) mult = mult.root(player.p.upgrades.length^0.2) 
@@ -58,6 +60,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         ${buyableEffect('p',13).gte(3)?`<br><br>三重压缩能量:${format(player.p.e3)}(${format(player.p.e2.pow(1/9).div(100).mul(this.condenseEffect(player.p.e4)))}/s),使得二重压缩能量获取*${format(this.condenseEffect(player.p.e3))}`:``}
         ${buyableEffect('p',13).gte(4)?`<br><br>四重压缩能量:${format(player.p.e4)}(${format(player.p.e3.pow(1/9).div(100).mul(this.condenseEffect(player.p.e5)))}/s),使得三重压缩能量获取*${format(this.condenseEffect(player.p.e4))}`:``}
         ${buyableEffect('p',13).gte(5)?`<br><br>五重压缩能量:${format(player.p.e5)}(${format(player.p.e4.pow(1/9).div(100).mul(this.condenseEffect(player.p.e6)))}/s),使得三重压缩能量获取*${format(this.condenseEffect(player.p.e5))}`:``}
+      
         `},
     effect(){
         var eff = player.p.e0.div(10).add(1).pow(2).pow(hasUpgrade("p",44)?buyableEffect("p",22):1)
@@ -377,6 +380,13 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
     update(diff){
         if(hasUpgrade("p",32)) player.p.e0 = player.p.e0.add(upgradeEffect("p",32).mul(diff))
         for(i=1;i<=buyableEffect('p',13).toNumber();i++) player.p[`e${i}`] = player.p[`e${i}`].add(player.p[`e${i-1}`].pow(1/9).div(100).mul(this.condenseEffect(player.p[`e${i+1}`])).mul(diff))
+        if(hasMilestone("esc",7)&&player.p.points.sub(1).gte(n(hasUpgrade("a",33)?1:1e10).mul(n(hasUpgrade("a",41)?1:1e2).pow(getBuyableAmount("p",11))).mul(n(2).pow(getBuyableAmount("p",11).pow(2)).pow(getBuyableAmount("p",11).gte(130)?getBuyableAmount("p",11).sub(30).mul(0.01):1))))setBuyableAmount('p',11,getBuyableAmount('p',11).add(1))
+        if(hasMilestone("esc",7)&&player.p.e0.sub(1).gte(three.pow(getBuyableAmount("p",12)).mul(10).pow(getBuyableAmount("p",12).gte(450)?getBuyableAmount("p",12).sub(350).mul(0.01):1)))setBuyableAmount('p',12,getBuyableAmount('p',12).add(1))
+        if(hasMilestone("esc",7)&&(player.p[`e${buyableEffect('p',13).toNumber()}`].sub(1)).gte(1e9))setBuyableAmount('p',13,getBuyableAmount('p',13).add(1))
+        if(hasMilestone("esc",7)&&player.p.points.sub(1).gte(n(hasUpgrade("a",33)?1:1e308).mul(n(hasUpgrade("a",41)?1:1e49).pow(getBuyableAmount("p",14))).mul(n(1e4).pow(getBuyableAmount("p",14).pow(2)))))setBuyableAmount('p',14,getBuyableAmount('p',14).add(1))
+        if(hasMilestone("esc",7)&&player.p.e0.sub(1).gte(n(hasUpgrade("a",33)?1:1e100).mul(n(hasUpgrade("a",41)?1:1e8).pow(getBuyableAmount("p",21))).mul(n(100).pow(getBuyableAmount("p",21).pow(2)))))setBuyableAmount('p',21,getBuyableAmount('p',21).add(1))
+        if(hasMilestone("esc",7)&&player.p.points.sub(1).gte(n(hasUpgrade("a",33)?1:"1e1800").mul(n(hasUpgrade("a",41)?1:1e25).pow(getBuyableAmount("p",22))).mul(n(10000).pow(getBuyableAmount("p",22).pow(2)))))setBuyableAmount('p',22,getBuyableAmount('p',22).add(1))
+        if(hasMilestone("esc",7)&&player.p.points.sub(1).gte(n(hasUpgrade("a",33)?1:"1e5000").mul(n(hasUpgrade("a",41)?1:1e100).pow(getBuyableAmount("p",23))).mul(n(1e10).pow(getBuyableAmount("p",23).pow(2)))))setBuyableAmount('p',23,getBuyableAmount('p',23).add(1))    
     },
     doReset(l){
         if(layers[l].row<=this.row) return
@@ -472,7 +482,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
             rewardDescription:"37.这么喜欢元吗?挑战C-2,C-3,C-4,C-5效果基于重置点被加成.",
             goalDescription:"36.不变的目标令人乏味.获得1e1335点数",
             rewardEffect(){
-                var eff = player.p.points.add(1).log10().add(1).log10().add(1).pow(0.05)
+                var eff = player.p.points.add(1).log10().add(1).log10().add(1).pow(0.05).pow(hasUpgrade("a",42)?2:1).pow(hasUpgrade("a",43)?1.5:1).pow(hasUpgrade("a",44)?1.2:1).pow(hasUpgrade("a",45)?1.1:1)
 
                 return eff
             },
@@ -486,12 +496,30 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 player.p.upgrades = [23]
             },
         },
+        23:{
+            name: "C-7",
+            challengeDescription: "61.为什么不设置一个升级呢?这里没有挑战",
+            rewardDescription:"元性质获取基于劝退点增加",
+            goalDescription:"获得1e10000点数",
+            rewardEffect(){
+                var eff = player.esc.points.add(1).log10().add(1)
+
+                return eff
+            },
+            rewardDisplay(){return `^${format(this.rewardEffect())}`},
+            canComplete(){return player.points.gte("1e10000")},
+            unlocked(){return upgradeEffect('p',23).gte(7)},
+            onEnter(){
+
+            },
+        },
+    
     },
 
     buyables:{
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(hasUpgrade("a",33)?1:1e10).mul(n(1e2).pow(x)).mul(n(2).pow(x.pow(2)).pow(getBuyableAmount(this.layer, this.id).gte(130)?getBuyableAmount(this.layer, this.id).sub(30).mul(0.01):1))
+                var c = n(hasUpgrade("a",33)?1:1e10).mul(n(hasUpgrade("a",41)?1:1e2).pow(x)).mul(n(2).pow(x.pow(2)).pow(getBuyableAmount(this.layer, this.id).gte(130)?getBuyableAmount(this.layer, this.id).sub(30).mul(0.01):1))
                 return c
             },
             display() { return `11.在没有第11升级时倍增第11升级效果.倍增前11个升级效果.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -500,9 +528,11 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 player.p.points = player.p.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            auto(){return hasMilestone("esc",7)},
             effect(x = getBuyableAmount(this.layer, this.id)){
                 var eff = x.mul(1.6).add(1).root(3.6)
                 eff = eff.mul(buyableEffect('p',14))
+                if(hasUpgrade("esc",13)) eff = eff.mul(upgradeEffect("esc",13))
                 return eff
             },
             unlocked(){return upgradeEffect("p",25).gte(1)},
@@ -548,7 +578,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
         14: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(hasUpgrade("a",33)?1:1e308).mul(n(1e49).pow(x)).mul(n(1e4).pow(x.pow(2)))
+                var c = n(hasUpgrade("a",33)?1:1e308).mul(n(hasUpgrade("a",41)?1:1e49).pow(x)).mul(n(1e4).pow(x.pow(2)))
                 return c
             },
             display() { return `倍增第一个购买项效果.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -565,7 +595,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
         21: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(hasUpgrade("a",33)?1:1e100).mul(n(1e8).pow(x)).mul(n(100).pow(x.pow(2)))
+                var c = n(hasUpgrade("a",33)?1:1e100).mul(n(hasUpgrade("a",41)?1:1e8).pow(x)).mul(n(100).pow(x.pow(2)))
                 return c
             },
             display() { return `倍增升级31效果.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置能量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -583,7 +613,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
         22: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(hasUpgrade("a",33)?1:"1e1800").mul(n(1e25).pow(x)).mul(n(10000).pow(x.pow(2)))
+                var c = n(hasUpgrade("a",33)?1:"1e1800").mul(n(hasUpgrade("a",41)?1:1e25).pow(x)).mul(n(10000).pow(x.pow(2)))
                 return c
             },
             display() { return `26.元套娃.倍增升级35到43效果.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -593,7 +623,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x = getBuyableAmount(this.layer, this.id)){
-                var eff = x.add(1).root(25)
+                var eff = x.add(1).root(25).pow(hasUpgrade("a",51)?2:1).pow(hasUpgrade("a",52)?1.5:1)
                 if(inChallenge("p",22))eff=eff.max(1).min(1).div(x.add(1).root(25))
                 return eff
             },
@@ -601,7 +631,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
         23: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(hasUpgrade("a",33)?1:"1e5000").mul(n(1e100).pow(x)).mul(n(1e10).pow(x.pow(2)))
+                var c = n(hasUpgrade("a",33)?1:"1e5000").mul(n(hasUpgrade("a",41)?1:1e100).pow(x)).mul(n(1e10).pow(x.pow(2)))
                 return c
             },
             display() { return `倍增升级15效果.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -617,6 +647,24 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             unlocked(){return upgradeEffect("p",25).gte(6)},
         },
+        24: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e10000").mul(n(1e200).pow(x)).mul(n(1e20).pow(x.pow(2)))
+                return c
+            },
+            display() { return `62.这个要8劝退点却提前出现.声望点获取.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return  player.p.points.gte(this.cost()) },
+            buy() {
+                player.p.points =  player.p.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = x.add(1).root(6.66)
+               
+                return eff
+            },
+            unlocked(){return upgradeEffect("p",25).gte(7)},
+        },
     },
     passiveGeneration(){
         if(hasChallenge("p",11)) return inChallenge("p",22)?1e-5:hasMilestone("esc",4)?'1':'0.1'
@@ -630,10 +678,12 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
     },
 })
 
-var escReq = [1e6,1e18,1e200,'e1000','e2750','e6000','e4350','e999999']
+var escReq = [1e6,1e18,1e200,'e1000','e2750','e6000','e4350','e7625','e999999']
 function isUnl(escPointsRequired){
     return player.esc.points.gte(escPointsRequired)
 }
+
+
 addLayer("a", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -642,6 +692,7 @@ addLayer("a", {
         unlocked: false,
 		points: new ExpantaNum(0),
     }},
+ 
     color: "lime",
     resource: "声望点(pp)", // Name of prestige currency
     baseResource: "点数",
@@ -823,7 +874,42 @@ addLayer("a", {
             description: "50.水了三行升级的作者态度也太不认真了叭(?)重置能量效果^1.025",
             cost(){return new OmegaNum(1e128)},
             unlocked(){return hasUpgrade("a",34)},
-            },                                                                                                             
+            },    
+        41: {
+            description: "58.仍然没用.移除p层级所有购买项一次项价格",
+            cost(){return new OmegaNum(1e161)},
+            unlocked(){return hasUpgrade("a",35)&&hasMilestone("esc",7)},
+            },          
+        42: {
+            description: "59.逐渐递减但不变的加成.挑战C-6的效果^2. 60.有规律的价格.",
+            cost(){return new OmegaNum(1e163)},
+            unlocked(){return hasUpgrade("a",41)&&hasMilestone("esc",7)},
+            },      
+        43: {
+            description: "挑战C-6的效果^1.5",
+            cost(){return new OmegaNum(1e165)},
+            unlocked(){return hasUpgrade("a",42)&&hasMilestone("esc",7)},
+            },     
+        44: {
+            description: "挑战C-6的效果^1.2",
+            cost(){return new OmegaNum(1e167)},
+            unlocked(){return hasUpgrade("a",43)&&hasMilestone("esc",7)},
+            },       
+        45: {
+            description: "挑战C-6的效果^1.1",
+            cost(){return new OmegaNum(1e169)},
+            unlocked(){return hasUpgrade("a",44)&&hasMilestone("esc",7)},
+            },      
+        51: {
+            description: "p层级第六个购买项效果^2",
+            cost(){return new OmegaNum(1e171)},
+            unlocked(){return hasUpgrade("a",45)&&hasMilestone("esc",7)},
+            },       
+        52: {
+            description: "p层级第六个购买项效果^1.5",
+            cost(){return new OmegaNum(1e178)},
+            unlocked(){return hasUpgrade("a",51)&&hasMilestone("esc",7)},
+            },                                                                                                                                                                                                      
         },
      
       
@@ -944,8 +1030,13 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         }, 
         7:{
             requirementDescription: "7劝退点",
-            effectDescription: "当前残局.重置点获取指数^0.8(下次更新给自动购买p层级可购买)",
+            effectDescription: "解锁更~~~~~~~~~~~多~~~~~~~~~~~的升级.(?)重置点获取指数^0.8,解锁新层级.自动购买所有p层级可购买",
             done() { return isUnl(7) }
+        }, 
+        8:{
+            requirementDescription: "8劝退点",
+            effectDescription: "当前残局",
+            done() { return isUnl(8) }
         }, 
     },
     upgrades:{
@@ -966,8 +1057,246 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
             unlocked(){return hasUpgrade("esc",11)},
             cost:n(0),
         },
-    
+        13:{
+            description:`劝退点加成p层级购买项11`,
+            effect(){
+                var eff =   player.esc.points.mul(0.01).add(1)
+              
+                return eff
+            },
+            effectDisplay(){return `x ${format(this.effect())}`},
+            unlocked(){return  hasMilestone("esc",7)},
+            cost:n(0),
+        },
     },
 
 })
+addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
+    symbol: `m`, // 这是节点上显示的字母
+    position: 1, // 节点顺序
+    startData() { return {
+        unlocked: true, //是否开始就解锁
+		points: new ExpantaNum(0),
+    }},
+    requires(){return new ExpantaNum(1e20)},
+    color: "#31aeb0",
+    resource: "元性质", // 重置获得的资源名称
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
 
+    exponent:0.5,
+    baseAmount(){return player.points},//基础资源数量
+    baseResource:"点数",//基础资源名称
+    gainMult() { // 资源获取数量倍率
+        mult = new ExpantaNum(1)
+        return mult
+    },
+    gainExp() { // 资源获取指数加成(与exponent相乘)
+        var exp = new ExpantaNum(1)
+        return exp
+    },
+    layerShown(){return hasMilestone("esc",7)},
+    row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    
+    effectDescription(){return `51.这是怨怨树吗？基于点数,使重置点获取x${format(this.effect())}.56.滥用双指数软上限.`},
+    effect(){let eff= player.points.add(1).pow(buyableEffect('m',11)).log(10).sub(20).max(1)
+                 eff=expPow(eff,buyableEffect('m',23))
+                 if (eff.gte("1e10000"))eff=expPow(expPow(eff,0.5),0.5).mul("1e10000")
+
+
+
+        return eff
+
+
+    },
+    /* upgrades:{
+        11:{
+            description:`点数加成自身.`,
+            effect(){
+                var eff = player.points.add(1).log10().add(1)
+                return eff
+            },
+            effectDisplay(){return `x ${format(this.effect())}`},
+            cost:n(4),
+            unlocked(){return hasUpgrade(this.layer,this.id-1)},
+        },
+    }, */
+    getResetGain(){
+        var gain = player.points.div(1e20).pow(0.5)
+       gain=gain.mul(buyableEffect('m',13))
+       gain=gain.pow(buyableEffect('m',14))
+       if(gain.gte(1e10)) gain=expPow(gain.mul(10),0.8).add(9.99e9)	
+        
+        return gain.floor()
+    },
+  
+    buyables:{
+        11: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n(1).mul(n(2).pow(x)).mul(n(1.01).pow(x.pow(2)))
+                return c
+            },
+            display() { return `52.只有一开始和最后一点点有用.指数增福点数在公式中的效果.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "元空间升级"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = x.mul(1.6).add(1).root(3.6)
+           
+                return eff
+            },
+            unlocked(){return true},
+        },
+        12: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n(20).mul(n(3).pow(x)).mul(n(1.02).pow(x.pow(2)))
+                return c
+            },
+            display() { return `点数增福点数.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "点数浓缩"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = player.points.add(10).log10().pow(x.mul(buyableEffect('m',22)).mul(2))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },        
+        13: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n(1e200).mul(n(10).pow(x)).mul(n(1.1).pow(x.pow(2)))
+                return c
+            },
+            display() { return `元性质增福元性质.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "元性质浓缩"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = player.m.points.add(10).log10().pow(x.mul(buyableEffect('m',21)).mul(2))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },     
+        14: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n(1e230).mul(n(1e10).pow(x)).mul(n(10).pow(x.pow(2)))
+                return c
+            },
+            display() { return `增福元性质获取.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "元性质增幅器"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = x.add(1).root(4)
+           
+                return eff
+            },
+            unlocked(){return true},
+        },    
+        21: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e845").mul(n(1e15).pow(x)).mul(n(50).pow(x.pow(2)))
+                return c
+            },
+            display() { return `53.字的顺序错了.浓缩元性质增幅浓缩元性质.<br />x${format(buyableEffect(this.layer,this.id),2)}浓缩元性质等级.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "浓缩元性质浓缩"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = getBuyableAmount("m", 12).add(1).log10().mul(0.05).add(1).pow(x.root(6))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },         
+        22: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e925").mul(n(1e20).pow(x)).mul(n(100).pow(x.pow(2)))
+                return c
+            },
+            display() { return `54.没考虑膨胀.基于重置点倍增点数浓缩.<br />x${format(buyableEffect(this.layer,this.id),2)}点数浓缩等级.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "加速子"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff =  player.p.points.add(1).log10().add(1).log10().mul(0.05).add(1).pow(x.root(11))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },         
+        23: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e1100").mul(n(10000).pow(x)).mul(n(10).pow(x.pow(2)))
+                return c
+            },
+            display() { return `55.逆天效果配逆天软上限.元性质效果指数.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "元化元"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff =  x.root(2).add(1).mul(buyableEffect('m',24))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },         
+        24: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e1130").mul(n(1e7).pow(x)).mul(n(100000).pow(x.pow(2)))
+                return c
+            },
+            display() { return `基于点数和加速子强度加成元化元.<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.m.points.gte(this.cost()) },
+            buy() {
+                player.m.points = player.m.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "57.借鉴不检查名称适配性.点数扭曲"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff =  player.points.add(1).log10().add(1).log10().mul(0.05).mul(buyableEffect('m',22)).add(1).pow(x.root(2))
+           
+                return eff
+            },
+            unlocked(){return true},
+        },         
+    },
+})

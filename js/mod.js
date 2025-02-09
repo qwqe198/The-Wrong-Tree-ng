@@ -12,11 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5",
+	num: "0.6",
 	name: "",
 }
 
 let changelog = `<h1>更新记录:</h1><br>
+<h3>v0.6</h3><br>
+		- 添加第七劝退点的内容.<br><br>
 <h3>v0.5</h3><br>
 		- 添加第六劝退点的内容.<br><br>
 <h3>v0.4</h3><br>
@@ -57,6 +59,7 @@ function getPointGen() {
 		else gain = gain.div(upgradeEffect("p",12))
 	}
 	gain = gain.mul(layers.esc.effect())
+    gain = gain.mul(buyableEffect('m',12))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
 	gain = gain.pow(layers.a.effect())	
 	if(hasMilestone("esc",6)) gain = expPow(gain.mul(10),0.8).div(10)	
