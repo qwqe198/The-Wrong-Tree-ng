@@ -12,12 +12,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6",
+	num: "0.65",
 	name: "",
 }
 
 let changelog = `<h1>更新记录:</h1><br>
-<h3>v0.6</h3><br>
+<h3>v0.65</h3><br>
+		- 添加第八劝退点的内容的一半(剧情还没写).<br><br>
+			<h3>v0.6</h3><br>
+	
 		- 添加第七劝退点的内容.<br><br>
 <h3>v0.5</h3><br>
 		- 添加第六劝退点的内容.<br><br>
@@ -61,8 +64,12 @@ function getPointGen() {
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
-	gain = gain.pow(layers.a.effect())	
+	if(hasMilestone("l",1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
+	gain = gain.pow(layers.a.effect())
+	
+	if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)	
 	if(hasMilestone("esc",6)) gain = expPow(gain.mul(10),0.8).div(10)	
+	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")	
 	return gain
 }
 
@@ -72,8 +79,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:7劝退点`},
-	function(){return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:8劝退点+2扩张完成`},
+	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
 
