@@ -834,7 +834,7 @@ addLayer("a", {
         },
         15: {
             description: "前边所有升级的效果+^0.2.所有.最先计算.",
-            cost(){return new OmegaNum(5e11)},
+            cost(){return new OmegaNum(3e11)},
             unlocked(){return hasUpgrade("a",14)},
             effect(){
                 var baseEff = new ExpantaNum(.2)
@@ -847,7 +847,7 @@ addLayer("a", {
         },
         21: {
             description: "45.公式用一下就不用了.修改升级12公式x(pp^0.25+1)^<br>((esc^1.5/10)^2)",
-            cost(){return new OmegaNum(2e12)},
+            cost(){return new OmegaNum(1e12)},
             unlocked(){return hasUpgrade("a",15)},
             },
         22: {
