@@ -1730,7 +1730,7 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
         var exp = new ExpantaNum(0.5)
         return exp
     },
-    layerShown(){return hasMilestone("esc",7)},
+    layerShown(){return hasMilestone("l",20)},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
    
   
