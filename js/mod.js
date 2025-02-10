@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.7",
+	num: "0.71",
 	name: "",
 }
 
@@ -64,7 +64,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:9劝退点+4声望加成`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:e31240点数`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
