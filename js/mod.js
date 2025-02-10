@@ -12,27 +12,11 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.65",
+	num: "0.7",
 	name: "",
 }
 
-let changelog = `<h1>更新记录:</h1><br>
-<h3>v0.65</h3><br>
-		- 添加第八劝退点的内容的一半(剧情还没写).<br><br>
-			<h3>v0.6</h3><br>
-	
-		- 添加第七劝退点的内容.<br><br>
-<h3>v0.5</h3><br>
-		- 添加第六劝退点的内容.<br><br>
-<h3>v0.4</h3><br>
-		- 添加第五劝退点的内容.<br><br>
- <h3>v0.3</h3><br>
-		- 添加第四劝退点的内容.<br><br>
-
-    <h3>v0.2</h3><br>
-		- 添加第三劝退点的内容.<br><br>
-	<h3>v0.1</h3><br>
-		- 添加0~2劝退点的内容.`
+let changelog = ``
 
 let winText = `您通关了!在qq里催更!`
 
@@ -58,11 +42,12 @@ function getPointGen() {
 		if(hasUpgrade("p",i)) gain = gain.mul(upgradeEffect("p",i))
 	}
 	if(inChallenge("p",11) || inChallenge("p",12) || inChallenge("p",13)){
-		if(hasUpgrade("p",12)) gain = gain.div(upgradeEffect("p",12).pow(2))
+		if(hasUpgrade("p",12)&&!(hasMilestone("l",19))) gain = gain.div(upgradeEffect("p",12).pow(2))
 		else gain = gain.div(upgradeEffect("p",12))
 	}
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
+	if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
 	if(hasMilestone("l",1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
 	gain = gain.pow(layers.a.effect())
@@ -79,7 +64,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:8劝退点+2扩张完成`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:9劝退点+4声望加成`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
