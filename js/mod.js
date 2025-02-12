@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.71",
+	num: "0.72",
 	name: "",
 }
 
@@ -51,7 +51,7 @@ function getPointGen() {
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
 	if(hasMilestone("l",1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
 	gain = gain.pow(layers.a.effect())
-	
+	if(inChallenge("m",11)) gain = expPow(gain.mul(10),0.125).div(10)	
 	if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)	
 	if(hasMilestone("esc",6)) gain = expPow(gain.mul(10),0.8).div(10)	
 	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")	
@@ -64,7 +64,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:e31240点数`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:10扩张完成`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	

@@ -1,3 +1,6 @@
+function getCP(layer,id){
+    return player[layer]['c'+id]
+  }
 //快捷调用+提高运算速度
 var zero = new OmegaNum(0)
 var one = new OmegaNum(1)
@@ -20,12 +23,7 @@ function checkAroundUpg(UPGlayer,place){
     return hasUpgrade(UPGlayer,place-1)||hasUpgrade(UPGlayer,place+1)||hasUpgrade(UPGlayer,place-10)||hasUpgrade(UPGlayer,place+10)
 }
 //对数软上限 *尽量少用,不稳定
-function logsoftcap(num,start,power){
-    if(num.gt(start)){
-        num = ten.tetr(num.slog(10).sub(power)).pow(start.logBase(ten.tetr(start.slog(10).sub(power))))
-    }
-    return num
-}
+
 //指数软上限
 function powsoftcap(num,start,power){
 	if(num.gt(start)){

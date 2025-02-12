@@ -66,6 +66,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         ${buyableEffect('p',13).gte(4)?`<br><br>四重压缩能量:${format(player.p.e4)}(${format(player.p.e3.pow(1/9).div(100).mul(this.condenseEffect(player.p.e5)))}/s),使得三重压缩能量获取*${format(this.condenseEffect(player.p.e4))}`:``}
         ${buyableEffect('p',13).gte(5)?`<br><br>五重压缩能量:${format(player.p.e5)}(${format(player.p.e4.pow(1/9).div(100).mul(this.condenseEffect(player.p.e6)))}/s),使得四重压缩能量获取*${format(this.condenseEffect(player.p.e5))}`:``}
         ${buyableEffect('p',13).gte(6)?`<br><br>六重压缩能量:${format(player.p.e6)}(${format(player.p.e5.pow(1/9).div(100).mul(this.condenseEffect(player.p.e7)))}/s),使得五重压缩能量获取*${format(this.condenseEffect(player.p.e6))}`:``}
+        ${buyableEffect('p',13).gte(7)?`<br><br>七重压缩能量:${format(player.p.e7)}(${format(player.p.e6.pow(1/9).div(100).mul(this.condenseEffect(player.p.e8)))}/s),使得六重压缩能量获取*${format(this.condenseEffect(player.p.e7))}`:``}
         `},
     effect(){
         var eff = player.p.e0.div(10).add(1).pow(2).pow(hasUpgrade("p",44)?buyableEffect("p",22):1)
@@ -118,7 +119,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 var eff = base.pow(player.p.upgrades.length)
                 var buyablePow = n(1)
                 buyablePow = hasUpgThenAdd(buyablePow,this.layer,31)
-                eff = eff.mul(buyableEffect("p",11).pow(buyablePow))
+                eff = eff.mul(buyableEffect("p",11).pow(buyablePow)).pow(hasMilestone("l", 31)?layers.a.effect():1 )
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
@@ -284,7 +285,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e1550'),
+            cost:n('1e1540'),
             unlocked(){return hasUpgrade(this.layer,35)&&isUnl(4)||isUnl(5)},
         },
         42:{
@@ -296,7 +297,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e1600'),
+            cost:n('1e1590'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(5)||inChallenge('p',14)},
         },
         43:{
@@ -307,7 +308,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e1650'),
+            cost:n('1e1640'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(5)||inChallenge('p',14)},
         },
         44:{
@@ -318,7 +319,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `^ ${format(this.effect())}`},
-            cost:n('1e2630'),
+            cost:n('1e2620'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(5)||inChallenge('p',14)},
         },
         45:{
@@ -329,18 +330,19 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e3150'),
+            cost:n('1e3140'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(5)||inChallenge('p',14)},
         },
         51:{
             description:`32.抄袭数学树的偷懒描述.二重压缩能量并不总是做无用功,二重压缩能量加成重置点获取`,
             effect(){
                 var eff = player.p.e2.add(1)
-                if(hasUpgrade('a',32)) eff = eff.pow(layers.a.effect())        
+                if(hasUpgrade('a',32)) eff = eff.pow(layers.a.effect())  
+                if(eff.gte("1e50000"))  eff =expPow(eff.mul(10),0.8).div(10).mul("1e44250")    
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e3700'),
+            cost:n('1e3690'),
             unlocked(){return hasUpgrade(this.layer,45)&&isUnl(5)||isUnl(6)},
         },
         52:{
@@ -351,7 +353,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e3900'),
+            cost:n('1e3880'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(6)||inChallenge('p',14)},
         },
         53:{
@@ -362,7 +364,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `^ ${format(this.effect())}`},
-            cost:n('1e4000'),
+            cost:n('1e3980'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(6)||inChallenge('p',14)},
         },
         54:{
@@ -373,7 +375,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n('1e6300'),
+            cost:n('1e6280'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(6)||inChallenge('p',14)},
         },
         55:{
@@ -735,7 +737,8 @@ addLayer("a", {
         if(eff.gte(6)) eff = eff.sqrt().sqrt().sqrt().sqrt().sqrt().mul(5.6732)   
         if(eff.gte(10)) eff = eff.div(2).add(5)       
         if(eff.gte(15)) eff = eff.div(5).add(12)  
-        if(eff.gte(25)) eff = eff.div(100).add(24.75)               
+        if(eff.gte(25)) eff = eff.div(100).add(24.75)  
+        if(hasMilestone("l",29)) eff = eff.mul(n(1.005).pow(player.l.points.add(1).log10().min(50)))
         return eff
     },
     effectDescription(){return `43.容易混淆的图标.b -> <text style = "color:green">${format(layers.a.effect(),2)}</text>`},
@@ -787,7 +790,7 @@ addLayer("a", {
 
                 if(baseEff.gt(1e100)){
                     var sc = 4
-                    if(hasMilestone("a",14)) sc-=2
+                  
                     baseEff = baseEff.root(sc).mul(1e100**(1-1/sc))
                 }
                 if(baseEff.gt(1e10000)){
@@ -812,8 +815,7 @@ addLayer("a", {
                 if(hasUpgrade("a",15)) baseEff = baseEff.pow(upgradeEffect("a",15))
              
              
-                baseEff = logsoftcap(baseEff,"ee8",0.5)
-                baseEff = logsoftcap(baseEff,"ee9",0.5)
+          
                 return baseEff
             },
             effectDisplay(){return `x${format(upgradeEffect("a",13),1)}`}
@@ -827,7 +829,7 @@ addLayer("a", {
               
                 if(hasUpgrade("a",15)) baseEff = baseEff.pow(upgradeEffect("a",15))
            
-                baseEff = logsoftcap(baseEff,"e1e7",0.25)
+           
                 return baseEff
             },
             effectDisplay(){return `x${format(upgradeEffect("a",14),1)}`}
@@ -961,7 +963,29 @@ addLayer("a", {
             unlocked(){return hasUpgrade("a",62)&&hasMilestone("esc",9)},
             },                                                                                                                                                                                                                                                    
         },
-     
+        buyables:{
+            11: {
+                cost(x = getBuyableAmount(this.layer, this.id)) {
+                    var c = n("1e14000").mul(n(1e308).pow(x)).mul(n(1e10).pow(x.pow(2)))
+                  
+                    return c
+                },
+                display() { return `生命获取<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+                canAfford() { return player.a.points.gte(this.cost()) },
+                buy() {
+                    player.a.points = player.a.points.sub(this.cost())
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                },
+                title() {
+                    return "数字生命"
+                }, 
+                effect(x = getBuyableAmount(this.layer, this.id)){
+                    var eff = n(2).pow(x)
+                  
+                    return eff
+                },
+                unlocked(){return upgradeEffect("p",25).gte(8)},
+            },},
       
             
         
@@ -998,6 +1022,7 @@ addLayer("a", {
         if(hasMilestone("l",27)) gain = gain.pow(n(1.1))     
        if(gain.gte(1e10)) gain=expPow(gain.mul(10),0.8).add(9.99e9)	
        if(gain.gte("1e1000")) gain=expPow(gain.mul(10),0.75).mul("1e900")	
+        if(gain.gte("1e20000")) gain=gain.pow(0.01).mul("1e19800")	
         if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)	
         return gain.floor()
     },
@@ -1098,7 +1123,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         }, 
         9:{
             requirementDescription: "9劝退点",
-            effectDescription: "自动购买p层级购买项11,m层级购买项11.12的效果变得更好.自动完成p层级挑战.生命获取x2.",
+            effectDescription: "自动购买p层级购买项12,m层级购买项11.12的效果变得更好.自动完成p层级挑战.生命获取x2.",
             done() { return isUnl(9) }
         },     
     },
@@ -1177,10 +1202,11 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
     effectDescription(){return `51.这是怨怨树吗？基于点数,使重置点获取x${format(this.effect())}.56.滥用双指数软上限.`},
     effect(){let eff= player.points.add(1).pow(buyableEffect('m',11)).log(10).sub(20).max(1)
                  eff=expPow(eff,buyableEffect('m',23))
+                
                  if (eff.gte("1e10000"))eff=expPow(expPow(eff,0.5),0.5).mul("1e10000")
                  if (eff.gte("1e15000"))eff=expPow(expPow(eff,0.5),0.5).mul("1e15000")
                  if (eff.gte("1e250000"))eff=expPow(expPow(eff,0.5),0.5).mul("1e250000")
-
+                 if (eff.gte("1e300000"))eff=expPow(expPow(eff,0.5),0.5).mul("1e300000")
         return eff
 
 
@@ -1205,17 +1231,19 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
        if(hasMilestone("l",21))  gain=gain.pow(1.05)
        gain=gain.pow(buyableEffect('m',14))
        if(hasChallenge("p",23)) gain = gain.pow(challengeEffect("p",23)) 
+       gain = gain.pow((challengeEffect("m",11)+1)**0.01) 
        if(gain.gte(1e10)) gain=expPow(gain.mul(10),0.8).add(9.99e9)	
-       if(gain.gte("1e7500")) gain=expPow(gain.mul(10),0.8).add("1e7500")	
+       if(gain.gte("1e7500")) gain=expPow(gain.mul(10),0.8).add("1e7500")
        if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
        return gain.floor()
     },
     update(diff){
       
+
         if(hasMilestone("l",2)&&player.m.points.sub(1).gte(n("1").mul(n(2).pow(getBuyableAmount("m",11))).mul(n(1.01).pow(getBuyableAmount("m",11).pow(2))).pow(hasMilestone("l",14)?25:1)))setBuyableAmount('m',11,getBuyableAmount('m',11).add(hasMilestone("esc",9)?10:1))    
         if(hasMilestone("l",3)&&player.m.points.sub(1).gte(n("20").mul(n(3).pow(getBuyableAmount("m",12))).mul(n(1.02).pow(getBuyableAmount("m",12).pow(2)))))setBuyableAmount('m',12,getBuyableAmount('m',12).add(hasMilestone("esc",9)?10:1))    
         if(hasMilestone("l",4)&&player.m.points.sub(1).gte(n(hasMilestone("l",25)?1:1e200).mul(n(10).pow(getBuyableAmount("m",13))).mul(n(1.1).pow(getBuyableAmount("m",13).pow(2))).pow(hasMilestone("l",23)?20:1)))setBuyableAmount('m',13,getBuyableAmount('m',13).add(1))  
-        if(hasMilestone("l",5)&&player.m.points.sub(1).gte(n("1e230").mul(n(1e10).pow(getBuyableAmount("m",14))).mul(n(10).pow(getBuyableAmount("m",14).pow(2)))))setBuyableAmount('m',14,getBuyableAmount('m',14).add(1))       
+        if(hasMilestone("l",5)&&player.m.points.sub(1).gte(n("1e229").mul(n(1e10).pow(getBuyableAmount("m",14))).mul(n(10).pow(getBuyableAmount("m",14).pow(2)))))setBuyableAmount('m',14,getBuyableAmount('m',14).add(1))       
         if(hasMilestone("l",6)&&player.m.points.sub(1).gte(n("1e845").mul(n(1e15).pow(getBuyableAmount("m",21))).mul(n(50).pow(getBuyableAmount("m",21).pow(2)))))setBuyableAmount('m',21,getBuyableAmount('m',21).add(1))         
         if(hasMilestone("l",7)&&player.m.points.sub(1).gte(n("1e925").mul(n(1e20).pow(getBuyableAmount("m",22))).mul(n(100).pow(getBuyableAmount("m",22).pow(2)))))setBuyableAmount('m',22,getBuyableAmount('m',22).add(1))      
         if(hasMilestone("l",8)&&player.m.points.sub(1).gte(n("1e1100").mul(n(10000).pow(getBuyableAmount("m",23))).mul(n(10).pow(getBuyableAmount("m",23).pow(2)))))setBuyableAmount('m',23,getBuyableAmount('m',23).add(1))        
@@ -1289,7 +1317,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
         },     
         14: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(1e230).mul(n(1e10).pow(x)).mul(n(10).pow(x.pow(2)))
+                var c = n(1e229).mul(n(1e10).pow(x)).mul(n(10).pow(x.pow(2)))
                 return c
             },
             display() { return `增福元性质获取.<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -1393,6 +1421,37 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked(){return true},
         },         
     },
+    challenges: {
+        11: {
+            name: '点数奇点',
+            challengeDescription: '点数获取指数变为其8次根.你基于挑战中取得的最高点数获得加成.',
+            rewardDescription() { return `当前最高${format(this.rewardEffect())},元性质获取^${format((this.rewardEffect()+1)**0.01)}` },
+            rewardEffect() {
+                var eff =   new OmegaNum (player.m.challenges[11])
+
+                return eff
+            },
+            goal: 0,
+            onExit(){
+             player.m.challenges[11]=player.points.max(challengeEffect("m",11)).max(1)
+         
+             
+            },
+            completionLimit: "1eeeee10",
+            canComplete() { return true },
+            resource() { return player.points },
+            unlocked() { return   upgradeEffect("p",25).gte(8)},
+        },
+    },
+    doReset(resettingLayer){
+        if(layers[resettingLayer].row > layers[this.layer].row){
+            let kept = ["unlocked","auto"]
+            if(resettingLayer == "l" && hasMilestone("l", 28) ){
+                kept.push("challenges")
+            }
+            layerDataReset(this.layer,kept)
+        }
+    },
 })
 addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
     symbol: `L`, // 这是节点上显示的字母
@@ -1421,7 +1480,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         var exp = new ExpantaNum(1)
         return exp
     },
-    layerShown(){return hasMilestone("esc",7)},
+    layerShown(){return hasMilestone("esc",8)},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     tabFormat: {
         生命里程碑: {
@@ -1445,15 +1504,17 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
 
                 ],},
     },
+   
+
     challenges: {
         11: {
-                name: "扩张",
+                name: "65.机器翻译.扩张",
                 challengeDescription(){
 
 
                         let a = "所有先前的资源指数都被<br>^" 
                         let e = tmp.l.challenges[11].challengeEffect
-                        let f = "<br>完成次数增加生命获取" 
+                        let f = "<br>完成次数增加生命获取,每完成10次解锁一个可购买." 
                         return a + e+ f
                 },
                 goalDescription(){
@@ -1496,7 +1557,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-            return  "前50个生命每个使点数^1.01,当前:^" + format(n(1.01).pow(player.l.points.min(50)))
+            return  "62.怎么会是生命树啊.前50个生命每个使点数^1.01,当前:^" + format(n(1.01).pow(player.l.points.min(50)))
         },
         },
         2:{
@@ -1506,7 +1567,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "自动购买第一个m层级可购买" 
+                return  "63.分批自动化.自动购买第一个m层级可购买" 
             },
         },
         3:{
@@ -1586,7 +1647,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "解锁挑战" 
+                return  "64.要大量生命重置.解锁挑战" 
             },
         },
         11:{
@@ -1606,7 +1667,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "p层级第二个购买项价格变成原来的10次方,效果变成原来的5次方." 
+                return  "66.增益还是减益.p层级第二个购买项价格变成原来的10次方,效果变成原来的5次方." 
             },
         },
         13:{
@@ -1616,7 +1677,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "生命加成所有先前的资源获取,当前:x" + format(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1 ))
+                return  "67.有用还是没用.生命加成所有先前的资源获取,当前:x" + format(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1 ))
             },
         },
         14:{
@@ -1626,7 +1687,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "m层级第一个购买项价格变成原来的25次方,效果变成原来的100次方." 
+                return  "68.没用还是有用.m层级第一个购买项价格变成原来的25次方,效果变成原来的100次方." 
             },
         },
         15:{
@@ -1636,7 +1697,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "m层级第二个购买项效果变成原来的1.5次方." 
+                return  "69.有用还是有用.m层级第二个购买项效果变成原来的1.5次方." 
             },
         },
         16:{
@@ -1676,7 +1737,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "挑战C-2不再增强升级效果." 
+                return  "70.必要的妥协.挑战C-2不再增强升级效果." 
             },
         },     
         20:{
@@ -1686,7 +1747,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "解锁新层级." 
+                return  "71.真的好熟悉啊.解锁新层级." 
             },
         },     
         21:{
@@ -1706,7 +1767,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "如果你在扩张里面,使声望加成对重置点生效." 
+                return  "72.没这个打不过扩张.如果你在扩张里面,使声望加成对重置点生效." 
             },
         }, 
         23:{
@@ -1716,7 +1777,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "m层级第三个购买项价格变成原来的20次方." 
+                return  "73.负面在前,正面在后.m层级第三个购买项价格变成原来的20次方." 
             },
         },      
         24:{
@@ -1758,7 +1819,47 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
               
                 return  "声望点获取^1.1." 
             },
+        },   
+        28:{
+            requirementDescription: "1e10生命",
+         
+            done() { return player.l.points.gte(1e10) },
+            effectDescription(){
+        
+              
+                return  "在生命重置中保留点数奇点." 
+            },
         },      
+        29:{
+            requirementDescription: "5e11生命",
+         
+            done() { return player.l.points.gte(5e11) },
+            effectDescription(){
+        
+              
+                return  "前50个数量级生命每个使b*1.005,当前:x" + format(n(1.005).pow(player.l.points.add(1).log10().min(50)))
+            },
+        },   
+        30:{
+            requirementDescription: "1e12生命",
+         
+            done() { return player.l.points.gte(1e12) },
+            effectDescription(){
+        
+              
+                return  "降低声望加成的价格." 
+            },
+        },    
+        31:{
+            requirementDescription: "2.5e13生命",
+         
+            done() { return player.l.points.gte(2.5e13) },
+            effectDescription(){
+        
+              
+                return  "b加成p层级升级13." 
+            },
+        },         
     },
    
     
@@ -1780,13 +1881,14 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         var gain = player.p.points.add(10).log10().div(7950).pow(2)
         if(hasMilestone("l", 10)) gain=gain.mul(tmp.l.challenges[11].rewardEffect)
         if(hasMilestone("esc",9))gain=gain.mul(2)      
-        
+        gain=gain.mul(buyableEffect("a",11))      
         return gain.floor()
     },
     getNextAt(){
         let gain = tmp.l.getResetGain.plus(1)
         if( hasMilestone("l", 10) ) gain=gain.div(tmp.l.challenges[11].rewardEffect)
         if(hasMilestone("esc",9))gain=gain.div(2)
+            gain=gain.div(buyableEffect("a",11))   
         return n(10).pow(gain.root(2).mul(7950)).max("1e7950")
 },
   
@@ -1807,7 +1909,7 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
         return 0
     },
     effectDescription(){return `声望点获取^${format(this.effect())}.`},
-    effect(){let eff= player.q.points.mul(hasUpgrade("q",11)?0.06:0.05).add(1)
+    effect(){let eff= player.q.points.mul(hasUpgrade("q",12)?0.075:hasUpgrade("q",11)?0.06:0.05).add(1)
                
         return eff         
                 },
@@ -1821,6 +1923,7 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
         var exp = new ExpantaNum(0.5)
+        if(hasMilestone("l",30))exp=new ExpantaNum(0.7915)
         return exp
     },
     layerShown(){return hasMilestone("l",20)},
@@ -1832,6 +1935,13 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked(){return true},
            
         },
+        12: {
+            description: "声望加成的效果变得更好.",
+            cost(){return new OmegaNum(9)},
+            unlocked(){return true},
+           
+        },
+      
     },
   
    

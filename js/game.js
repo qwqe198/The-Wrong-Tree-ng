@@ -165,7 +165,7 @@ function layerDataReset(layer, keep = []) {
 	if (layers[layer].clickables && !player[layer].clickables) 
 		player[layer].clickables = getStartClickables(layer)
 	for (thing in storedData) {
-		player[layer][thing] =storedData[thing]
+		player[layer][thing] = storedData[thing]
 	}
 }
 
@@ -180,6 +180,7 @@ function addPoints(layer, gain) {
 	player[layer].points = player[layer].points.add(gain).max(0)
 	if (player[layer].best) player[layer].best = player[layer].best.max(player[layer].points)
 	if (player[layer].total) player[layer].total = player[layer].total.add(gain)
+	if (layers[layer].maxValue) player[layer].points = player[layer].points.min(layers[layer].maxValue())
 }
 
 function generatePoints(layer, diff) {
