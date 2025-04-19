@@ -160,7 +160,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 var eff = n(0.25)
                 eff = eff.mul(buyableEffect("p",11))
                 if(inChallenge("p",22)) eff = eff.mul(0.5)   
-             
+                
                 return eff.min(0.75)
             },
             effectDisplay(){return `+^ ${format(this.effect())}(硬上限:+^0.75)`},
@@ -173,7 +173,8 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 var eff = n(0.25)
                 eff = eff.mul(buyableEffect("p",11))
                 if(!hasUpgrade("p",55))eff=eff.min(0.75)
-                    if(hasUpgrade("p",55))eff=eff.mul(0.06).add(0.75)           
+                if(hasUpgrade("p",55))eff=eff.mul(hasMilestone("l",34)?0.1:0.06).add(0.75)      
+                   
                 return eff
             },
             effectDisplay(){return `+* ${format(this.effect())}(硬上限:+*0.75)`},
@@ -384,6 +385,16 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
             cost:n('1e6666'),
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(6)||inChallenge('p',14)},
         },
+        61: {
+            description: "生命获取x10",
+            cost(){return new OmegaNum("1e34265")},
+            unlocked(){return hasUpgrade("p",55)&&hasMilestone("esc",9)},
+            },    
+        62: {
+            description: "生命获取x50",
+            cost(){return new OmegaNum("1e35430")},
+            unlocked(){return hasUpgrade("p",55)&&hasMilestone("esc",9)},
+            },                        
     },
     update(diff){
         if(hasUpgrade("p",32)) player.p.e0 = player.p.e0.add(upgradeEffect("p",32).mul(diff))
@@ -545,7 +556,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x = getBuyableAmount(this.layer, this.id)){
-                var eff = x.mul(1.6).add(1).root(3.6)
+                var eff = x.mul(1.6).add(1).root(hasMilestone("l",33)?3:3.6)
                 eff = eff.mul(buyableEffect('p',14))
                 if(hasUpgrade("esc",13)) eff = eff.mul(upgradeEffect("esc",13))
                 if(eff.gte(7.8)&&!hasMilestone("l",26))eff=eff.mul(0.5).add(3.9)
@@ -966,7 +977,7 @@ addLayer("a", {
         buyables:{
             11: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
-                    var c = n("1e14000").mul(n(1e308).pow(x)).mul(n(1e10).pow(x.pow(2)))
+                    var c = n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(x)).mul(n(1e10).pow(x.pow(2)))
                   
                     return c
                 },
@@ -1063,7 +1074,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         var exp = new ExpantaNum(1)
         return exp
     },
-    row: 9, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    row: 999, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown(){return true},
     effectDescription(){return `点数获取*${format(this.effect())}.`},
     effect(){return n(1.5).pow(player.esc.points.pow(2))},
@@ -1503,9 +1514,40 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 "challenges",
 
                 ],},
+        生命可购买: {
+            buttonStyle() {return  {'color': 'lightblue'}},
+            unlocked() {return player.l.challenges[11]>=10},
+            content:
+                ["main-display",
+                  
+                "buyables",
+    
+                ],},
     },
    
-
+    buyables:{
+        11: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e20").mul(n(10).pow(x)).mul(n(2).pow(x.pow(2)))
+              
+                return c
+            },
+            display() { return `生命获取<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.l.points.gte(this.cost()) },
+            buy() {
+                player.l.points = player.l.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "α → ∂α"
+            }, 
+            effect(x = getBuyableAmount(this.layer, this.id)){
+                var eff = player.points.add(2).log(2).add(2).log(2).pow(x)
+              
+                return eff
+            },
+            unlocked(){return true},
+        },},
     challenges: {
         11: {
                 name: "65.机器翻译.扩张",
@@ -1859,7 +1901,47 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
               
                 return  "b加成p层级升级13." 
             },
-        },         
+        },      
+        32:{
+            requirementDescription: "1e18生命",
+         
+            done() { return player.l.points.gte(1e18) },
+            effectDescription(){
+        
+              
+                return  "降低p层级购买项11价格." 
+            },
+        },      
+        33:{
+            requirementDescription: "1e22生命",
+         
+            done() { return player.l.points.gte(1e22) },
+            effectDescription(){
+        
+              
+                return  "懒得数劝退条目了:这是同一个p吗?增加p层级购买项11效果." 
+            },
+        },  
+        34:{
+            requirementDescription: "1e24生命",
+         
+            done() { return player.l.points.gte(1e24) },
+            effectDescription(){
+        
+              
+                return  "削弱p层级升级22效果的软上限." 
+            },
+        },     
+        35:{
+            requirementDescription: "1e40000点数",
+         
+            done() { return player.points.gte("1e40000")  },
+            effectDescription(){
+        
+              
+                return  "解锁新层级." 
+            },
+        },                             
     },
    
     
@@ -1880,15 +1962,20 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
     getResetGain(){
         var gain = player.p.points.add(10).log10().div(7950).pow(2)
         if(hasMilestone("l", 10)) gain=gain.mul(tmp.l.challenges[11].rewardEffect)
-        if(hasMilestone("esc",9))gain=gain.mul(2)      
-        gain=gain.mul(buyableEffect("a",11))      
+        if(hasMilestone("esc",9))gain=gain.mul(2)   
+        if(hasUpgrade("p",61))gain=gain.mul(10)   
+        if(hasUpgrade("p",62))gain=gain.mul(50)  
+        gain=gain.mul(buyableEffect("a",11))    
+        gain=gain.mul(buyableEffect("l",11))   
         return gain.floor()
     },
     getNextAt(){
         let gain = tmp.l.getResetGain.plus(1)
         if( hasMilestone("l", 10) ) gain=gain.div(tmp.l.challenges[11].rewardEffect)
         if(hasMilestone("esc",9))gain=gain.div(2)
-            gain=gain.div(buyableEffect("a",11))   
+        if(hasUpgrade("p",61))gain=gain.div(10)   
+        gain=gain.div(buyableEffect("a",11))   
+        gain=gain.div(buyableEffect("l",11))   
         return n(10).pow(gain.root(2).mul(7950)).max("1e7950")
 },
   
@@ -1945,6 +2032,57 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
     },
   
    
+    
+
+    
+   
+})
+addLayer("lcb", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
+    symbol: `M`, // 这是节点上显示的字母
+    position: 1, // 节点顺序
+    startData() { return {
+        unlocked: true, //是否开始就解锁
+		points: new ExpantaNum(0),
+    }},
+    requires(){return new ExpantaNum("1e40000")},
+    color: "#793784",
+    resource: "00里程碑", // 重置获得的资源名称
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    passiveGeneration(){
+      
+        return 0
+    },
+    effectDescription(){return `
+        虚晃一枪，这个层级不重置任何东西<br>
+        `},
+    exponent:1,
+    baseAmount(){return player.points},//基础资源数量
+    baseResource:"点数",//基础资源名称
+    gainMult() { // 资源获取数量倍率
+        mult = new ExpantaNum(1)
+      
+        return mult
+    },
+    gainExp() { // 资源获取指数加成(与exponent相乘)
+        var exp = new ExpantaNum(0.5)
+       
+        return exp
+    },
+    layerShown(){return hasMilestone("l",35)},
+    row: 999, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    getNextAt(){
+        let gain = player.lcb.points
+        return n("1e40000").pow(n(1.1).pow(gain))
+},
+milestones:{
+    1:{
+        requirementDescription: "第100个里程碑",
+        effectDescription: "当点数到e1, e4, e9, e16, e25, e36, e49, e64, e81, e100, e121, e144, e169, e196, e225, e256, e289, e324, e361, e400, e441, e484, e529, e576, e625, e676, e729, e784, e841, e900, e961, e1024, e1089, e1156, e1225, e1296, e1369, e1444, e1521, e1600, e1681, e1764, e1849, e1936, e2025, e2116, e2209, e2304, e2401, e2500, e2601, e2704, e2809, e2916, e3025, e3136, e3249, e3364, e3481, e3600, e3721, e3844, e3969, e4096, e4225, e4356, e4489, e4624, e4761, e4900, e5041, e5184, e5329, e5476, e5625, e5776, e5929, e6084, e6241, e6400, e6561, e6724, e6889, e7056, e7225, e7396, e7569, e7744, e7921, e8100, e8281, e8464, e8649, e8836, e9025, e9216, e9409, e9604, e9801, e10000时,点数获取x1e10",
+        done() { return player.lcb.points.gte(1) }
+    },
+   
+},
+resetsNothing: true,
     
 
     
