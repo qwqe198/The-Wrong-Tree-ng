@@ -2401,7 +2401,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         2:{
             requirementDescription: "2战力",
             effectDescription: "解锁一些可以提升属性的东西",
-            done() { return player.cq.points.gte(1) }
+            done() { return player.cq.points.gte(2) }
         },
         3:{
             requirementDescription: "3战力",
