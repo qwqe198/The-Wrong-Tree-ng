@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0",
+	num: "1.05",
 	name: "",
 }
 
@@ -69,7 +69,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:2战力`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:5战力`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
@@ -85,8 +85,9 @@ function isEndgame() {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	if(hasAchievement("rw",11)) return n(1e308)
-		return n(3600)
+	
+		return n(hasAchievement("rw",11)?1e308:3600)
+	
 }
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
