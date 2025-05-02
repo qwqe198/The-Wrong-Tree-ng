@@ -2631,13 +2631,13 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                         return eff
                 },
                 goal: () => "4",
-                canComplete: () => player.esc.points.gte(tmp.l.challenges[11].goal),
+                canComplete: () => player.esc.points.gte(tmp.cq.challenges[11].goal),
                 rewardDescription(){
                        
                        
-                        let b = "当前: *" + format(tmp.l.challenges[11].rewardEffect)
+                        let b = "当前: *" + format(tmp.cq.challenges[11].rewardEffect)
                         let c = "<br>你完成了" 
-                        c += formatWhole(player.l.challenges[11]) + "/5次"
+                        c += formatWhole(player.cq.challenges[11]) + "/5次"
                         return  b  + c
                 },
                 completionLimit: 5,
