@@ -2397,7 +2397,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     effect(){let eff= player.cq.points.max(0)
         if(hasAchievement("rw",15)) eff=eff.mul(1.5)  
         eff = eff.mul(buyableEffect("cq",11))
-        eff = eff.mul(tmp.l.challenges[11].rewardEffect)
+        eff = eff.mul(tmp.cq.challenges[11].rewardEffect)
         return eff         
                 },
     exponent:1,
@@ -2535,7 +2535,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         }, 
         22: {
-            description: "30/3x3/0  p层级购买项效果x1.01.",
+            description: "30/3x3/0  p层级购买项11效果x1.01.",
             cost(){return new OmegaNum(n(30).div(player.cq.atk).sub(1).floor().mul(((n(3).sub(player.cq.def)).mul(3)).max(0)))},
             unlocked(){return hasUpgrade("cq",21)},
             currencyDisplayName: "血量",
