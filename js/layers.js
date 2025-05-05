@@ -2339,7 +2339,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         atk: new ExpantaNum(1),
         def: new ExpantaNum(0),
     }},
-    requires(){return new ExpantaNum("1")},
+    requires(){return new ExpantaNum("10")},
     color: "yellow",
     resource: "战力", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -2738,7 +2738,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
          player.cq.def =  player.cq.def.max(upgradeEffect("cq",10001))
          if(hasUpgrade("cq",31)&&upgradeEffect("p",25).gte(8))player.m.challenges[11]=player.m.challenges[11].add(expPow(player.points.mul(10),0.125))
          if(hasUpgrade("cq",32)&&player.l.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
-
+            player.cq.points =  n(2)
 
 
 
@@ -2748,6 +2748,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     
    
 })
+
 addLayer("rw", {
     startData() { return {
         unlocked: true,
