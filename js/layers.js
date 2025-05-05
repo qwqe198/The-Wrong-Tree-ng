@@ -1207,7 +1207,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         var exp = new ExpantaNum(1)
         return exp
     },
-    row: 999, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    row: 99, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown(){return true},
     effectDescription(){
         if(inChallenge("cq",11)) return `点数获取/${format(this.effect().pow(-1))}.`
@@ -2295,7 +2295,7 @@ addLayer("lcb", { //这是代码中的节点代码 例如player.p可以调用该
         return exp
     },
     layerShown(){return hasMilestone("l",35)||hasMilestone("cq",1)},
-    row: 999, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    row: 99, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     getNextAt(){
         let gain = player.lcb.points
         return n("1e40000").pow(n(1.05).pow(gain))
@@ -2415,7 +2415,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         return exp
     },
     layerShown(){return hasMilestone("esc",10)||hasMilestone("cq",1)},
-    row: 1000, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    row: 100, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
    
     milestones:{
 
@@ -2738,7 +2738,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
          player.cq.def =  player.cq.def.max(upgradeEffect("cq",10001))
          if(hasUpgrade("cq",31)&&upgradeEffect("p",25).gte(8))player.m.challenges[11]=player.m.challenges[11].add(expPow(player.points.mul(10),0.125))
          if(hasUpgrade("cq",32)&&player.l.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
-            player.cq.points =  n(2)
+          
 
 
 
