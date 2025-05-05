@@ -2577,7 +2577,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },      
         31: {
-            description: "100/10/1  怪物开始有防御了，在点数奇点外自动获得挑战点数.",
+            description: "100/10/1  怪物开始有防御了，在前4行重置保留点数奇点.",
             cost(){return new OmegaNum(n(100).div(player.cq.atk.sub(1)).sub(1).floor().mul(((n(10).sub(player.cq.def)).mul(1)).max(0)))},
             unlocked(){return hasUpgrade("cq",25)},
             currencyDisplayName: "血量",
@@ -2615,7 +2615,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },
         35: {
-            description: "1000/5/2  保留每秒自动获得100%的重置点.",
+            description: "1000/5/2  保留每秒自动获得12.5%的重置点.",
             cost(){return new OmegaNum(n(1000).div(player.cq.atk.sub(2).max(0)).sub(1).floor().mul(((n(5).sub(player.cq.def)).mul(1)).max(0)))},
             unlocked(){return hasUpgrade("cq",34)},
          
@@ -2677,7 +2677,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 },
                 title() {
-                    return "提升生命"
+                    return "提升血量"
                 }, 
                 effect(x = getBuyableAmount(this.layer, this.id)){
                     var eff = n(1.5).pow(x)
@@ -2731,12 +2731,20 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 unlocked(){return hasMilestone("cq", 2) },
             },
         },
-       
+        doReset(resettingLayer){
+            if(layers[resettingLayer].row > layers[this.layer].row){
+                let kept = ["unlocked","auto"]
+                if(resettingLayer == "cq" && hasUpgrade("cq",31) ){
+                    kept.push("challenges")
+                }
+                layerDataReset(this.layer,kept)
+            }
+        },
     update(diff){
          player.cq.hp = player.cq.hp.add(layers.cq.effect().mul(diff))
          player.cq.atk =  player.cq.atk.max(upgradeEffect("cq",10000))
          player.cq.def =  player.cq.def.max(upgradeEffect("cq",10001))
-         if(hasUpgrade("cq",31)&&upgradeEffect("p",25).gte(8))player.m.challenges[11]=player.m.challenges[11].add(expPow(player.points.mul(10),0.125))
+         if(hasUpgrade("cq",31)&&upgradeEffect("p",23).gte(8))player.cq.challenges[11]=player.cq.challenges[11].add(expPow(player.points.mul(10),0.125).mul(diff))
          if(hasUpgrade("cq",32)&&player.l.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
           
 
