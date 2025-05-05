@@ -438,6 +438,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasMilestone("esc",9)&&player.points.gte("1e175"))player.p.challenges[21]++
         if(hasMilestone("esc",9)&&player.points.gte("1e1335"))player.p.challenges[22]++
         if(hasMilestone("esc",9)&&player.points.gte("1e10000"))player.p.challenges[23]++
+      
     },
     doReset(l){
         if(layers[l].row<=this.row) return
@@ -722,7 +723,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
     },
     passiveGeneration(){
-        if(hasChallenge("p",11)) return inChallenge("p",22)?1e-5:hasMilestone("esc",4)?'1':'0.125'
+        if(hasChallenge("p",11)||hasUpgrade("cq",35)) return inChallenge("p",22)?1e-5:hasMilestone("esc",4)?'1':'0.125'
         return 0
     },
    
@@ -2338,7 +2339,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         atk: new ExpantaNum(1),
         def: new ExpantaNum(0),
     }},
-    requires(){return new ExpantaNum("10")},
+    requires(){return new ExpantaNum("1")},
     color: "yellow",
     resource: "战力", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -2441,30 +2442,32 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         },
     },
     upgrades: {
-        atk:{
-            requirementDescription: "存攻击",
-            effectDescription: "",
+      10000:{
+            description: "存攻击",
+           
             effect(){
-                var eff = 1
-                if(hasAchievement("rw",17))eff+1
-                eff +buyableEffect("cq",12)
-                return eff
-            },
-          
-            done() { return player.cq.points.lt(-1) },
-            unlocked(){return false},
-        },
-        def:{
-            requirementDescription: "存防御",
-            effect(){
-                var eff = 0
-                eff +buyableEffect("cq",13)
+                let eff = n(1)
+                if(hasAchievement("rw",17))eff=eff.add(1)
+                eff=eff.add(buyableEffect("cq",12))
                 return eff
             },
             effectDisplay(){return ` ${format(this.effect())}`},
-            effectDescription: "",
+            cost() { return new OmegaNum (15) },
+         
+        },
+        10001:{
+            description: "存防御",
+            effect(){
+                let eff = n(0)
+             
+                eff=eff.add(buyableEffect("cq",13))
+            
+                return eff
+            },
+            effectDisplay(){return ` ${format(this.effect())}`},
             unlocked(){return false},
-            done() { return player.cq.points.lt(-1) }
+        
+            cost() { return new OmegaNum (15)}
         },
         11: {
             description: "10/3/0  点数获取x3.",
@@ -2574,7 +2577,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },      
         31: {
-            description: "100/10/1  在点数奇点外自动获得挑战点数.",
+            description: "100/10/1  怪物开始有防御了，在点数奇点外自动获得挑战点数.",
             cost(){return new OmegaNum(n(100).div(player.cq.atk.sub(1)).sub(1).floor().mul(((n(10).sub(player.cq.def)).mul(1)).max(0)))},
             unlocked(){return hasUpgrade("cq",25)},
             currencyDisplayName: "血量",
@@ -2610,7 +2613,16 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyDisplayName: "血量",
             currencyInternalName: "hp",
             currencyLayer: "cq"
-        },                   
+        },
+        35: {
+            description: "1000/5/2  保留每秒自动获得100%的重置点.",
+            cost(){return new OmegaNum(n(1000).div(player.cq.atk.sub(2).max(0)).sub(1).floor().mul(((n(5).sub(player.cq.def)).mul(1)).max(0)))},
+            unlocked(){return hasUpgrade("cq",34)},
+         
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },                                 
     },
     challenges: {
         11: {
@@ -2676,14 +2688,14 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             12: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
-                    var c = n("1e40000").mul(n("1e1000").pow(x)).mul(n(1e50).pow(x.pow(2)))
+                    var c = n("1000").mul(n("2").pow(x))
                   
                     return c
                 },
-                display() { return `攻击+<br />${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}点数<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
-                canAfford() { return player.points.gte(this.cost()) },
+                display() { return `攻击+<br />${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}血量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+                canAfford() { return player.cq.hp.gte(this.cost()) },
                 buy() {
-                    player.points = player.points.sub(this.cost())
+                    player.cq.hp = player.cq.hp.sub(this.cost())
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 },
                 title() {
@@ -2698,14 +2710,14 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             13: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
-                    var c = n("1e11111").mul(n("1e300").pow(x)).mul(n(1e20).pow(x.pow(2)))
+                    var c = n("1000").mul(n("2").pow(x))
                   
                     return c
                 },
-                display() { return `防御+<br />${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元性质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
-                canAfford() { return player.m.points.gte(this.cost()) },
+                display() { return `防御+<br />${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}血量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+                canAfford() { return player.cq.hp.gte(this.cost()) },
                 buy() {
-                    player.m.points = player.m.points.sub(this.cost())
+                    player.cq.hp = player.cq.hp.sub(this.cost())
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 },
                 title() {
@@ -2722,8 +2734,8 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
        
     update(diff){
          player.cq.hp = player.cq.hp.add(layers.cq.effect().mul(diff))
-         player.cq.atk =  player.cq.atk.max(upgradeEffect("cq","atk"))
-         player.cq.def =  player.cq.def.max(upgradeEffect("cq","def"))
+         player.cq.atk =  player.cq.atk.max(upgradeEffect("cq",10000))
+         player.cq.def =  player.cq.def.max(upgradeEffect("cq",10001))
          if(hasUpgrade("cq",31)&&upgradeEffect("p",25).gte(8))player.m.challenges[11]=player.m.challenges[11].add(expPow(player.points.mul(10),0.125))
          if(hasUpgrade("cq",32)&&player.l.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
 
