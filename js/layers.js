@@ -2744,7 +2744,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
          player.cq.hp = player.cq.hp.add(layers.cq.effect().mul(diff))
          player.cq.atk =  player.cq.atk.max(upgradeEffect("cq",10000))
          player.cq.def =  player.cq.def.max(upgradeEffect("cq",10001))
-         if(hasUpgrade("cq",31)&&upgradeEffect("p",23).gte(8))player.cq.challenges[11]=player.cq.challenges[11].add(expPow(player.points.mul(10),0.125).mul(diff))
+
          if(hasUpgrade("cq",32)&&player.l.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
           
 
