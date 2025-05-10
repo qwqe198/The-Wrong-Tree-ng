@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.05",
+	num: "1.1",
 	name: "",
 }
 
@@ -50,6 +50,7 @@ function getPointGen() {
 	if(hasUpgrade("cq",14)) gain = gain.mul(upgradeEffect("cq",14))
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
+	if(hasMilestone("t",1)) gain = gain.mul(player.t.points.add(1))
 	if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
 	if(hasMilestone("lcb",1)) gain = gain.mul(n(1e10).pow(player.points.add(10).log(10).root(2).floor().min(100)))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
@@ -69,7 +70,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局:5战力`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.通天塔那里有点bug`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
