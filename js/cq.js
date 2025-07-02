@@ -11,8 +11,8 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     position: 0, // 节点顺序
     startData() { return {
         unlocked: true, //是否开始就解锁
-		points: new ExpantaNum(20),
-        hp: new ExpantaNum(1e7),
+		points: new ExpantaNum(0),
+        hp: new ExpantaNum(0),
         atk: new ExpantaNum(1),
         def: new ExpantaNum(0),
     }},
