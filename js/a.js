@@ -6,7 +6,7 @@ addLayer("a", {
         unlocked: false,
 		points: new ExpantaNum(0),
     }},
-    autoUpgrade(){return hasMilestone("esc",8)},
+    autoUpgrade(){return hasMilestone("esc",8)||hasUpgrade("cq",52)},
     color: "lime",
     resource: "声望点(pp)", // Name of prestige currency
     baseResource: "点数",
@@ -435,7 +435,7 @@ if(hasMilestone("lcb",4)&&player.a.points.gte("1e30000")) gain = gain.pow(2);}
     },
    
     passiveGeneration(){
-        if(hasMilestone("esc",8))return 10
+        if(hasMilestone("esc",8) ||hasUpgrade("cq",54))return 10
         return 0
     },
 

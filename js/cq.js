@@ -125,72 +125,72 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         },
  6:{
             requirementDescription: "7战力",
-            effectDescription: "保留自动购买p层级购买12",
+            effectDescription: "这里的 保留自动购买p层级购买12",
             done() { return player.cq.points.gte(7) }
         },
  7:{
             requirementDescription: "8战力",
-            effectDescription: "保留自动购买p层级购买13",
+            effectDescription: "自动购买 保留自动购买p层级购买13",
             done() { return player.cq.points.gte(8) }
         },
  8:{
             requirementDescription: "9战力",
-            effectDescription: "保留自动购买p层级购买14",
+            effectDescription: "可以 保留自动购买p层级购买14",
             done() { return player.cq.points.gte(9) }
         },
  9:{
             requirementDescription: "10战力",
-            effectDescription: "保留自动购买p层级购买21",
+            effectDescription: "无视解锁条件 保留自动购买p层级购买21",
             done() { return player.cq.points.gte(10) }
         },
  10:{
             requirementDescription: "11战力",
-            effectDescription: "保留自动购买p层级购买22",
+            effectDescription: "所以 保留自动购买p层级购买22",
             done() { return player.cq.points.gte(11) }
         },
  11:{
             requirementDescription: "12战力",
-            effectDescription: "保留自动购买p层级购买23",
+            effectDescription: "简单试炼2 保留自动购买p层级购买23",
             done() { return player.cq.points.gte(12) }
         },
  12:{
             requirementDescription: "13战力",
-            effectDescription: "保留自动购买p层级购买24",
+            effectDescription: "容易了很多 保留自动购买p层级购买24",
             done() { return player.cq.points.gte(13) }
         },
  13:{
             requirementDescription: "14战力",
-            effectDescription: "保留自动完成p层级挑战11",
+            effectDescription: "当然 保留自动完成p层级挑战11",
             done() { return player.cq.points.gte(14) }
         },
  14:{
             requirementDescription: "15战力",
-            effectDescription: "保留自动完成p层级挑战12",
+            effectDescription: "自动挑战 保留自动完成p层级挑战12",
             done() { return player.cq.points.gte(15) }
         },
  15:{
             requirementDescription: "16战力",
-            effectDescription: "保留自动完成p层级挑战13",
+            effectDescription: "也是如此 保留自动完成p层级挑战13",
             done() { return player.cq.points.gte(16) }
         },
  16:{
             requirementDescription: "17战力",
-            effectDescription: "保留自动完成p层级挑战14",
+            effectDescription: "只不过 保留自动完成p层级挑战14",
             done() { return player.cq.points.gte(17) }
         },
  17:{
             requirementDescription: "18战力",
-            effectDescription: "保留自动完成p层级挑战21",
+            effectDescription: "没有一个专门的试炼是与挑战有关 保留自动完成p层级挑战21",
             done() { return player.cq.points.gte(18) }
         },
  18:{
             requirementDescription: "19战力",
-            effectDescription: "保留自动完成p层级挑战22",
+            effectDescription: "所以 保留自动完成p层级挑战22",
             done() { return player.cq.points.gte(19) }
         },
  19:{
             requirementDescription: "20战力",
-            effectDescription: "保留自动完成p层级挑战23",
+            effectDescription: "这真的只是一个qol 保留自动完成p层级挑战23",
             done() { return player.cq.points.gte(20) }
         },
     },
@@ -434,19 +434,69 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         },     
                   45: {
             description: "222/100/5  重置能量获取基于重置能量增加，升级34对该升级生效.",
-            cost(){return battle(10000,15,0)}, //!!剩下你看着改
+            cost(){return battle(222,100,5)}, //!!剩下你看着改
             unlocked(){return hasUpgrade("cq",44)},
             effect(){
                 var eff = player.p.e0.add(10).log10()
                 if(hasUpgrade("cq",34)) eff = eff.pow(player.esc.points.add(1))
 
                 return eff
-            },    unlocked(){return hasUpgrade("cq",43)},
+            },    unlocked(){return hasUpgrade("cq",44)},
             effectDisplay(){return `x ${format(this.effect())}`},
             currencyDisplayName: "血量",
             currencyInternalName: "hp",
             currencyLayer: "cq"
-        },                 
+        },       
+  51: {
+            description: "1000/66/6  点数获取基于战力增加.",
+            cost(){return battle(1000,66,6)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",44)},
+            effect(){
+                var eff =  player.cq.points.add(10).log10().mul(0.01).add(1)
+
+                return eff
+            },    unlocked(){return hasUpgrade("cq",45)},
+            effectDisplay(){return `^ ${format(this.effect())}`},
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },    
+         52: {
+            description: "1777/77/7  保留自动购买a层级升级.",
+            cost(){return battle(1777,77,7)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",51)},
+
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },  
+         53: {
+            description: "2888/88/8  自动购买q层级升级.",
+            cost(){return battle(2888,88,8)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",52)},
+
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },      
+       54: {
+            description: "3999/99/9  保留自动获得声望点.",
+            cost(){return battle(3999,99,9)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",53)},
+
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },   
+     55: {
+            description: "5000/100/10  保留自动获得元性质.",
+            cost(){return battle(5000,100,10)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",54)},
+
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },      
     },
     challenges: {
         11: {
@@ -560,6 +610,47 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             unlocked(){
                     return buyableEffect("t",11).gte(7)
+            },
+           
+    },// inChallenge("l", 11)
+           21: {
+            name: "简单试炼4",
+            challengeDescription(){
+
+                let a ="酒醉般的平衡，点数获取开" 
+                let e = (3**(player.cq.challenges[21]+1))   
+                let f ="次根，p层级升级14失效,重置点获取^" 
+       let g =(2**(player.cq.challenges[21]+1))
+     let h =" 奖励：每秒自动获取(1e-3*10^x)%生命" 
+     
+                    return a+e+f+g+h},
+            goalDescription(){
+                    return "4劝退点"
+            },
+            challengeEffect(){
+                let eff =n(3).pow(player.cq.challenges[21]+1)
+          
+
+                return eff
+        },
+            goal: () => "4",
+            canComplete: () => player.esc.points.gte(4),
+            rewardDescription(){
+                   
+                   
+                    let b = "当前: " + format(tmp.cq.challenges[21].rewardEffect)+"%"
+                    let c = "<br>你完成了" 
+                    c += formatWhole(player.cq.challenges[21]) + "/5次"
+                    return  b+ c
+            },
+            completionLimit: 5,
+            rewardEffect(){let eff=n(10).pow(player.cq.challenges[21]).div(1000)
+
+                    
+                    return eff
+            },
+            unlocked(){
+                    return player.cq.challenges[13]>=1
             },
            
     },// inChallenge("l", 11)

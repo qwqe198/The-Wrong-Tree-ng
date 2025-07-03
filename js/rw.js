@@ -71,6 +71,31 @@ addLayer("rw", {
             done() { return buyableEffect("t",11).gte(1) },
             tooltip: "爬1层塔，奖励：重置能量获取^1.025后x1e10。",
         },
+26: {
+            name: "渐入佳境",
+            done() { return buyableEffect("t",11).gte(5) },
+            tooltip: "爬5层塔，奖励： 防御x1.1。",
+        },
+27: {
+            name: "此任务已被旋转放置赞助",
+            done() { return player.cq.challenges[13] >= 1 },
+            tooltip: "完成1次简单试炼3，奖励：扩张奖励^1.05",
+        },
+31: {
+            name: "自动化1",
+            done() { return player.cq.points.gte(13) },
+            tooltip: "在战力重置时保留所有自动p层级购买，奖励：自动获取劝退点",
+        },
+32: {
+            name: "自动化2",
+            done() { return player.cq.points.gte(20) },
+            tooltip: "在战力重置时保留所有自动p层级挑战，奖励：劝退点不再重置任何东西",
+        },
+33: {
+            name: "醉翁亭记",
+            done() { return player.cq.challenges[21] >= 1 },
+            tooltip: "完成1次简单试炼4，奖励：还没做",
+        },
     },
     tabFormat: [
         "blank", 

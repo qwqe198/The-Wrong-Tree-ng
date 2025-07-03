@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.15",
+	num: "1.16",
 	name: "",
 }
 
@@ -57,6 +57,8 @@ function getPointGen() {
 	if(hasMilestone("lcb",1)) gain = gain.mul(n(1e10).pow(player.points.add(10).log(10).root(2).floor().min(100)))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
 	if(hasUpgrade("cq",24)) gain = gain.pow(1.01)
+ if(inChallenge("cq",21))  gain = gain.root((3**(player.cq.challenges[21]+1))  ) 
+if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(hasMilestone("l",1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
 	gain = gain.pow(layers.a.effect())
 	if(inChallenge("m",11)) gain = expPow(gain.mul(10),0.125).div(10)	

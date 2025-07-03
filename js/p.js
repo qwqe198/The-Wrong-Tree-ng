@@ -41,6 +41,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasMilestone("esc",7))  mult = mult.mul(layers.m.effect())
         if(hasMilestone("l",13)) mult= mult.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
             if(hasUpgrade("cq",25)) mult = mult.pow(1.01)
+ if(inChallenge("cq",21)) mult = mult.pow((2**(player.cq.challenges[21]+1))  ) 
         if(player.q.points.gte(1)&&hasMilestone("l",22)&&inChallenge("l",11)) mult = mult.pow(layers.q.effect())        
         if(inChallenge("l",11)) mult = expPow(mult.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
 	if(inChallenge("cq",13)) mult = expPow(mult.mul(10),n(0.99).pow((player.cq.challenges[13]+1)*3).mul(10000).floor().div(10000) ).div(10)	
@@ -79,6 +80,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasMilestone("esc",5)) eff = eff.mul(layers.esc.effect())
         
         if(hasUpgrade("a",35)) eff = eff.pow(1.025) 
+
         if(eff.gte("1e250000"))eff =expPow(eff.mul(10),0.75).div(10).mul("1e240000")        
         return eff
     },
@@ -144,6 +146,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 buyablePow = hasUpgThenAdd(buyablePow,this.layer,31)
                 if(hasMilestone("t",7))  eff = eff.mul(buyableEffect("t",11).add(1)) 
                 eff = eff.mul(buyableEffect("p",11).pow(buyablePow))
+if(inChallenge("cq",21))   eff = n(1)
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
@@ -405,7 +408,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked(){return hasUpgrade(this.layer,this.id-1)||isUnl(6)||inChallenge('p',14)},
         },
         61: {
-            description: "生命获取x10",
+            description: "多好的升级啊 生命获取x10",
             cost(){return new OmegaNum("1e34265")},
             unlocked(){return hasUpgrade("p",55)&&hasMilestone("esc",9)},
             },    
@@ -500,7 +503,7 @@ if((hasMilestone("esc",7)||hasMilestone("cq",19))&&player.points.gte("1e10000"))
         },
         14:{
             name: "C-4",
-            challengeDescription: "18.这次会重置更~~~~~多~~~~~东西,并且只能购买10个升级.(超出则无法完成挑战)19.什么阴间挑战(?)",
+            challengeDescription: "18.萌新噩梦 这次会重置更~~~~~多~~~~~东西,并且只能购买10个升级.(超出则无法完成挑战)19.什么阴间挑战(?)",
             rewardDescription:"升级35效果基于重置点被加成.",
             rewardEffect(){
                 var eff = player.p.points.add(1).log10().add(1).log10().div(16).add(1).pow(3)

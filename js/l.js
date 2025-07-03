@@ -115,7 +115,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 completionLimit: 110,
                 rewardEffect(){let eff=player.l.challenges[11]+1
                    if(hasMilestone("l",16))  eff=eff**eff
-                        
+                  if(hasAchievement("rw",27))  eff=eff^1.05
                         return eff
                 },
                 unlocked(){
@@ -577,6 +577,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         gain=gain.mul(buyableEffect("a",11))    
         gain=gain.mul(buyableEffect("l",11))  
         gain=gain.mul(buyableEffect("cq",11)) 
+  if(hasMilestone("t", 8)) gain=gain.add(n(10).pow(buyableEffect("t",11)))
         if(!hasMilestone("esc",8))gain=gain.min(0)   
         return gain.floor()
     },
@@ -591,5 +592,8 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasAchievement("rw",15)) gain=gain.div(1.5)
         return n(10).pow(gain.root(2).mul(7950)).max("1e7950")
 },
-  
+   passiveGeneration(){
+        if(player.cq.challenges[21] >= 1)return n(10).pow(player.cq.challenges[21]).div(1000)
+        return 0
+    },
 })

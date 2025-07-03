@@ -147,5 +147,8 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
             cost:n(0),
         },
     },
-
+  resetsNothing(){return hasAchievement("rw",32)},
+  
+    
+autoPrestige(){return hasAchievement("rw",31)},
 })

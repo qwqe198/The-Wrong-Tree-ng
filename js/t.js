@@ -94,13 +94,27 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription: "p层级升级14效果乘(x+1)，解锁一个新的试炼",
             done() { return buyableEffect("t",11).gte(7) }
         },
-       
+       8:{
+            requirementDescription: "8层",
+            effectDescription: "光速过8劝退 生命获取+1ex",
+            done() { return buyableEffect("t",11).gte(8) }
+        },
+       9:{
+            requirementDescription: "9层",
+            effectDescription: "声望加成效果^1.025",
+            done() { return buyableEffect("t",11).gte(9) }
+        },
+   10:{
+            requirementDescription: "10层",
+            effectDescription: "解锁通天币（咕咕咕）",
+            done() { return buyableEffect("t",11).gte(10) }
+        },
     },
    tabFormat: {
         主要: {
             buttonStyle() {return  {'color': 'lightblue'}},
             content:
-                ["main-display",
+                [
               
                 "prestige-button", "resource-display",
                  "buyables",

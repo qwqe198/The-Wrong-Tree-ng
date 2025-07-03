@@ -17,7 +17,7 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     effectDescription(){return `声望点获取^${format(this.effect())}.`},
     effect(){let eff= player.q.points.mul(hasUpgrade("q",12)?0.075:hasUpgrade("q",11)?0.06:0.05).add(1)
-               
+                if(hasMilestone("t", 9)) eff  =eff  .pow(1.025)
         return eff         
                 },
     exponent:5,
@@ -51,7 +51,7 @@ addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该�
       
     },
     resetsNothing(){return hasUpgrade("cq",33)},
-   
+    autoUpgrade(){return hasUpgrade("cq",53)},
     
 autoPrestige(){return hasAchievement("rw",22)},
     
