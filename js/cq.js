@@ -77,6 +77,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         eff = eff.mul(buyableEffect("cq",11))
         eff = eff.mul(tmp.cq.challenges[11].rewardEffect)
         if(hasMilestone("t",5))  eff = eff.mul(buyableEffect("t",11).add(1)) 
+  if(hasAchievement("rw",33)) eff=eff.pow(1.1)  
         return eff         
                 },
     exponent:1,
@@ -84,7 +85,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     baseResource:"劝退点",//基础资源名称
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
-      
+      if(hasMilestone("lcb",5))mult=mult.mul(n(2).pow(player.lcb.points.sub(4)).min(100).max(0))
         return mult
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -215,7 +216,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 let eff = n(0)
              
                 eff=eff.add(buyableEffect("cq",13))
-            
+               if(hasAchievement("rw",26))eff=eff.mul(1.1)
                 return eff
             },
             effectDisplay(){return ` ${format(this.effect())}`},

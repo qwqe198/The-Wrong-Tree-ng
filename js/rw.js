@@ -94,12 +94,17 @@ addLayer("rw", {
 33: {
             name: "醉翁亭记",
             done() { return player.cq.challenges[21] >= 1 },
-            tooltip: "完成1次简单试炼4，奖励：还没做",
+            tooltip: "完成1次简单试炼4，奖励：血量获取^1.1",
+        },
+34: {
+            name: "双倍战力",
+            done() { return player.lcb.points.gte(5) },
+            tooltip: "一次重置获得2战力，奖励：自动重置里程碑",
         },
     },
     tabFormat: [
         "blank", 
-        ["display-text", function() { return "成就: "+player.rw.achievements.length+"/"+(Object.keys(tmp.rw.achievements).length-2) }], 
+        ["display-text", function() { return "任务: "+player.rw.achievements.length+"/"+(Object.keys(tmp.rw.achievements).length-2) }], 
         "blank", "blank",
         "achievements",
     ],
