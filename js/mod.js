@@ -53,6 +53,7 @@ function getPointGen() {
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
 	if(hasMilestone("t",1)) gain = gain.mul(buyableEffect("t",11).add(1))
+	if(hasMilestone("t",10)&&inChallenge("cq",21)) gain = gain.mul(n(10).pow(buyableEffect("t",11).pow(3)))
 	if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
 	if(hasMilestone("lcb",1)) gain = gain.mul(n(1e10).pow(player.points.add(10).log(10).root(2).floor().min(100)))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)

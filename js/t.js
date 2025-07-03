@@ -4,6 +4,7 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
     startData() { return {
         unlocked: true, //是否开始就解锁
 		points: new ExpantaNum(0),
+coin:new ExpantaNum(0),
     }},
   
     layerShown(){return true},
@@ -14,7 +15,11 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
       
         return 0
     },
-   
+    effectDescription(){return `
+       
+         ${buyableEffect("t",11).gte(10)?`<br><br>通天币:${format(player.t.coin)}(${format(milestoneEffect('t',10))}/s),`:``}
+      
+        `},
   
        buyables:{
             11: {
@@ -106,7 +111,8 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
         },
    10:{
             requirementDescription: "10层",
-            effectDescription: "解锁通天币（咕咕咕）",
+            effectDescription: "强大，无须多言 在简单试炼4内点数获取x1e(x^3)",
+ 
             done() { return buyableEffect("t",11).gte(10) }
         },
     },
@@ -115,7 +121,7 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
             buttonStyle() {return  {'color': 'lightblue'}},
             content:
                 [
-              
+              "main-display",
                 "prestige-button", "resource-display",
                  "buyables",
                 "milestones",

@@ -194,6 +194,11 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription: "这真的只是一个qol 保留自动完成p层级挑战23",
             done() { return player.cq.points.gte(20) }
         },
+20:{
+            requirementDescription: "25战力",
+            effectDescription: "解锁副本，元性质获取^1.15但是移除点数奇点",
+            done() { return player.cq.points.gte(25) }
+        },
     },
     upgrades: {
       10000:{
