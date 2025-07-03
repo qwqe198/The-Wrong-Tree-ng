@@ -49,7 +49,7 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
-            cost:n(1),
+            cost:n(2),
                        unlocked(){return true},
            
         },
