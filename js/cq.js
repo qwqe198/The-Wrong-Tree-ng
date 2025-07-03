@@ -503,6 +503,15 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyDisplayName: "血量",
             currencyInternalName: "hp",
             currencyLayer: "cq"
+        },  
+     61: {
+            description: "1e6固伤 在简单试炼3中,解锁声望点，但是声望点和b^0.1  .",
+            cost(){return n(1e6)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",55)},
+
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
         },      
     },
     challenges: {
