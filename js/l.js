@@ -63,7 +63,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n("1e20").mul(n(10).pow(x)).mul(n(2).pow(x.pow(2)))
-              
+               
                 return c
             },
             display() { return `生命获取<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -577,6 +577,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         gain=gain.mul(buyableEffect("a",11))    
         gain=gain.mul(buyableEffect("l",11))  
         gain=gain.mul(buyableEffect("cq",11)) 
+gain=gain.mul(layers.a1.effect())
   if(hasMilestone("t", 8)) gain=gain.add(n(10).pow(buyableEffect("t",11)))
         if(!hasMilestone("esc",8))gain=gain.min(0)   
         return gain.floor()

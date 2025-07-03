@@ -101,6 +101,21 @@ addLayer("rw", {
             done() { return player.lcb.points.gte(5) },
             tooltip: "一次重置获得2战力，奖励：自动重置里程碑",
         },
+35: {
+            name: "竟然还有副本",
+            done() { return player.cq.points.gte(25) },
+            tooltip: "解锁副本，奖励：解锁一个新层级",
+        },
+36: {
+            name: "捉虫虫",
+            done() { return player.a1.points.gte(1) },
+            tooltip: "击杀1只变形虫，奖励：提升血量购买价格^0.9",
+        },
+37: {
+            name: "虫虫捉点数",
+            done() { return hasUpgrade("a1",12) },
+            tooltip: "获得A层级升级12，奖励：购买升级数量提升上一个升级效果(^x)",
+        },
     },
     tabFormat: [
         "blank", 

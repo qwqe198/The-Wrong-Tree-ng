@@ -77,6 +77,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         eff = eff.mul(buyableEffect("cq",11))
         eff = eff.mul(tmp.cq.challenges[11].rewardEffect)
         if(hasMilestone("t",5))  eff = eff.mul(buyableEffect("t",11).add(1)) 
+  eff = eff.mul(layers.a1.effect())
   if(hasAchievement("rw",33)) eff=eff.pow(1.1)  
         return eff         
                 },
@@ -468,7 +469,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },    
          52: {
-            description: "1777/77/7  保留自动购买a层级升级.",
+            description: "1777/77/7  保留自动购买pp层级升级.",
             cost(){return battle(1777,77,7)}, //!!剩下你看着改
             unlocked(){return hasUpgrade("cq",51)},
 
@@ -666,7 +667,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             11: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
                     var c = n("1e50").mul(n(10000).pow(x)).mul(n(5).pow(x.pow(2)))
-                  
+                                  if(hasAchievement("rw",36)) c = c.pow(0.9)
                     return c
                 },
                 display() { return `血量和生命获取<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },

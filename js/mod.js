@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.16",
+	num: "1.2",
 	name: "",
 }
 
@@ -50,6 +50,8 @@ function getPointGen() {
  if(hasAchievement("rw",21)) gain=gain.mul(2)
 	if(hasUpgrade("cq",13)) gain = gain.mul(upgradeEffect("cq",13))
 	if(hasUpgrade("cq",14)) gain = gain.mul(upgradeEffect("cq",14))
+	if(hasUpgrade("a1",11)) gain = gain.mul(upgradeEffect("a1",11))
+	if(hasUpgrade("a1",12)) gain = gain.pow(upgradeEffect("a1",12))
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
 	if(hasMilestone("t",1)) gain = gain.mul(buyableEffect("t",11).add(1))
@@ -76,7 +78,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局20战力`},
+	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局 完成3行任务`},
 	function(){ if(hasMilestone("esc",6))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
