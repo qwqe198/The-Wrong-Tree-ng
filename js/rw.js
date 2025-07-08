@@ -116,6 +116,31 @@ addLayer("rw", {
             done() { return hasUpgrade("a1",12) },
             tooltip: "获得A层级升级12，奖励：购买升级数量提升上一个升级效果(^x)",
         },
+41: {
+            name: "更多虫虫",
+            done() { return hasUpgrade("a1",13) },
+            tooltip: "获得A层级升级13，奖励：变形虫x1.2",
+        },
+42: {
+            name: "虫虫自增",
+            done() { return hasUpgrade("a1",14) },
+            tooltip: "获得A层级升级14，奖励：保留自动购买p层级升级",
+        },
+43: {
+            name: "虫虫购买",
+            done() { return hasUpgrade("a1",15) },
+            tooltip: "获得A层级升级15，奖励：自动购买esc层级升级",
+        },
+44: {
+            name: "点数上限",
+            done() { return player.points.gte("1e50000") },
+            tooltip: "获得1e50000点数，奖励：提示 点数获取好像遇到硬上限了，你要进入第2个副本才能提高",
+        },
+45: {
+            name: "劝退超限",
+            done() { return hasMilestone("esc",11) },
+            tooltip: "获得11劝退点，奖励：自动购买L层级可购买11",
+        },
     },
     tabFormat: [
         "blank", 

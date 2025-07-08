@@ -1,4 +1,4 @@
-var escReq = [1e6,1e18,1e200,'e1000','e2750','e6000','e4350','e7625','e19590','e47137','e999999']
+var escReq = [1e6,1e18,1e200,'e1000','e2750','e6000','e4350','e7625','e19590','e47137','e50000','e999999']
 function isUnl(escPointsRequired){
     return player.esc.points.gte(escPointsRequired)
 }
@@ -102,6 +102,11 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
             effectDescription: "解锁新层级.",
             done() { return isUnl(10) }
         },     
+        11:{
+            requirementDescription: "11劝退点",
+            effectDescription: "在重置中保留劝退里程碑，效果触发改为当前劝退点，解锁秘境，A层级升级15效果x2（咕咕咕）.",
+            done() { return isUnl(11) }
+        },     
     },
     upgrades:{
         11:{
@@ -149,6 +154,6 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
     },
   resetsNothing(){return hasAchievement("rw",32)},
   
-    
+      autoUpgrade(){return hasAchievement("rw",43)},
 autoPrestige(){return hasAchievement("rw",31)},
 })

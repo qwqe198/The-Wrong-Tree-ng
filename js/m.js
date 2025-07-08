@@ -61,7 +61,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
        if(hasMilestone("l",21))  gain=gain.pow(1.05)
        gain=gain.pow(buyableEffect('m',14))
        if(hasChallenge("p",23)) gain = gain.pow(challengeEffect("p",23)) 
-       gain = gain.pow((challengeEffect("m",11)+1)**0.01) 
+       gain = gain.pow((hasMilestone("cq",20)?1:challengeEffect("m",11)+1)**0.01) 
 if(hasMilestone("cq",20))gain=gain.pow(1.15)  
        if(gain.gte(1e10)) gain=expPow(gain.mul(10),0.8).add(9.99e9)	
        if(gain.gte("1e7500")&&!hasMilestone("l",36)) gain=expPow(gain.mul(10),0.8).add("1e7500")

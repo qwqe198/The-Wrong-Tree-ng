@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.2",
+	num: "1.21",
 	name: "",
 }
 
@@ -78,7 +78,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `所有在本游戏中显示的劝退方法都不是很强,以保证这玩意能玩,但不要以为这些坑不怎么劝退.残局 完成3行任务`},
+	function(){return `残局 11劝退点`},
 	function(){ if(hasMilestone("esc",6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
@@ -95,7 +95,7 @@ function isEndgame() {
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
 	
-		return n(hasAchievement("rw",11)?1e308:3600)
+		return n(hasAchievement("rw",11)?99999999999999:3600)
 	
 }
 

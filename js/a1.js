@@ -16,7 +16,7 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
         return 0
     },
 
-    effectDescription(){return `副本1:变形虫：来自转生链的弱小怪物，但是一群变形虫是很难缠的，击杀它的难度与同时击杀的数量10次方成正比<br>
+    effectDescription(){return `副本1:变形虫（推荐战力:25）：来自转生链的弱小怪物，但是一群变形虫是很难缠的，击杀它的难度与同时击杀的数量10次方成正比<br>
 生命和血量获取x${format(this.effect())}.`},
     effect(){let eff= player.a1.points.add(1).pow(0.5)
 
@@ -27,7 +27,9 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
     baseResource:"血量",//基础资源名称
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
-      
+              if(hasUpgrade("a1",13)) mult = mult.mul(upgradeEffect("a1",13))
+              if(hasUpgrade("a1",14)) mult = mult.mul(upgradeEffect("a1",14))
+     if(hasAchievement("rw",41)) mult = mult.mul(1.2)
         return mult
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -65,6 +67,37 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked(){return true},
            
         },
-      },
+        13: {
+            description: "每个变形虫升级使变形虫x1.2.",
+ effect(){
+                var eff = n(1.2).pow(player.a1.upgrades.length)
+
+                return eff
+            },
+            effectDisplay(){return `x ${format(this.effect())}`},
+             cost:n(100),
+            unlocked(){return true},
+           
+        },
+        14: {
+            description: "变形虫加成自身.",
+ effect(){
+                var eff = player.a1.points.add(10).log10()
+
+                return eff
+            },
+            effectDisplay(){return `x ${format(this.effect())}`},
+             cost:n(300),
+            unlocked(){return true},
+           
+        },
+ 15: {
+            description: "解锁0.5个变形虫可购买.",
+ 
+             cost:n(1000),
+            unlocked(){return true},
+           
+        },
+   },
     },
 )

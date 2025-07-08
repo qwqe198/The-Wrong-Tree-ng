@@ -77,8 +77,11 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
         eff = eff.mul(buyableEffect("cq",11))
         eff = eff.mul(tmp.cq.challenges[11].rewardEffect)
         if(hasMilestone("t",5))  eff = eff.mul(buyableEffect("t",11).add(1)) 
+     if(hasMilestone("cq",21))  eff = eff.mul(player.a1.points.add(10).log10()) 
   eff = eff.mul(layers.a1.effect())
+if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
   if(hasAchievement("rw",33)) eff=eff.pow(1.1)  
+
         return eff         
                 },
     exponent:1,
@@ -200,6 +203,11 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription: "解锁副本，元性质获取^1.15但是移除点数奇点",
             done() { return player.cq.points.gte(25) }
         },
+21:{
+            requirementDescription: "30战力",
+            effectDescription()  { return   "变形虫加成血量获取,当前:x"+ format(player.a1.points.add(10).log10())},
+            done() { return player.cq.points.gte(30) }
+        },
     },
     upgrades: {
       10000:{
@@ -213,7 +221,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             effectDisplay(){return ` ${format(this.effect())}`},
-            cost() { return new OmegaNum (15) },
+            cost() { return new OmegaNum ("1eeeeeeeeeeeeeee10") },
          
         },
         10001:{
@@ -228,7 +236,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDisplay(){return ` ${format(this.effect())}`},
             unlocked(){return false},
         
-            cost() { return new OmegaNum (15)}
+            cost() { return new OmegaNum ("1eeeeeeeeeeeeeeee10")},
         },
         11: {
             description: "10/3/0  点数获取x3.",
@@ -505,18 +513,46 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },  
      61: {
-            description: "1e6固伤 在简单试炼3中,解锁声望点，但是声望点和b^0.1  .",
-            cost(){return n(1e6)}, //!!剩下你看着改
+            description: "3e5固伤 在简单试炼3中,解锁声望点，但是声望点和b^0.1  .",
+            cost(){return n(3e5)}, //!!剩下你看着改
             unlocked(){return hasUpgrade("cq",55)},
 
             currencyDisplayName: "血量",
             currencyInternalName: "hp",
             currencyLayer: "cq"
-        },      
+        },   
+        62: {
+            description: "7777/111/11  血量基于它本身增加.",
+            cost(){return battle(7777,111,11)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",61)},
+ effect(){
+                var eff =  player.cq.hp.add(10).log10()
+
+                return eff
+            },  
+            effectDisplay(){return `x ${format(this.effect())}`},
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },  
+     63: {
+            description: "9999/133/13  生命基于它本身增加.",
+            cost(){return battle(9999,133,13)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",62)},
+ effect(){
+                var eff =  player.l.points.add(10).log10()
+
+                return eff
+            },  
+            effectDisplay(){return `x ${format(this.effect())}`},
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },  
     },
     challenges: {
         11: {
-                name: "简单试炼1",
+                name: "简单试炼1（首次推荐战力：3）",
                 challengeDescription(){
 
                     let a ="劝退点效果变为原来的" 
@@ -554,7 +590,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                
         },
            12: {
-            name: "简单试炼2",
+            name: "简单试炼2（首次推荐战力：5）",
             challengeDescription(){
 
                 let a ="p层级购买项11效果/" 
@@ -592,7 +628,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
            
     },// inChallenge("l", 11)
            13: {
-            name: "简单试炼3",
+            name: "简单试炼3（首次推荐战力：10）",
             challengeDescription(){
 
                 let a ="你被困在" 
@@ -630,7 +666,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
            
     },// inChallenge("l", 11)
            21: {
-            name: "简单试炼4",
+            name: "简单试炼4（首次推荐战力：20）",
             challengeDescription(){
 
                 let a ="酒醉般的平衡，点数获取开" 
