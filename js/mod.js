@@ -72,7 +72,7 @@ if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")
 	//加强疫苗 
 if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)
-	if(hasMilestone("esc",12)&&hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11).add(10).log10().pow(1.25)
+	if(hasMilestone("esc",12)&&hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11).add(10).log10().pow(1.25))
 if(hasMilestone("t",11)) gain = gain.mul(n(1.05).pow(buyableEffect("t",11)))
 //上限
 if(gain.gte("1e50000")) gain=gain.min("1e50000")
