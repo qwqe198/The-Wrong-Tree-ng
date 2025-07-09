@@ -40,7 +40,9 @@ if(eff.gte(100))eff=eff.pow(0.5).mul(10)
     },
     layerShown(){return hasMilestone("cq",20)},
     row: 100, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
-   
+    doReset(resettingLayer){
+       player.cq.hp=n(0)
+    },
 onPrestige(resettingLayer){       player.cq.hp=n(0)
     },
    buyables:{
