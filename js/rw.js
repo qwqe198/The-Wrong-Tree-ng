@@ -146,15 +146,15 @@ addLayer("rw", {
             done() { return player.i.points.gte(1) },
             tooltip: "获得1增量点，奖励：增量点获取基于自身增加",
         },
-47: {
+51: {
             name: "病毒树残局？",
             done() { return player.points.gte("1.1981e7")&&inChallenge("t",11) },
-            tooltip: "在加强疫苗中获得1.1981e7点数，奖励：简单试炼3真简单 重置时保留L层级购买",
+            tooltip: "在加强疫苗中获得1.1981e7点数，奖励：防御对通天塔怪物生效",
         },
-51: {
-            name: "1e8",
+47: {
+            name: "1e6",
             done() { return player.points.gte("1e8")&&inChallenge("t",11) },
-            tooltip: "在加强疫苗中获得1e8点数，奖励：防御对通天塔中怪物生效",
+            tooltip: "在加强疫苗中获得1e6点数，奖励：简单试炼3真简单 重置时保留L层级购买",
         },
 52: {
             name: "哦不，软上限",
