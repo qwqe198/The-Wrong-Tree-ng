@@ -24,7 +24,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
         var exp = new ExpantaNum(1)
         return exp
     },
-    layerShown(){return true},
+    layerShown(){return inChallenge("t",11)},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
    buyables:{
             11: {
