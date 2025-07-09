@@ -223,7 +223,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
 
     getResetGain(){
         var gain = player.points.log10().sub(3)
-if(player.points.lt(1e5))gain=n(0)
+if(player.points.lt(1e4))gain=n(0)
 //基础
  gain = gain.pow(buyableEffect('i',13))
 //乘数
