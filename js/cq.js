@@ -208,6 +208,11 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
             effectDescription()  { return   "变形虫加成血量获取,当前:x"+ format(player.a1.points.add(10).log10())},
             done() { return player.cq.points.gte(30) }
         },
+22:{
+            requirementDescription: "50战力",
+            effectDescription()  { return   "血量加成变形虫获取,当前:x"+ format(player.cq.hp.pow(0.02))},
+            done() { return player.cq.points.gte(50) }
+        },
     },
     upgrades: {
       10000:{
@@ -673,9 +678,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
                 let e = (3**(player.cq.challenges[21]+1))   
                 let f ="次根，p层级升级14失效,重置点获取^" 
        let g =(2**(player.cq.challenges[21]+1))
+     let i = player.cq.challenges[21]>=1?" b强制为1,强制触发劝退6效果1" :""
      let h =" 奖励：每秒自动获取(1e-3*10^x)%生命" 
      
-                    return a+e+f+g+h},
+                    return a+e+f+g+i+h},
             goalDescription(){
                     return "4劝退点"
             },

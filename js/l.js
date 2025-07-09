@@ -551,7 +551,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
     
 update(diff){
 
-        if(hasAchievement("rw",45)&&player.l.points.sub(1).gte(n(1e20).mul(10).pow(getBuyableAmount("l",11)).mul(n(2).pow(getBuyableAmount("l",11).pow(2)))))setBuyableAmount('l',11,getBuyableAmount('l',11).add(1))
+        if(hasAchievement("rw",45)&&player.l.points.sub(1).gte(n(1e20).mul(n(10).pow(getBuyableAmount("l",11))).mul(n(2).pow(getBuyableAmount("l",11).pow(2)))))setBuyableAmount('l',11,getBuyableAmount('l',11).add(1))
      
       
     },

@@ -68,11 +68,12 @@ if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(inChallenge("m",11)) gain = expPow(gain.mul(10),0.125).div(10)	
 	if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
 	if(inChallenge("cq",13)) gain = expPow(gain.mul(10),n(0.99).pow((player.cq.challenges[13]+1)*3).mul(10000).floor().div(10000) ).div(10)	
-	if(player.esc.points.gte(6)) gain = expPow(gain.mul(10),0.8).div(10)	
+	if(player.esc.points.gte(6)||(inChallenge("cq",21)&&player.cq.challenges[21]>=1)) gain = expPow(gain.mul(10),0.8).div(10)	
 	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")
 	//加强疫苗 
 if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)
 	if(hasMilestone("esc",12)&&hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11).add(10).log10())
+if(hasMilestone("t",11)) gain = gain.mul(n(1.05).pow(buyableEffect("t",11)))
 //上限
 if(gain.gte("1e50000")) gain=gain.min("1e50000")
 	return gain
@@ -84,7 +85,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局 在加强疫苗中获得1.1981e7点数`},
+	function(){return `残局 完成32任务`},
 	function(){ if(player.esc.points.gte(6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	

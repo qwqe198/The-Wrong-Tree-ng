@@ -149,7 +149,27 @@ addLayer("rw", {
 47: {
             name: "病毒树残局？",
             done() { return player.points.gte("1.1981e7")&&inChallenge("t",11) },
-            tooltip: "在加强疫苗中获得1.1981e7点数，奖励：重置时保留L层级购买",
+            tooltip: "在加强疫苗中获得1.1981e7点数，奖励：简单试炼3真简单 重置时保留L层级购买",
+        },
+51: {
+            name: "1e8",
+            done() { return player.points.gte("1e8")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1e8点数，奖励：防御对通天塔中怪物生效",
+        },
+52: {
+            name: "哦不，软上限",
+            done() { return upgradeEffect("a1",11).gte(1e100) },
+            tooltip: "A层级升级11效果到1e100，奖励：效果超过1e100的部分指数^0.5",
+        },
+53: {
+            name: "这个好像太没用了",
+            done() { return getBuyableAmount("a1", 11).gte(5) },
+            tooltip: "买5次A层级购买11，奖励：该购买效果对增量获取生效",
+        },
+54: {
+            name: "更多增量",
+            done() { return player.i.points.gte(5e22) },
+            tooltip: "获得5e22增量，奖励：解锁简单试炼5（还没做）",
         },
     },
     tabFormat: [

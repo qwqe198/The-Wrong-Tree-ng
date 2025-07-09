@@ -26,6 +26,7 @@ coin:new ExpantaNum(0),
                 cost(x = getBuyableAmount(this.layer, this.id)) {
                     var c = n("1000").mul(n(3).pow(x)).mul(n(1.1).pow(x.pow(2)))
                         c=c.div(player.cq.atk)
+if(hasAchievement("rw",51))c=c.div(player.cq.def)
                     return c
                 },
                 display() { return `需要:${format(this.cost(getBuyableAmount(this.layer, this.id)))}血量<br>层数:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -46,7 +47,7 @@ coin:new ExpantaNum(0),
             },
         },
     exponent:1,
-    baseAmount(){return player.points},//基础资源数量
+    baseAmount(){return player.cq.hp},//基础资源数量
     baseResource:"血量",//基础资源名称
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
@@ -66,7 +67,7 @@ coin:new ExpantaNum(0),
                 challengeDescription(){
 
 
-                        let a = "点数获取log10后/9，进入时进行战力重置" 
+                        let a = "（推荐战力:30)点数获取log10后/9，进入时进行战力重置,退出时重置增量" 
                       
                         return a 
                 },
@@ -87,6 +88,11 @@ coin:new ExpantaNum(0),
                           onEnter(){
              
  doReset("t")
+              
+            },
+          onExit(){
+             
+ player.i.points=n(0)
               
             },
               
@@ -149,6 +155,12 @@ coin:new ExpantaNum(0),
  
             done() { return buyableEffect("t",11).gte(10) }
         },
+ 11:{
+            requirementDescription: "12层",
+            effectDescription: "无瑕点数获取x(1.05^x)",
+ 
+            done() { return buyableEffect("t",11).gte(12) }
+        },
     },
    tabFormat: {
         主要: {
@@ -166,7 +178,11 @@ coin:new ExpantaNum(0),
    
     },
    
-
+    getResetGain(){
+        var gain = n(1)
+  	
+        return gain
+    },
 update(diff){
 player.t.points=buyableEffect("t",11)
 

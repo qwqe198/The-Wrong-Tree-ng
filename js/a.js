@@ -37,6 +37,8 @@ addLayer("a", {
         if(hasMilestone("l",29)) eff = eff.mul(n(1.005).pow(player.l.points.add(1).log10().min(50)))
         if(hasAchievement("rw",13)) eff = eff.mul(1.005) 
   if(hasUpgrade("cq",61)&&inChallenge("cq",13))  eff = eff.pow(0.1)
+if(inChallenge("cq",21)&&player.cq.challenges[21]>=1)  eff = n(1)
+
         return eff
     },
     effectDescription(){return `43.容易混淆的图标.b -> <text style = "color:green">${format(layers.a.effect(),2)}</text>`},
