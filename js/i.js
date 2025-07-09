@@ -5,7 +5,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
         unlocked: true, //是否开始就解锁
 		points: new ExpantaNum(0),
     }},
-    requires(){return new ExpantaNum(1e5)},
+    requires(){return new ExpantaNum(1e4)},
     color: "#4B4C83",
     resource: "增量", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -202,7 +202,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                         content: [
                                 "main-display",
                                 ["display-text", function(){
-                                        return "增量基础获得量的公式是 log10(点数)-4, 低于1e5点数时为零，"
+                                        return "增量基础获得量的公式是 log10(点数)-3, 低于1e4点数时为零，"
                                 }],
                                 ["display-text", function(){
                                         return "这一数字受提高增量基础获得量的升级的影响，效果为累乘，"
@@ -222,7 +222,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
         },
 
     getResetGain(){
-        var gain = player.points.log10().sub(4)
+        var gain = player.points.log10().sub(3)
 if(player.points.lt(1e5))gain=n(0)
 //基础
  gain = gain.pow(buyableEffect('i',13))
