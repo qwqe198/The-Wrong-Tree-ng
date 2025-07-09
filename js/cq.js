@@ -678,10 +678,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
                 let e = (3**(player.cq.challenges[21]+1))   
                 let f ="次根，p层级升级14失效,重置点获取^" 
        let g =(2**(player.cq.challenges[21]+1))
-     let i = player.cq.challenges[21]>=1?" b强制为1,强制触发劝退6效果1" :""
+    
      let h =" 奖励：每秒自动获取(1e-3*10^x)%生命" 
      
-                    return a+e+f+g+i+h},
+                    return a+e+f+g+h},
             goalDescription(){
                     return "4劝退点"
             },
@@ -795,7 +795,8 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
          player.cq.hp = player.cq.hp.add(layers.cq.effect().mul(diff))
          player.cq.atk = upgradeEffect("cq",10000)
          player.cq.def =upgradeEffect("cq",10001)
-
+if(player.cq.challenges[13]>=3)player.cq.challenges[13]=3
+if(player.cq.challenges[21]>=2)player.cq.challenges[21]=2//下版本删
          if(hasUpgrade("cq",32)&&player.a.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
           
 

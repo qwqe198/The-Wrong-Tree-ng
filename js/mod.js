@@ -68,7 +68,7 @@ if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(inChallenge("m",11)) gain = expPow(gain.mul(10),0.125).div(10)	
 	if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
 	if(inChallenge("cq",13)) gain = expPow(gain.mul(10),n(0.99).pow((player.cq.challenges[13]+1)*3).mul(10000).floor().div(10000) ).div(10)	
-	if(player.esc.points.gte(6)||(inChallenge("cq",21)&&player.cq.challenges[21]>=1)) gain = expPow(gain.mul(10),0.8).div(10)	
+	if(player.esc.points.gte(6)) gain = expPow(gain.mul(10),0.8).div(10)	
 	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")
 	//加强疫苗 
 if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)

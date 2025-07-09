@@ -67,7 +67,7 @@ if(hasMilestone("cq",20))gain=gain.pow(1.15)
        if(gain.gte("1e7500")&&!hasMilestone("l",36)) gain=expPow(gain.mul(10),0.8).add("1e7500")
        if(gain.gte("1e7500")&&hasMilestone("l",36)) gain=expPow(gain.mul(10),0.8).mul("1e7500")
        if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
-        if(!hasMilestone("esc",7))gain=gain.min(0)  
+        if(!player.esc.points.gte(7))gain=gain.min(0)  
        return gain.floor()
     },
     update(diff){

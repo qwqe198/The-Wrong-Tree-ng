@@ -37,7 +37,7 @@ addLayer("a", {
         if(hasMilestone("l",29)) eff = eff.mul(n(1.005).pow(player.l.points.add(1).log10().min(50)))
         if(hasAchievement("rw",13)) eff = eff.mul(1.005) 
   if(hasUpgrade("cq",61)&&inChallenge("cq",13))  eff = eff.pow(0.1)
-if(inChallenge("cq",21)&&player.cq.challenges[21]>=1)  eff = n(1)
+
 
         return eff
     },
@@ -431,7 +431,7 @@ if(hasMilestone("lcb",4)&&player.a.points.gte("1e30000")) gain = gain.pow(2);}
         if(gain.gte("1e22500")) gain=expPow(expPow(gain,0.75),0.75).mul("1e22500")	 
       if(gain.gte("1e25000")) gain=gain.log10().sub(15000).pow(6250)	    
         if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
-        if(!(hasMilestone("esc",6)||(hasUpgrade("cq",61)&&inChallenge("cq",13))))gain=gain.min(0)    	
+        if(!(player.esc.points.gte(6)||(hasUpgrade("cq",61)&&inChallenge("cq",13))))gain=gain.min(0)    	
         return gain.floor()
     },
     prestigeButtonText(){
