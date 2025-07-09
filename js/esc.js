@@ -112,7 +112,7 @@ if(inChallenge("esc",11)) return n(Infinity)
         },  
            12:{
             requirementDescription: "在加强疫苗中获得1劝退点",
-            effectDescription()  {return "I层级升级11加成无瑕（加强疫苗效果后）点数获取,当前:x"+ format( upgradeEffect("i",11).add(10).log10())},
+            effectDescription()  {return "I层级升级11加成无瑕（加强疫苗效果后）点数获取,当前:x"+ format( upgradeEffect("i",11).add(10).log10().pow(1.25)},
             done() { return isUnl(1)&&inChallenge("t",11) },
             unlocked(){return inChallenge("t",11)},
         },     
