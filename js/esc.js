@@ -17,7 +17,9 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
     resource: "劝退点", // 重置获得的资源名称
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires(){
+if(inChallenge("esc",11)) return n(Infinity)
         if(escReq[player.esc.points.toNumber()]) return n(escReq[player.esc.points.toNumber()])
+
         return n(Infinity)
     },
     base:1,
@@ -50,6 +52,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
             unlocked(){return hasUpgrade(this.layer,this.id-1)},
         },
     }, */
+  
    
     milestones:{
         1:{
@@ -104,8 +107,14 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         },     
         11:{
             requirementDescription: "11劝退点",
-            effectDescription: "在重置中保留劝退里程碑，效果触发改为当前劝退点，解锁秘境，A层级升级15效果x2（咕咕咕）.",
+            effectDescription: "在重置中保留劝退里程碑和升级，效果触发改为当前劝退点，解锁秘境（在塔中），A层级升级15效果x2.",
             done() { return isUnl(11) }
+        },  
+           12:{
+            requirementDescription: "在加强疫苗中获得1劝退点",
+            effectDescription()  {return "I层级升级11加成无瑕（加强疫苗效果后）点数获取,当前:x"+ format( upgradeEffect("i",11).add(10).log10())},
+            done() { return isUnl(1)&&inChallenge("t",11) },
+            unlocked(){return inChallenge("t",11)},
         },     
     },
     upgrades:{
@@ -156,4 +165,15 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
   
       autoUpgrade(){return hasAchievement("rw",43)},
 autoPrestige(){return hasAchievement("rw",31)},
+   doReset(resettingLayer){
+        if(layers[resettingLayer].row > layers[this.layer].row){
+            let kept = ["unlocked","auto"]
+            if( hasAchievement("rw",45) ){
+                kept.push("milestones")
+                kept.push(" upgrades")
+ 
+            }
+            layerDataReset(this.layer,kept)
+        }
+    },
 })

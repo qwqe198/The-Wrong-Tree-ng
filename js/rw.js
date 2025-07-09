@@ -134,12 +134,22 @@ addLayer("rw", {
 44: {
             name: "点数上限",
             done() { return player.points.gte("1e50000") },
-            tooltip: "获得1e50000点数，奖励：提示 点数获取好像遇到硬上限了，你要进入第2个副本才能提高",
+            tooltip: "获得1e50000点数，奖励：变形虫只重置血量 提示 点数获取好像遇到硬上限了，你要进入第2个副本才能提高",
         },
 45: {
             name: "劝退超限",
             done() { return hasMilestone("esc",11) },
             tooltip: "获得11劝退点，奖励：自动购买L层级可购买11",
+        },
+46: {
+            name: "增量开始",
+            done() { return player.i.points.gte(1) },
+            tooltip: "获得1增量点，奖励：增量点获取基于自身增加",
+        },
+47: {
+            name: "病毒树残局？",
+            done() { return player.points.gte("1.1981e7")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1.1981e7点数，奖励：重置时保留L层级购买",
         },
     },
     tabFormat: [

@@ -603,4 +603,15 @@ gain=gain.mul(layers.a1.effect())
         if(player.cq.challenges[21] >= 1)return n(10).pow(player.cq.challenges[21]).div(100000)
         return 0
     },
+   doReset(resettingLayer){
+        if(layers[resettingLayer].row > layers[this.layer].row){
+            let kept = ["unlocked","auto"]
+            if( hasAchievement("rw",47) ){
+                kept.push("buyables")
+             
+ 
+            }
+            layerDataReset(this.layer,kept)
+        }
+    },
 })

@@ -10,17 +10,17 @@ coin:new ExpantaNum(0),
     layerShown(){return true},
     color: "yellow",
     resource: "层", // 重置获得的资源名称
-    type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     passiveGeneration(){
       
         return 0
     },
     effectDescription(){return `
        
-         ${buyableEffect("t",11).gte(10)?`<br><br>通天币:${format(player.t.coin)}(${format(milestoneEffect('t',10))}/s),`:``}
+      
       
         `},
-  
+  requires(){return new ExpantaNum(1)},
        buyables:{
             11: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -46,7 +46,7 @@ coin:new ExpantaNum(0),
             },
         },
     exponent:1,
-    baseAmount(){return player.cq.hp},//基础资源数量
+    baseAmount(){return player.points},//基础资源数量
     baseResource:"血量",//基础资源名称
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
@@ -60,7 +60,41 @@ coin:new ExpantaNum(0),
     },
     layerShown(){return hasMilestone("cq",4)},
     row: 100, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+    challenges: {
+        11: {
+                name: "秘境1 加强疫苗",
+                challengeDescription(){
 
+
+                        let a = "点数获取log10后/9，进入时进行战力重置" 
+                      
+                        return a 
+                },
+                goalDescription(){
+                        return "1F1e308点数"
+                },
+           
+                goal: () => "eeeeeeeeeeeeeee10",
+                canComplete: () => player.points.gte(tmp.t.challenges[11].goal),
+                rewardDescription(){
+                       
+                       
+
+                        let c = "<br>你完成了" 
+                        c += formatWhole(player.t.challenges[11]) + "/1次"
+                        return   c
+                },
+                          onEnter(){
+             
+ doReset("t")
+              
+            },
+              
+                unlocked(){
+                        return hasMilestone("esc", 11) 
+                },
+               
+        },}, // inChallenge("l", 11)
     milestones:{
 
       
@@ -111,7 +145,7 @@ coin:new ExpantaNum(0),
         },
    10:{
             requirementDescription: "10层",
-            effectDescription: "强大，无须多言 在简单试炼4内点数获取x1e(x^3)",
+            effectDescription: "强大，无须多言 在简单试炼4内点数获取x1e(x^3.14)",
  
             done() { return buyableEffect("t",11).gte(10) }
         },
@@ -122,19 +156,19 @@ coin:new ExpantaNum(0),
             content:
                 [
               "main-display",
-                "prestige-button", "resource-display",
+            "resource-display",
                  "buyables",
                 "milestones",
-
+  "challenges",
                 ],},
      
    
    
     },
    
-resetsNothing: true,
-update(diff){
 
+update(diff){
+player.t.points=buyableEffect("t",11)
 
   
      

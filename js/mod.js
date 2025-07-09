@@ -49,13 +49,14 @@ function getPointGen() {
 	if(hasUpgrade("cq",42)) gain = gain.mul(upgradeEffect("cq",42))
  if(hasAchievement("rw",21)) gain=gain.mul(2)
 	if(hasUpgrade("cq",13)) gain = gain.mul(upgradeEffect("cq",13))
+if(hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11))
 	if(hasUpgrade("cq",14)) gain = gain.mul(upgradeEffect("cq",14))
 	if(hasUpgrade("a1",11)) gain = gain.mul(upgradeEffect("a1",11))
 	if(hasUpgrade("a1",12)) gain = gain.pow(upgradeEffect("a1",12))
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
 	if(hasMilestone("t",1)) gain = gain.mul(buyableEffect("t",11).add(1))
-	if(hasMilestone("t",10)&&inChallenge("cq",21)) gain = gain.mul(n(10).pow(buyableEffect("t",11).pow(3)))
+	if(hasMilestone("t",10)&&inChallenge("cq",21)) gain = gain.mul(n(10).pow(buyableEffect("t",11).pow(3.14)))
 	if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
 	if(hasMilestone("lcb",1)) gain = gain.mul(n(1e10).pow(player.points.add(10).log(10).root(2).floor().min(100)))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
@@ -67,9 +68,14 @@ if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(inChallenge("m",11)) gain = expPow(gain.mul(10),0.125).div(10)	
 	if(inChallenge("l",11)) gain = expPow(gain.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
 	if(inChallenge("cq",13)) gain = expPow(gain.mul(10),n(0.99).pow((player.cq.challenges[13]+1)*3).mul(10000).floor().div(10000) ).div(10)	
-	if(hasMilestone("esc",6)) gain = expPow(gain.mul(10),0.8).div(10)	
-	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")	
-	return gain.min("1e50000")
+	if(player.esc.points.gte(6)) gain = expPow(gain.mul(10),0.8).div(10)	
+	if(gain.gte("1e15000")) gain=expPow(gain.mul(10),0.8).mul("1e14000")
+	//加强疫苗 
+if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)
+	if(hasMilestone("esc",12)&&hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11).add(10).log10())
+//上限
+if(gain.gte("1e50000")) gain=gain.min("1e50000")
+	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
@@ -78,8 +84,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局 11劝退点`},
-	function(){ if(hasMilestone("esc",6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
+	function(){return `残局 在加强疫苗中获得1.1981e7点数`},
+	function(){ if(player.esc.points.gte(6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	
 

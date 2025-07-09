@@ -45,7 +45,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(player.q.points.gte(1)&&hasMilestone("l",22)&&inChallenge("l",11)) mult = mult.pow(layers.q.effect())        
         if(inChallenge("l",11)) mult = expPow(mult.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
 	if(inChallenge("cq",13)) mult = expPow(mult.mul(10),n(0.99).pow((player.cq.challenges[13]+1)*3).mul(10000).floor().div(10000) ).div(10)	
-        if(hasMilestone("esc",7)) mult = expPow(mult.mul(10),0.8).div(10)	
+        if(player.esc.points.gte(7)) mult = expPow(mult.mul(10),0.8).div(10)	
         if(mult.gte("1e13000")) mult=expPow(mult.mul(10),0.8).mul("1e11045")	
         if(mult.gte("1e25000")) mult=expPow(mult.mul(10),0.8).mul("1e21700")	         
         if(inChallenge("p",21)) mult = mult.div(player.p.points.mul(player.points.pow(0.1).add(1)).add(1)) 

@@ -552,10 +552,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
     },
     challenges: {
         11: {
-                name: "简单试炼1（首次推荐战力：3）",
+                name: "简单试炼1",
                 challengeDescription(){
 
-                    let a ="劝退点效果变为原来的" 
+                    let a ="（首次推荐战力：3）劝退点效果变为原来的" 
                     let e = tmp.cq.challenges[11].challengeEffect      
                     let f ="次方，且对重置点和重置能量生效,奖励：每次完成使血量获取x2，生命基础获取指数+0.5"   
                         return a+e+f},
@@ -590,10 +590,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
                
         },
            12: {
-            name: "简单试炼2（首次推荐战力：5）",
+            name: "简单试炼2",
             challengeDescription(){
 
-                let a ="p层级购买项11效果/" 
+                let a ="（首次推荐战力：5）p层级购买项11效果/" 
                 let e = player.cq.challenges[12]*0.2+1.2      
                 let f ="奖励：每次完成使攻击x1.1"   
                     return a+e+f},
@@ -628,10 +628,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
            
     },// inChallenge("l", 11)
            13: {
-            name: "简单试炼3（首次推荐战力：10）",
+            name: "简单试炼3",
             challengeDescription(){
 
-                let a ="你被困在" 
+                let a ="（首次推荐战力：10）你被困在" 
                 let e = (player.cq.challenges[13]+1)*3    
                 let f ="重扩张之中，奖励：每次完成使有效扩张次数-0.2(作用于进入挑战的效果，不是奖励）"   
                     return a+e+f},
@@ -666,10 +666,10 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
            
     },// inChallenge("l", 11)
            21: {
-            name: "简单试炼4（首次推荐战力：20）",
+            name: "简单试炼4",
             challengeDescription(){
 
-                let a ="酒醉般的平衡，点数获取开" 
+                let a ="（首次推荐战力：20）酒醉般的平衡，点数获取开" 
                 let e = (3**(player.cq.challenges[21]+1))   
                 let f ="次根，p层级升级14失效,重置点获取^" 
        let g =(2**(player.cq.challenges[21]+1))
