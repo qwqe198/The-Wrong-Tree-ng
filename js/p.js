@@ -39,7 +39,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasUpgrade("p",32)) mult = mult.mul(layers.p.effect())
         if(hasUpgrade("esc",12)||inChallenge("cq",11)) mult = mult.mul(layers.esc.effect())
         if(hasMilestone("esc",7))  mult = mult.mul(layers.m.effect())
-        if(hasMilestone("l",13)) mult= mult.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
+        if(hasMilestone("l",13)) mult= mult.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1).pow(buyableEffect("a1",13)))
             if(hasUpgrade("cq",25)) mult = mult.pow(1.01)
 if(hasMilestone("t",12)) mult = mult.pow(n(1).add(buyableEffect("t",11).mul(0.005)))
  if(inChallenge("cq",21)) mult = mult.pow((2**(player.cq.challenges[21]+1))  ) 

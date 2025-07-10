@@ -81,7 +81,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
   eff = eff.mul(layers.a1.effect())
 if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
   if(hasAchievement("rw",33)) eff=eff.pow(1.1)  
-
+if(hasAchievement("rw",57)) eff=eff.pow(1.05) 
         return eff         
                 },
     exponent:1,
@@ -722,7 +722,7 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
 
 
     
-     let h =" 奖励：每次完成使无瑕点数,变形虫获取x3,增量获取x10（未实装）" 
+     let h =" 奖励：每次完成使无瑕点数,变形虫获取x3,增量获取x10" 
      
                     return a+b+h},
             goalDescription(){

@@ -253,7 +253,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             effectDescription(){
         
               
-                return  "67.有用还是没用.生命加成所有先前的资源获取,当前:x" + format(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1 ))
+                return  "67.有用还是没用.生命加成所有先前的资源获取,当前:x" + format(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1 ).pow(buyableEffect("a1",13)))
             },
         },
         14:{

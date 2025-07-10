@@ -55,7 +55,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
     getResetGain(){
         var gain = player.points.div(1e20).pow(0.5)
        gain=gain.mul(buyableEffect('m',13))
-       if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
+       if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1).pow(buyableEffect("a1",13)))
         if(hasMilestone("l",39)) gain = gain.pow(n(hasMilestone("l",40)?1.1:1.06).pow(player.l.challenges[11]))
        if(hasMilestone("l",11))  gain=gain.pow(1.05)
        if(hasMilestone("l",21))  gain=gain.pow(1.05)

@@ -184,7 +184,22 @@ addLayer("rw", {
 57: {
             name: "突破禁制",
             done() { return player.cq.challenges[22] >= 1 },
-            tooltip: "完成1次简单试炼5，奖励：咕咕咕",
+            tooltip: "完成1次简单试炼5，奖励：血量获取^1.05",
+        },
+61: {
+            name: "指数基础",
+            done() { return hasUpgrade("a1",25) },
+            tooltip: "获得A层级升级25，奖励：这个升级效果已经很强大了",
+        },
+62: {
+            name: "1e13",
+            done() { return player.points.gte("1e13")&&player.i.points.gte("1e411")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1e13点数和1e411增量，奖励：自动购买I层级升级,变形虫获取x13",
+        },
+63: {
+            name: "变形虫生命",
+            done() { return getBuyableAmount("a1", 13).gte(1) },
+            tooltip: "买1次A层级购买13，奖励：解锁新的战斗（制作中）",
         },
     },
     tabFormat: [

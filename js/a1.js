@@ -11,7 +11,7 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     passiveGeneration(){
      
-
+ if(hasUpgrade("a1",23)) return 1
     
         return 0
     },
@@ -20,6 +20,7 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
 生命和血量获取x${format(this.effect())}.`},
     effect(){let eff= player.a1.points.add(1).pow(0.5)
 if(eff.gte(100))eff=eff.pow(0.5).mul(10)
+if(eff.gte(1000))eff=eff.root(3).mul(100)
         return eff         
                 },
     exponent:0.1,
@@ -31,6 +32,10 @@ if(eff.gte(100))eff=eff.pow(0.5).mul(10)
               if(hasUpgrade("a1",14)) mult = mult.mul(upgradeEffect("a1",14))
     if(hasMilestone("cq",22)) mult = mult.mul(player.cq.hp.pow(0.02))
      if(hasAchievement("rw",41)) mult = mult.mul(1.2)
+ if(hasChallenge("cq",22)) mult = mult.mul(3**player.cq.challenges[22])
+     if(hasUpgrade("a1",23)) mult = mult.mul(2)
+  mult = mult.mul(buyableEffect('a1',12))
+if(hasAchievement("rw",62)) mult = mult.mul(13)
         return mult
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -60,8 +65,8 @@ onPrestige(resettingLayer){       player.cq.hp=n(0)
                 },
                 
                 effect(x = getBuyableAmount(this.layer, this.id)){
-                    var eff = n(1.5).pow(x)
-                  
+                    var eff = n(1.5).pow(hasUpgrade("a1",24)?x.add(getBuyableAmount("a1",12)):x)
+                 
                     return eff
                 },
                 unlocked(){return hasUpgrade("a1",15)},
@@ -86,6 +91,26 @@ onPrestige(resettingLayer){       player.cq.hp=n(0)
                 },
                 unlocked(){return hasUpgrade("a1",22)},
             },
+       13: {
+                cost(x = getBuyableAmount(this.layer, this.id)) {
+                    var c = n("1e7").mul(n(5).pow(x)).mul(n(1.01).pow(x.pow(2)))
+                  
+                    return c
+                },
+                display() { return `150生命里程碑效果<br />^${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}变形虫<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+                canAfford() { return player.a1.points.gte(this.cost()) },
+                buy() {
+                    player.a1.points = player.a1.points.sub(this.cost())
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                },
+                
+                effect(x = getBuyableAmount(this.layer, this.id)){
+                    var eff = x.mul(0.05).add(1)
+                  
+                    return eff
+                },
+                unlocked(){return hasUpgrade("a1",31)},
+            },
 },   
 
 
@@ -107,7 +132,7 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
         12: {
             description: "每个变形虫升级使点数^1.01.",
  effect(){
-                var eff = n(1.01).pow(player.a1.upgrades.length)
+                var eff = n(hasUpgrade("a1",21)?n(1.01).add(player.a1.upgrades.length*0.0005):1.01).pow(player.a1.upgrades.length)
 
                 return eff
             },
@@ -161,6 +186,36 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
             unlocked(){return true},
            
         },
+23: {
+            description: "双倍变形虫获取和每秒获得100%的变形虫,但是移除重置按钮.",
+ 
+             cost:n(30000),
+            unlocked(){return  getBuyableAmount("a1", 12).gte(1)},
+           
+        },
+ 24: {
+
+                        description: "A层级购买12等级加在A层级购买11上",
+                        cost: n(15e4),
+                        unlocked(){
+                                return getBuyableAmount("a1", 12).gte(3) 
+                        }, //hasUpgrade("a", 24)
+                },
+25: {
+
+                        description: "每个变形虫升级增加0.0005到变形虫升级12基础",
+                        cost: n(5e5),
+                        unlocked(){
+                                return getBuyableAmount("a1", 11).gte(10) 
+                        }, //hasUpgrade("a", 24)
+                },
+31: {
+            description: "解锁第三个变形虫可购买.",
+ 
+             cost:n(1e7),
+            unlocked(){return hasUpgrade("a1",25)},
+           
+        },
    },
  tabFormat: {
         升级: {
@@ -168,7 +223,8 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
             content:
                 ["main-display",
               
-                "prestige-button", "resource-display",
+ ["prestige-button", "", function (){ return hasUpgrade("a1", 23) ? {'display': 'none'} : {}}],
+"resource-display",
                 "upgrades",
 
                 ],},
@@ -180,7 +236,8 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
             unlocked() {return hasUpgrade("a1",15)&&hasMilestone("esc",11)},
             content:
                 ["main-display",
-                       "prestige-button", "resource-display",
+                       ["prestige-button", "", function (){ return hasUpgrade("a1", 23) ? {'display': 'none'} : {}}],
+"resource-display",
                 "buyables",
     
                 ],},

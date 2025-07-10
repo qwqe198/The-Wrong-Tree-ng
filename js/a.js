@@ -317,7 +317,7 @@ addLayer("a", {
         if(hasUpgrade("a",11)) gain = gain.mul(upgradeEffect("a",11))
         if(hasUpgrade("a",12)) gain = gain.mul(upgradeEffect("a",12))
         if(hasAchievement("rw",16)) mult = mult.mul(1e10)
-        if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
+        if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1).pow(buyableEffect("a1",13)))
         gain = gain.pow(buyableEffect("p",23))
         if(player.q.points.gte(1)) gain = gain.pow(layers.q.effect())
         if(hasMilestone("l",17)) gain = gain.pow(n(1.05).pow(player.l.challenges[11]))

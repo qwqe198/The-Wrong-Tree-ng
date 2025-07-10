@@ -88,7 +88,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                 }, 
                 effect(x = getBuyableAmount(this.layer, this.id)){
                     var eff = n(1.05).pow(x)
-                  
+              if(eff.gte(10))eff=eff.pow(0.5).mul(n(10).root(2))
                     return eff
                 },
                 unlocked(){return hasUpgrade("i",14)},
@@ -103,6 +103,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                                 let eff = player.i.points.plus(1)
                             if(hasUpgrade("i",21))eff=eff.pow(2)
                             if(hasUpgrade("i",24))eff=eff.pow(buyableEffect('i',13))
+
                                 return eff
                         },
                         unlocked(){
@@ -199,7 +200,67 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                                 return getBuyableAmount("i", 11).gte(81)
                         },
                 },
-      
+     41: {
+                  
+                        description: "增量数量提升增量获得量",
+                        cost: n(1e123),
+   effect(){
+                                let exp = 1
+                                return player.i.points.plus(10).log10().pow(exp)
+                        },
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(169)
+                        },
+ effectDisplay(){return `x ${format(this.effect())}`},
+                }, 
+42: {
+                  
+                        description: "三倍的增量获得量",
+                        cost: n(1e130),
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(174)
+                        },
+                },
+43: {
+                  
+                        description: "解锁新的增量升级",
+                        cost: n(1e134),
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(177)
+                        },
+                },
+15: {
+                  
+                        description: "基础增量获得量乘以“增量强度”的等级",
+                        cost: n(1e135),
+                        unlocked(){
+                                return hasUpgrade("i",43)
+                        },
+                },
+25: {
+                  
+                        description: "基础增量获得量乘以“增量耐性”的等级",
+                        cost: n(1e177),
+                        unlocked(){
+                                return getBuyableAmount("i", 12).gte(43)
+                        },
+                },
+35: {
+                  
+                        description: "基础增量获得量乘以“增量速度”的等级",
+                        cost: n(1e248),
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(241)
+                        },
+                },
+44: {
+                  
+                        description: "I层级升级12对基础增量获得量生效",
+                        cost: n("1e355"),
+                        unlocked(){
+                                return getBuyableAmount("i", 13).gte(61)
+                        },
+                },
     },
      tabFormat: {
                 "主菜单": {
@@ -250,6 +311,10 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
 if(player.points.lt(1e4))gain=n(0)
 //基础
 if(hasAchievement("rw",46)&&hasUpgrade("i",32)) gain = gain.mul(player.i.points.add(10).log10())
+if(hasUpgrade("i",15)) gain = gain.mul(getBuyableAmount("i", 12).add(1))
+if(hasUpgrade("i",25)) gain = gain.mul(getBuyableAmount("i", 13).add(1))
+if(hasUpgrade("i",35)) gain = gain.mul(getBuyableAmount("i", 11).add(1))
+if(hasUpgrade("i",12)&&hasUpgrade("i",44)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
  gain = gain.pow(buyableEffect('i',13))
 //乘数
 if(hasUpgrade("i",12)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
@@ -257,6 +322,10 @@ if(hasAchievement("rw",46)&&!hasUpgrade("i",32)) gain = gain.mul(player.i.points
 if(hasAchievement("rw",53)) gain = gain.mul(buyableEffect('a1',11))
   gain = gain.mul(buyableEffect('i',11))
  gain = gain.mul(buyableEffect('i',12))
+if(hasUpgrade("i",41)) gain = gain.mul(upgradeEffect("i",41))
+
+if(hasUpgrade("i",42)) gain = gain.mul(3)
+if(hasChallenge("cq",22)) gain = gain.mul(3**player.cq.challenges[22])
 if(hasMilestone("t",12)) gain = gain.mul(n(1.1).pow(buyableEffect("t",11)))
      if(!inChallenge("t",11))gain=n(0)
        return gain.floor()
@@ -266,5 +335,5 @@ if(hasMilestone("t",12)) gain = gain.mul(n(1.1).pow(buyableEffect("t",11)))
 
 
     },
-  
+    autoUpgrade(){return hasAchievement("rw",62)},
 })
