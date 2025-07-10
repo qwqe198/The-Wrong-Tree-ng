@@ -712,6 +712,40 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
             },
            
     },// inChallenge("l", 11)
+      22: {
+            name: "简单试炼5",
+            challengeDescription(){
+
+                let a ="（首次推荐战力：50）你的加成太多了,"
+     let b = player.cq.challenges[22]>=1?" p层级升级11,12,13失效" :"p层级升级11,12失效" 
+
+
+
+    
+     let h =" 奖励：每次完成使无瑕点数,变形虫获取x3,增量获取x10（未实装）" 
+     
+                    return a+b+h},
+            goalDescription(){
+                    return "4劝退点"
+            },
+          
+            goal: () => "4",
+            canComplete: () => player.esc.points.gte(4),
+            rewardDescription(){
+                   
+                   
+
+                    let c = "<br>你完成了" 
+                    c += formatWhole(player.cq.challenges[22]) + "/5次"
+                    return   c
+            },
+            completionLimit: 5,
+
+            unlocked(){
+                    return hasAchievement("rw",21)
+            },
+           
+    },// inChallenge("l", 11)
     }, // inChallenge("l", 11)
          
         buyables:{
@@ -795,8 +829,8 @@ if(hasUpgrade("cq",62)) eff=eff.mul(upgradeEffect("cq",62))
          player.cq.hp = player.cq.hp.add(layers.cq.effect().mul(diff))
          player.cq.atk = upgradeEffect("cq",10000)
          player.cq.def =upgradeEffect("cq",10001)
-if(player.cq.challenges[13]>=3)player.cq.challenges[13]=3
-if(player.cq.challenges[21]>=2)player.cq.challenges[21]=2//下版本删
+if(player.cq.challenges[13]>4)player.cq.challenges[13]=4
+if(player.cq.challenges[21]>2)player.cq.challenges[21]=2//下版本删
          if(hasUpgrade("cq",32)&&player.a.points.sub(1).gte(n(hasMilestone("l",32)?"1e10000":"1e14000").mul(n(1e308).pow(getBuyableAmount("a",11))).mul(n(1e10).pow(getBuyableAmount("a",11).pow(2)))))setBuyableAmount("a",11,getBuyableAmount("a",11).add(1))  
           
 

@@ -41,6 +41,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if(hasMilestone("esc",7))  mult = mult.mul(layers.m.effect())
         if(hasMilestone("l",13)) mult= mult.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
             if(hasUpgrade("cq",25)) mult = mult.pow(1.01)
+if(hasMilestone("t",12)) mult = mult.pow(n(1).add(buyableEffect("t",11).mul(0.005)))
  if(inChallenge("cq",21)) mult = mult.pow((2**(player.cq.challenges[21]+1))  ) 
         if(player.q.points.gte(1)&&hasMilestone("l",22)&&inChallenge("l",11)) mult = mult.pow(layers.q.effect())        
         if(inChallenge("l",11)) mult = expPow(mult.mul(10),tmp.l.challenges[11].challengeEffect).div(10)
@@ -99,7 +100,8 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 var buyablePow = n(1)
                 buyablePow = hasUpgThenAdd(buyablePow,this.layer,31)
                 eff = eff.mul(buyableEffect("p",11).pow(buyablePow))
-                if(inChallenge("p",22)) eff = eff.pow(0.5)   
+                if(inChallenge("p",22)) eff = eff.pow(0.5)
+   if(inChallenge("cq",22))   eff = n(1)
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
@@ -116,6 +118,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 buyablePow = hasUpgThenAdd(buyablePow,this.layer,31)
                 eff = eff.mul(buyableEffect("p",11).pow(buyablePow))
                 if(hasUpgrade("a",34)) eff =eff.pow(buyableEffect("p",23))
+if(inChallenge("cq",22))   eff = n(1)
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
@@ -132,6 +135,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 buyablePow = hasUpgThenAdd(buyablePow,this.layer,31)
                 if(hasMilestone("t",6))  eff = eff.mul(buyableEffect("t",11).add(1)) 
                 eff = eff.mul(buyableEffect("p",11).pow(buyablePow)).pow(hasMilestone("l", 31)?layers.a.effect():1 )
+if(inChallenge("cq",22)&&player.cq.challenges[22]>=1)   eff = n(1)
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},
@@ -623,6 +627,7 @@ if((hasMilestone("esc",7)||hasMilestone("cq",19))&&player.points.gte("1e10000"))
  if(hasAchievement("rw",24))   eff = eff.pow(1.1)
                 if(hasUpgrade("a",25)) eff = eff.pow(upgradeEffect("a",15))
                 if(hasMilestone("l",12)) eff = eff.pow(5)
+
                 return eff
             },
             unlocked(){return upgradeEffect("p",25).gte(2)},

@@ -153,7 +153,7 @@ addLayer("rw", {
         },
 47: {
             name: "1e6",
-            done() { return player.points.gte("1e8")&&inChallenge("t",11) },
+            done() { return player.points.gte("1e6")&&inChallenge("t",11) },
             tooltip: "在加强疫苗中获得1e6点数，奖励：简单试炼3真简单 重置时保留L层级购买",
         },
 52: {
@@ -169,7 +169,22 @@ addLayer("rw", {
 54: {
             name: "更多增量",
             done() { return player.i.points.gte(5e22) },
-            tooltip: "获得5e22增量，奖励：解锁简单试炼5（还没做）",
+            tooltip: "获得5e22增量，奖励：解锁简单试炼5",
+        },
+55: {
+            name: "黄道十二宫",
+            done() { return buyableEffect("t",11).gte(14)},
+            tooltip: "获得12塔里程碑，奖励：无瑕点数x12",
+        },
+56: {
+            name: "1e10",
+            done() { return player.points.gte("1e10")&&player.i.points.gte("1e110")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1e10点数和1e110增量，奖励：点数x1e15后^1.15",
+        },
+57: {
+            name: "突破禁制",
+            done() { return player.cq.challenges[22] >= 1 },
+            tooltip: "完成1次简单试炼5，奖励：咕咕咕",
         },
     },
     tabFormat: [

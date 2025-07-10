@@ -43,7 +43,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                     return "增量速度"
                 }, 
                 effect(x = getBuyableAmount(this.layer, this.id)){
-                    var eff = n(1.5).pow(x)
+                    var eff = n(hasUpgrade("i",34)?1.5+getBuyableAmount("i", 11)*0.01:1.5).pow(x)
                   
                     return eff
                 },
@@ -65,7 +65,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                     return "增量强度"
                 }, 
                 effect(x = getBuyableAmount(this.layer, this.id)){
-                    var eff = n(2).pow(x)
+                    var eff = n(hasUpgrade("i",33)?2+getBuyableAmount("i", 12)*0.02:2).pow(x)
                   
                     return eff
                 },
@@ -175,6 +175,30 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                                 return getBuyableAmount("i", 12).gte(14)
                         },
                 },
+32: {
+                  
+                        description: "任务46奖励在增量耐性之前生效",
+                        cost: n(1e24),
+                        unlocked(){
+                                return getBuyableAmount("i", 12).gte(15)
+                        },
+                },
+33: {
+                  
+                        description: "每获得一个“增量强度”， “增量强度”效果的底数加 0.02",
+                        cost: n(1e27),
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(78)
+                        },
+                },
+34: {
+                  
+                        description: "每获得一个“增量速度”， “增量速度”效果的底数加 0.01",
+                        cost: n(1e29),
+                        unlocked(){
+                                return getBuyableAmount("i", 11).gte(81)
+                        },
+                },
       
     },
      tabFormat: {
@@ -225,13 +249,15 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
         var gain = player.points.log10().sub(3)
 if(player.points.lt(1e4))gain=n(0)
 //基础
+if(hasAchievement("rw",46)&&hasUpgrade("i",32)) gain = gain.mul(player.i.points.add(10).log10())
  gain = gain.pow(buyableEffect('i',13))
 //乘数
 if(hasUpgrade("i",12)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
-if(hasAchievement("rw",46)) gain = gain.mul(player.i.points.add(10).log10())
+if(hasAchievement("rw",46)&&!hasUpgrade("i",32)) gain = gain.mul(player.i.points.add(10).log10())
 if(hasAchievement("rw",53)) gain = gain.mul(buyableEffect('a1',11))
   gain = gain.mul(buyableEffect('i',11))
  gain = gain.mul(buyableEffect('i',12))
+if(hasMilestone("t",12)) gain = gain.mul(n(1.1).pow(buyableEffect("t",11)))
      if(!inChallenge("t",11))gain=n(0)
        return gain.floor()
     },

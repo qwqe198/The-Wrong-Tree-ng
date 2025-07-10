@@ -55,12 +55,14 @@ if(hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11))
 	if(hasUpgrade("a1",12)) gain = gain.pow(upgradeEffect("a1",12))
 	gain = gain.mul(layers.esc.effect())
     gain = gain.mul(buyableEffect('m',12))
+if(hasAchievement("rw",56)) gain = gain.mul(1e15)
 	if(hasMilestone("t",1)) gain = gain.mul(buyableEffect("t",11).add(1))
 	if(hasMilestone("t",10)&&inChallenge("cq",21)) gain = gain.mul(n(10).pow(buyableEffect("t",11).pow(3.14)))
 	if(hasMilestone("l",13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18)?layers.a.effect():1))
 	if(hasMilestone("lcb",1)) gain = gain.mul(n(1e10).pow(player.points.add(10).log(10).root(2).floor().min(100)))
 	if(hasUpgrade("esc",11)) gain = gain.pow(1.01)
 	if(hasUpgrade("cq",24)) gain = gain.pow(1.01)
+if(hasAchievement("rw",56)) gain = gain.pow(1.15)
  if(inChallenge("cq",21))  gain = gain.root((3**(player.cq.challenges[21]+1))  ) 
 if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 	if(hasMilestone("l",1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
@@ -74,6 +76,7 @@ if(hasUpgrade("cq",51)) gain = gain.pow(upgradeEffect("cq",51))
 if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)
 	if(hasMilestone("esc",12)&&hasUpgrade("i",11)) gain = gain.mul(upgradeEffect("i",11).add(10).log10().pow(1.25))
 if(hasMilestone("t",11)) gain = gain.mul(n(1.05).pow(buyableEffect("t",11)))
+if(hasAchievement("rw",55)) gain = gain.mul(12)
 //上限
 if(gain.gte("1e50000")) gain=gain.min("1e50000")
 	return gain
@@ -85,7 +88,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局 完成32任务`},
+	function(){return `残局 完成1次简单试炼5`},
 	function(){ if(player.esc.points.gte(6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	

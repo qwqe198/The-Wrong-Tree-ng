@@ -1,4 +1,4 @@
-var escReq = [1e6,1e18,1e200,'e1000','e2750','e6000','e4350','e7625','e19590','e47137','e50000','e999999']
+var escReq = [1e5,1e18,1e200,'e1000','e2750','e6000','e4350','e7625','e19590','e47137','e50000','e999999']
 function isUnl(escPointsRequired){
     return player.esc.points.gte(escPointsRequired)
 }

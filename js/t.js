@@ -161,6 +161,12 @@ if(hasAchievement("rw",51))c=c.div(player.cq.def)
  
             done() { return buyableEffect("t",11).gte(12) }
         },
+12:{
+            requirementDescription: "14层",
+            effectDescription: "增量获取x(1.1^x),重置点获取^(1+0.005x)",
+ 
+            done() { return buyableEffect("t",11).gte(14) }
+        },
     },
    tabFormat: {
         主要: {
