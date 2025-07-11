@@ -306,7 +306,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                 },
         },
 
-    getResetGain(){
+ getResetGain(){
         var gain = player.points.log10().sub(3)
 
 //基础
@@ -331,8 +331,9 @@ if(hasAchievement("rw",65)) gain = gain.pow(1.05)
  gain = gain.mul(layers.csm.effect())
 //传送门
 if(player.csm.points.gte(1)) gain=expPow(gain.mul(10),0.9)
+if(player.points.lt(1e4))gain=n(0)
+     if(!inChallenge("t",11))gain=n(0)
 
-     if(!inChallenge("t",11)&&player.points.lt(1e4))gain=n(0)
        return gain.floor()
     },
     update(diff){
