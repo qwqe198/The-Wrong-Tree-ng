@@ -116,6 +116,12 @@ if(inChallenge("esc",11)) return n(Infinity)
             done() { return isUnl(1)&&inChallenge("t",11) },
             unlocked(){return inChallenge("t",11)},
         },     
+           13:{
+            requirementDescription: "在加强疫苗中获得2劝退点",
+            effectDescription()  {return "解锁传送门（还没做）"},
+            done() { return isUnl(2)&&inChallenge("t",11) },
+            unlocked(){return inChallenge("t",11)},
+        },     
     },
     upgrades:{
         11:{

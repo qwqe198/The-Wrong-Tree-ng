@@ -554,6 +554,29 @@ if(hasAchievement("rw",57)) eff=eff.pow(1.05)
             currencyInternalName: "hp",
             currencyLayer: "cq"
         },  
+  64: {
+            description: "10000/100/50/3  战力加成无瑕点数.",
+            cost(){return battle(10000,100,50).pow(3)}, //!!剩下你看着改
+            unlocked(){return hasAchievement("rw",63)},
+ effect(){
+                var eff =  player.cq.points.add(1)
+
+                return eff
+            },  
+            effectDisplay(){return `x ${format(this.effect())}`},
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },  
+ 65: {
+            description: "11111/111/55/3  自动购买增量耐性,效果比手动更好.",
+            cost(){return battle(11111,111,55).pow(3)}, //!!剩下你看着改
+            unlocked(){return hasUpgrade("cq",64)},
+ 
+            currencyDisplayName: "血量",
+            currencyInternalName: "hp",
+            currencyLayer: "cq"
+        },  
     },
     challenges: {
         11: {

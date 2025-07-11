@@ -36,6 +36,7 @@ if(eff.gte(1000))eff=eff.root(3).mul(100)
      if(hasUpgrade("a1",23)) mult = mult.mul(2)
   mult = mult.mul(buyableEffect('a1',12))
 if(hasAchievement("rw",62)) mult = mult.mul(13)
+if(hasAchievement("rw",66)) mult = mult.mul(player.i.points.add(10).log10())
         return mult
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -214,6 +215,18 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
  
              cost:n(1e7),
             unlocked(){return hasUpgrade("a1",25)},
+           
+        },
+32: {
+            description: "变形虫降低增量强度价格.",
+  effect(){
+                var eff = player.a1.points.add(10).log10().mul(0.05).add(1)
+
+                return eff
+            },
+            effectDisplay(){return `开${format(this.effect())}次根`},
+             cost:n(1e10),
+            unlocked(){return hasUpgrade("a1",31)},
            
         },
    },

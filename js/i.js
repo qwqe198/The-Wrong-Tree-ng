@@ -52,7 +52,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
             12: {
                 cost(x = getBuyableAmount(this.layer, this.id)) {
                     var c = n("1e4").mul(n(hasUpgrade("i",23)?1:4).pow(x)).mul(n(1.25).pow(x.pow(2)))
-                  
+                  if(hasUpgrade("a1",32))c=c.root(upgradeEffect("a1",32))
                     return c
                 },
                 display() { return `增量获取<br />x${format(buyableEffect(this.layer,this.id),2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}增量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -327,11 +327,12 @@ if(hasUpgrade("i",41)) gain = gain.mul(upgradeEffect("i",41))
 if(hasUpgrade("i",42)) gain = gain.mul(3)
 if(hasChallenge("cq",22)) gain = gain.mul(3**player.cq.challenges[22])
 if(hasMilestone("t",12)) gain = gain.mul(n(1.1).pow(buyableEffect("t",11)))
+if(hasAchievement("rw",65)) gain = gain.pow(1.05)
      if(!inChallenge("t",11))gain=n(0)
        return gain.floor()
     },
     update(diff){
-      
+             if(hasUpgrade("cq",65)&&player.i.points.sub(1).gte(n(1e5).mul(n(1.25).pow(getBuyableAmount("i",13).pow(2)))))setBuyableAmount('i',13,getBuyableAmount('i',13).add(1)) 
 
 
     },

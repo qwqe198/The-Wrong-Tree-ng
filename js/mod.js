@@ -78,7 +78,8 @@ if(inChallenge("t",11)) gain = gain.add(10).log10().div(9)
 if(hasMilestone("t",11)) gain = gain.mul(n(1.05).pow(buyableEffect("t",11)))
 if(hasAchievement("rw",55)) gain = gain.mul(12)
    if(hasChallenge("cq",22)) gain = gain.mul(3**player.cq.challenges[22])
-
+if(hasUpgrade("cq",64)) gain = gain.mul(upgradeEffect("cq",64))
+if(hasAchievement("rw",66)) gain = gain.mul(player.i.points.add(10).log10())
 //上限
 if(gain.gte("1e50000")) gain=gain.min("1e50000")
 	return gain
@@ -90,7 +91,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局 完成所有任务`},
+	function(){return `残局 在加强疫苗中获得2劝退点`},
 	function(){ if(player.esc.points.gte(6)||(hasUpgrade("cq",61)&&inChallenge("cq",13)))return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(),5)}`}	
 ]
 	

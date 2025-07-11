@@ -199,9 +199,23 @@ addLayer("rw", {
 63: {
             name: "变形虫生命",
             done() { return getBuyableAmount("a1", 13).gte(1) },
-            tooltip: "买1次A层级购买13，奖励：解锁新的战斗（制作中）",
+            tooltip: "买1次A层级购买13，奖励：解锁新的战斗",
         },
-    },
+64: {
+            name: "第四个数字是什么",
+            done() { return hasUpgrade("cq",64) },
+            tooltip: "获得cq层级升级64，奖励：当然是伤害指数啦",
+        },
+65: {
+            name: "竟然和任务序号一样",
+            done() { return hasUpgrade("cq",65) },
+            tooltip: "获得cq层级升级65，奖励：增量获取^1.05",
+        },
+66: {
+            name: "1e15",
+            done() { return player.points.gte("1e15")&&player.i.points.gte("1e533")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1e15点数和1e533增量，奖励：快了……增量的数量级加成无瑕点数和变形虫",
+    },},
     tabFormat: [
         "blank", 
         ["display-text", function() { return "任务: "+player.rw.achievements.length+"/"+(Object.keys(tmp.rw.achievements).length-2) }], 
