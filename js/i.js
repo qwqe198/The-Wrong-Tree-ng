@@ -306,7 +306,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                 },
         },
 
- getResetGain(){
+    getResetGain(){
         var gain = player.points.log10().sub(3)
 
 //基础
