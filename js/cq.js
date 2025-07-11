@@ -569,7 +569,7 @@ if(hasAchievement("rw",57)) eff=eff.pow(1.05)
             currencyLayer: "cq"
         },  
  65: {
-            description: "11111/111/55/3  自动购买增量耐性,效果比手动更好.",
+            description: "11111/111/55/3  自动购买增量耐性,效果比手动更好（后面的自动也是）.",
             cost(){return battle(11111,111,55).pow(3)}, //!!剩下你看着改
             unlocked(){return hasUpgrade("cq",64)},
  

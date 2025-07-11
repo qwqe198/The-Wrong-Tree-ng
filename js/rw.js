@@ -215,7 +215,18 @@ addLayer("rw", {
             name: "1e15",
             done() { return player.points.gte("1e15")&&player.i.points.gte("1e533")&&inChallenge("t",11) },
             tooltip: "在加强疫苗中获得1e15点数和1e533增量，奖励：快了……增量的数量级加成无瑕点数和变形虫",
-    },},
+    },
+67: {
+            name: "传送门",
+            done() { return player.csm.points.gte("1")&&inChallenge("t",11) },
+            tooltip: "在加强疫苗中获得1传送门，奖励：自动购买增量强度",
+    },
+71: {
+            name: "转生增量?",
+            done() { return player.csm.ati.gte("1")&&inChallenge("t",11) },
+            tooltip: "获得1转生增量，奖励：A层级升级14效果平方",
+    },
+},
     tabFormat: [
         "blank", 
         ["display-text", function() { return "任务: "+player.rw.achievements.length+"/"+(Object.keys(tmp.rw.achievements).length-2) }], 

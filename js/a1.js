@@ -158,7 +158,7 @@ if(eff.gte(1e100))eff=expPow(eff.mul(10),0.5).mul("1e90")
             description: "变形虫加成自身.",
  effect(){
                 var eff = player.a1.points.add(10).log10()
-
+  if(hasAchievement("rw",71))eff=eff.pow(2)
                 return eff
             },
             effectDisplay(){return `x ${format(this.effect())}`},

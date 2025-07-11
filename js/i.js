@@ -308,7 +308,7 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
 
     getResetGain(){
         var gain = player.points.log10().sub(3)
-if(player.points.lt(1e4))gain=n(0)
+
 //基础
 if(hasAchievement("rw",46)&&hasUpgrade("i",32)) gain = gain.mul(player.i.points.add(10).log10())
 if(hasUpgrade("i",15)) gain = gain.mul(getBuyableAmount("i", 12).add(1))
@@ -328,12 +328,16 @@ if(hasUpgrade("i",42)) gain = gain.mul(3)
 if(hasChallenge("cq",22)) gain = gain.mul(3**player.cq.challenges[22])
 if(hasMilestone("t",12)) gain = gain.mul(n(1.1).pow(buyableEffect("t",11)))
 if(hasAchievement("rw",65)) gain = gain.pow(1.05)
-     if(!inChallenge("t",11))gain=n(0)
+ gain = gain.mul(layers.csm.effect())
+//传送门
+if(player.csm.points.gte(1)) gain=expPow(gain.mul(10),0.9)
+
+     if(!inChallenge("t",11)&&player.points.lt(1e4))gain=n(0)
        return gain.floor()
     },
     update(diff){
              if(hasUpgrade("cq",65)&&player.i.points.sub(1).gte(n(1e5).mul(n(1.25).pow(getBuyableAmount("i",13).pow(2)))))setBuyableAmount('i',13,getBuyableAmount('i',13).add(1)) 
-
+  if(hasAchievement("cq",67)&&player.i.points.sub(1).gte(n(1e4).mul(n(1.25).pow(getBuyableAmount("i",12).pow(2))).root(upgradeEffect("a1",32))))setBuyableAmount('i',12,getBuyableAmount('i',12).add(1)) 
 
     },
     autoUpgrade(){return hasAchievement("rw",62)},
