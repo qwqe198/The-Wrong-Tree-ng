@@ -70,11 +70,11 @@ function getStartLayerData(layer) {
 		layerdata.best = new ExpantaNum(0);
 	if (layerdata.resetTime === undefined)
 		layerdata.resetTime = 0;
-        if (layerdata.forceTooltip === undefined)
-                layerdata.forceTooltip = false;
+	if (layerdata.forceTooltip === undefined)
+		layerdata.forceTooltip = false;
 
-        layerdata.buyables = getStartBuyables(layer);
-        if (layerdata.noRespecConfirm === undefined) layerdata.noRespecConfirm = false
+	layerdata.buyables = getStartBuyables(layer);
+	if (layerdata.noRespecConfirm === undefined) layerdata.noRespecConfirm = false
 	if (layerdata.clickables == undefined)
 		layerdata.clickables = getStartClickables(layer);
 	layerdata.spentOnBuyables = new ExpantaNum(0);
@@ -337,4 +337,4 @@ function versionCheck() {
 }
 var saveInterval = setInterval(function () {
 	if (options.autosave){save()};
-}, 500);
+}, 10000);
