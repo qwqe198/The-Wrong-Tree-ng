@@ -447,5 +447,7 @@ addLayer("a", {
         if (hasMilestone("esc", 8) || hasUpgrade("cq", 54)) return 10
         return 0
     },
-
+     update(diff) {
+ if (hasUpgrade("cq", 32) && player.a.points.sub(1).gte(n(hasMilestone("l", 32) ? "1e10000" : "1e14000").mul(n(1e308).pow(getBuyableAmount("a", 11))).mul(n(1e10).pow(getBuyableAmount("a", 11).pow(2))))) setBuyableAmount("a", 11, getBuyableAmount("a", 11).add(1))
+}
 })

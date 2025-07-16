@@ -121,7 +121,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
         },
         13: {
             requirementDescription: "在加强疫苗中获得2劝退点",
-            effectDescription() { return "解锁传送门（还没做）" },
+            effectDescription() { return "解锁传送门" },
             done() { return isUnl(2) && inChallenge("t", 11) },
             unlocked() { return inChallenge("t", 11) },
         },

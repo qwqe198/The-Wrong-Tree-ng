@@ -231,12 +231,12 @@ addLayer("rw", {
         72: {
             name: "三次灌注1",
             done() { return getBuyableAmount("csm", 11).gte(3) },
-            tooltip: "买3次点数灌注，奖励：解锁增量灌注",
+            tooltip: "买3次点数灌注，奖励：在1传送门时解锁增量灌注",
         },
          73: {
             name: "三次灌注2",
             done() { return getBuyableAmount("csm", 12).gte(3) },
-            tooltip: "买3次增量灌注，奖励：解锁变形虫灌注和一个变形虫升级",
+            tooltip: "买3次增量灌注，奖励：解锁一个变形虫升级和在1传送门时解锁变形虫灌注",
         },
   74: {
             name: "3^3次灌注3",

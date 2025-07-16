@@ -81,7 +81,7 @@ addLayer("csm", { //这是代码中的节点代码 例如player.p可以调用该
 
                 return eff
             },
-            unlocked() { return hasAchievement("rw", 72)},
+            unlocked() { return hasAchievement("rw", 72)&&player.csm.points.gte(1)},
         },
         13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -103,7 +103,7 @@ addLayer("csm", { //这是代码中的节点代码 例如player.p可以调用该
 
                 return eff
             },
-            unlocked() { return hasAchievement("rw", 73)},
+            unlocked() { return hasAchievement("rw", 73)&&player.csm.points.gte(1)},
         },
     },
         effect() {
@@ -138,7 +138,7 @@ eff=eff.pow(buyableEffect('csm', 12))
 
                                 }],
                                 ["display-text", function () {
-                                        return "+解锁转生增量,点数灌注(还没做）"
+                                        return "+解锁转生增量,点数灌注"
 
                                 }],
 

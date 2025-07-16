@@ -577,7 +577,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             currencyLayer: "cq"
         },
         65: {
-            description: "11111/111/55/3  自动购买增量耐性,效果比手动更好（后面的自动也是）.",
+            description: "11111/111/55/3  自动购买增量耐性.",
             cost() { return battle(11111, 111, 55).pow(3) }, //!!剩下你看着改
             unlocked() { return hasUpgrade("cq", 64) },
 
@@ -782,7 +782,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             completionLimit: 5,
 
             unlocked() {
-                return hasAchievement("rw", 21)
+                return hasAchievement("rw", 54)
             },
 
         },// inChallenge("l", 11)
@@ -872,7 +872,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
 
         if (player.cq.challenges[21] > 3) player.cq.challenges[21] = 3//下版本删
         if (player.cq.challenges[22] > 2) player.cq.challenges[22] = 2
-        if (hasUpgrade("cq", 32) && player.a.points.sub(1).gte(n(hasMilestone("l", 32) ? "1e10000" : "1e14000").mul(n(1e308).pow(getBuyableAmount("a", 11))).mul(n(1e10).pow(getBuyableAmount("a", 11).pow(2))))) setBuyableAmount("a", 11, getBuyableAmount("a", 11).add(1))
+     
 
 
 

@@ -29,7 +29,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
     layerShown() { return hasMilestone("esc", 7) || hasMilestone("cq", 1) },
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
 
-    effectDescription() { return `51.这是怨怨树吗？基于点数,使重置点获取x${format(this.effect())}.56.滥用双指数软上限.` },
+    effectDescription() { return `51.这是怨怨树吗？基于点数,使重置点获取x${format(this.effect())} 56.滥用双指数软上限.` },
     effect() {
         let eff = player.points.add(1).pow(buyableEffect('m', 11)).log(10).sub(20).max(1)
         if (hasAchievement("rw", 14)) eff = eff.pow(1.025)
