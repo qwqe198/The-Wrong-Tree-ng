@@ -1,6 +1,6 @@
 addLayer("q", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
     symbol: `q`, // 这是节点上显示的字母
-    position: 0, // 节点顺序
+    position: 1, // 节点顺序
     startData() {
         return {
             unlocked: true, //是否开始就解锁

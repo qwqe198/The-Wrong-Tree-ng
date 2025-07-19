@@ -49,6 +49,7 @@ function getPointGen() {
 	if (hasUpgrade("cq", 42)) gain = gain.mul(upgradeEffect("cq", 42))
 	if (hasAchievement("rw", 21)) gain = gain.mul(2)
 	if (hasUpgrade("cq", 13)) gain = gain.mul(upgradeEffect("cq", 13))
+if (inChallenge("cq", 23)&&player.cq.challenges[23] >= 1) gain = gain.div(upgradeEffect("p", 13).pow(2))
 	if (hasUpgrade("i", 11)) gain = gain.mul(upgradeEffect("i", 11))
 	if (hasUpgrade("cq", 14)) gain = gain.mul(upgradeEffect("cq", 14))
 	if (hasUpgrade("a1", 11)) gain = gain.mul(upgradeEffect("a1", 11))
@@ -56,6 +57,7 @@ function getPointGen() {
 	gain = gain.mul(layers.esc.effect())
 	gain = gain.mul(buyableEffect('m', 12))
 	if (hasAchievement("rw", 56)) gain = gain.mul(1e15)
+if (hasAchievement("rw", 66)) gain = gain.mul(n(10).pow(7.5))
 	if (hasMilestone("t", 1)) gain = gain.mul(buyableEffect("t", 11).add(1))
 	if (hasMilestone("t", 10) && inChallenge("cq", 21)) gain = gain.mul(n(10).pow(buyableEffect("t", 11).pow(3.14)))
 	if (hasMilestone("l", 13)) gain = gain.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18) ? layers.a.effect() : 1).pow(buyableEffect("a1", 13)))
@@ -63,6 +65,8 @@ function getPointGen() {
 	if (hasUpgrade("esc", 11)) gain = gain.pow(1.01)
 	if (hasUpgrade("cq", 24)) gain = gain.pow(1.01)
 	if (hasAchievement("rw", 56)) gain = gain.pow(1.15)
+if (hasAchievement("rw", 66)) gain = gain.pow(1.075)
+if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) gain = gain.pow(0.25)
 	if (inChallenge("cq", 21)) gain = gain.root((3 ** (player.cq.challenges[21] + 1)))
 	if (hasUpgrade("cq", 51)) gain = gain.pow(upgradeEffect("cq", 51))
 	if (hasMilestone("l", 1)) gain = gain.pow(n(1.01).pow(player.l.points.min(50)))
@@ -94,7 +98,7 @@ function addedPlayerData() {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function () { return `残局 完成任务` },
+	function () { return `残局 300战力` },
 	function () { if (player.esc.points.gte(6) || (hasUpgrade("cq", 61) && inChallenge("cq", 13))) return `42.不知道从哪里找的.点数获取^b ,b=${format(layers.a.effect(), 5)}` }
 ]
 

@@ -246,7 +246,17 @@ addLayer("rw", {
 75: {
             name: "简单试炼的一半",
             done() { return player.cq.challenges[13] >= 5 },
-            tooltip: "彻底完成简单试炼3，奖励：咕咕咕",
+            tooltip: "彻底完成简单试炼3，奖励：解锁简单试炼6,点数x1e7.5后^1.075",
+        },
+    76: {
+            name: "隐藏条件",
+            done() { return inChallenge("cq", 23) },
+            tooltip: "进入简单试炼6，奖励：你无法每秒获得重置点,但是劝退点7的第一个效果在试炼中生效",
+        },  
+     77: {
+            name: "终于到来",
+            done() { return player.cq.challenges[23] >= 1 },
+            tooltip: "完成1次简单试炼6，奖励：你的扩张次数不会小于战力里程碑数量-3，隐藏简单试炼1，2，解锁新的战力里程碑",
         },
     },
     tabFormat: [

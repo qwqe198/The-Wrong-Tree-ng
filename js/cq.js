@@ -26,6 +26,10 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
 
         return 0
     },
+onPrestige(resettingLayer) {
+        player.esc.points = n(0)
+
+    },
     tabFormat: {
         里程碑: {
             buttonStyle() { return { 'color': 'yellow' } },
@@ -70,6 +74,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 ],
         },
     },
+
     effectDescription() {
         return `
         <br>
@@ -98,7 +103,8 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
         if (hasMilestone("lcb", 5)) mult = mult.mul(n(2).pow(player.lcb.points.sub(4)).min(100).max(0))
-        return mult
+if (hasAchievement("rw", 77)) mult = mult.mul(2)
+        return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
         var exp = new ExpantaNum(1)
@@ -220,6 +226,12 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             requirementDescription: "50战力",
             effectDescription() { return "血量加成变形虫获取,当前:x" + format(player.cq.hp.pow(0.02)) },
             done() { return player.cq.points.gte(50) }
+        },
+ 23: {
+            requirementDescription: "300战力",
+            effectDescription() { return "解锁第2个副本(咕咕咕）"  },
+            done() { return player.cq.points.gte(300)&&hasAchievement("rw", 77) },
+unlocked() { return hasAchievement("rw", 77) },
         },
     },
     upgrades: {
@@ -623,7 +635,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             unlocked() {
-                return hasMilestone("cq", 3)
+                return hasMilestone("cq", 3)&&!hasAchievement("rw", 77)
             },
 
         },
@@ -663,7 +675,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             unlocked() {
-                return player.cq.challenges[11] >= 1
+                return player.cq.challenges[11] >= 1&&!hasAchievement("rw", 77)
             },
 
         },// inChallenge("l", 11)
@@ -714,7 +726,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
                 let a = "（首次推荐战力：20）酒醉般的平衡，点数获取开"
                 let e = (3 ** (player.cq.challenges[21] + 1))
                 let f = "次根，p层级升级14失效,重置点获取^"
-                let g = (2 ** (player.cq.challenges[21] + 1))
+                let g = (player.cq.challenges[21] >= 3?1:2 ** (player.cq.challenges[21] + 1))
 
                 let h = " 奖励：每秒自动获取(1e-3*10^x)%生命"
 
@@ -756,7 +768,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             challengeDescription() {
 
                 let a = "（首次推荐战力：50）你的加成太多了,"
-                let b = player.cq.challenges[22] >= 1 ? " p层级升级11,12,13失效" : "p层级升级11,12失效"
+                let b = player.cq.challenges[22] >= 2 ? " p层级升级11,12,13,14失效，点数^0.25" :player.cq.challenges[22] >= 1 ? " p层级升级11,12,13失效" : "p层级升级11,12失效"
 
 
 
@@ -783,6 +795,41 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
 
             unlocked() {
                 return hasAchievement("rw", 54)
+            },
+
+        },// inChallenge("l", 11)
+23: {
+            name: "简单试炼6",
+            challengeDescription() {
+
+                let a = "（首次推荐战力：69(不错)）"
+                let b = player.cq.challenges[23] >= 1 ? "劝退点中的分隔符现在非常大。升级13效果反转。重置点和升级重置会在重置点重置时发生" : "劝退点中的分隔符现在非常大,重置点和升级重置会在重置点重置时发生"
+
+
+
+
+                let h = " 奖励：每次完成使战力获取x2"
+
+                return a + b + h
+            },
+            goalDescription() {
+                return "4劝退点"
+            },
+
+            goal: () => "4",
+            canComplete: () => player.esc.points.gte(4),
+            rewardDescription() {
+
+
+
+                let c = "<br>你完成了"
+                c += formatWhole(player.cq.challenges[23]) + "/5次"
+                return c
+            },
+            completionLimit: 5,
+
+            unlocked() {
+                return hasAchievement("rw", 65)
             },
 
         },// inChallenge("l", 11)

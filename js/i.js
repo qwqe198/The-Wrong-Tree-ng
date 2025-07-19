@@ -333,6 +333,7 @@ eff=eff.pow(buyableEffect('csm', 11))
                 gain = gain.mul(layers.csm.effect())
                 //传送门
                 if (player.csm.points.gte(1)) gain = expPow(gain.mul(10), 0.9)
+                        if(gain.gte("1e700"))gain = gain.pow(0.5).mul("1e350")
                 if (player.points.lt(1e4)||!inChallenge("t", 11)) gain = n(0)
                gain=gain.min(layers.csm.getNextAt())
 

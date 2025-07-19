@@ -18,7 +18,12 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         }
     },
     autoUpgrade() { return hasMilestone("esc", 6) || hasAchievement("rw", 42) },
-
+onPrestige(){
+        if(inChallenge("cq", 23)){
+             player.p.points = n(0)
+             player.p.upgrades = []
+        }
+    },
     color: "lime",
     resource: "重置点", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -44,11 +49,11 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (hasMilestone("l", 13)) mult = mult.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18) ? layers.a.effect() : 1).pow(buyableEffect("a1", 13)))
         if (hasUpgrade("cq", 25)) mult = mult.pow(1.01)
         if (hasMilestone("t", 12)) mult = mult.pow(n(1).add(buyableEffect("t", 11).mul(0.005)))
-        if (inChallenge("cq", 21)) mult = mult.pow((2 ** (player.cq.challenges[21] + 1)))
+        if (inChallenge("cq", 21)) mult = mult.pow((player.cq.challenges[21] >= 3?1:2 ** (player.cq.challenges[21] + 1)))
         if (player.q.points.gte(1) && hasMilestone("l", 22) && inChallenge("l", 11)) mult = mult.pow(layers.q.effect())
         if (inChallenge("l", 11)) mult = expPow(mult.mul(10), tmp.l.challenges[11].challengeEffect).div(10)
         if (inChallenge("cq", 13)) mult = expPow(mult.mul(10), n(0.99).pow((player.cq.challenges[13] + 1) * 3).mul(10000).floor().div(10000)).div(10)
-        if (player.esc.points.gte(7)) mult = expPow(mult.mul(10), 0.8).div(10)
+        if (player.esc.points.gte(7)||inChallenge("cq", 23)) mult = expPow(mult.mul(10), 0.8).div(10)
         if (mult.gte("1e13000")) mult = expPow(mult.mul(10), 0.8).mul("1e11045")
         if (mult.gte("1e25000")) mult = expPow(mult.mul(10), 0.8).mul("1e21700")
         if (inChallenge("p", 21)) mult = mult.div(player.p.points.mul(player.points.pow(0.1).add(1)).add(1))
@@ -139,6 +144,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 if (hasMilestone("t", 6)) eff = eff.mul(buyableEffect("t", 11).add(1))
                 eff = eff.mul(buyableEffect("p", 11).pow(buyablePow)).pow(hasMilestone("l", 31) ? layers.a.effect() : 1)
                 if (inChallenge("cq", 22) && player.cq.challenges[22] >= 1) eff = n(1)
+
                 return eff
             },
             effectDisplay() { return `x ${format(this.effect())}` },
@@ -154,6 +160,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 if (hasMilestone("t", 7)) eff = eff.mul(buyableEffect("t", 11).add(1))
                 eff = eff.mul(buyableEffect("p", 11).pow(buyablePow))
                 if (inChallenge("cq", 21)) eff = n(1)
+if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) eff = n(1)
                 return eff
             },
             effectDisplay() { return `x ${format(this.effect())}` },
@@ -196,6 +203,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 if (!hasUpgrade("p", 55)) eff = eff.min(0.75)
                 if (hasUpgrade("p", 55)) eff = eff.mul(hasMilestone("l", 34) ? 0.1 : 0.06).add(0.75)
 
+         
                 return eff
             },
             effectDisplay() { return `+* ${format(this.effect())}(硬上限:+*0.75)` },
@@ -266,6 +274,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
                 if (hasUpgrade('p', 34)) eff = eff.mul(upgradeEffect('p', 34))
                 if (hasMilestone("l", 41)) eff = eff.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18) ? layers.a.effect() : 1))
                 if (hasAchievement("rw", 25)) eff = eff.pow(1.025).mul(1e10)
+
                 return eff
             },
             effectDisplay() { return `+ ${format(this.effect())}/s` },
@@ -443,7 +452,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
     update(diff) {
         if (hasUpgrade("p", 32)) player.p.e0 = player.p.e0.add(upgradeEffect("p", 32).mul(diff))
         for (i = 1; i <= buyableEffect('p', 13).toNumber(); i++) player.p[`e${i}`] = player.p[`e${i}`].add(player.p[`e${i - 1}`].pow(1 / 9).div(100).mul(this.condenseEffect(player.p[`e${i + 1}`])).mul(diff))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 5)) && player.p.points.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(getBuyableAmount("p", 11))).mul(n(2).pow(getBuyableAmount("p", 11).pow(2)).pow(getBuyableAmount("p", 11).gte(130) ? getBuyableAmount("p", 11).sub(30).mul(0.01) : 1)))) setBuyableAmount('p', 11, getBuyableAmount('p', 11).add(hasMilestone("l", 38) ? 5 : 1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 5)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(getBuyableAmount("p", 11))).mul(n(2).pow(getBuyableAmount("p", 11).pow(2)).pow(getBuyableAmount("p", 11).gte(130) ? getBuyableAmount("p", 11).sub(30).mul(0.01) : 1)))) setBuyableAmount('p', 11, getBuyableAmount('p', 11).add(hasMilestone("l", 38) ? 5 : 1))
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 6)) && player.p.e0.sub(1).gte(three.pow(getBuyableAmount("p", 12)).mul(10).pow(getBuyableAmount("p", 12).gte(450) ? getBuyableAmount("p", 12).sub(350).mul(0.01) : 1).pow(hasMilestone("l", 12) ? 10 : 1))) setBuyableAmount('p', 12, getBuyableAmount('p', 12).add(hasMilestone("esc", 9) ? 10 : 1))
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 7)) && (player.p[`e${buyableEffect('p', 13).toNumber()}`].sub(1)).gte(1e9)) setBuyableAmount('p', 13, getBuyableAmount('p', 13).add(1))
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 8)) && player.p.points.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e308).mul(n(hasUpgrade("a", 41) ? 1 : 1e49).pow(getBuyableAmount("p", 14))).mul(n(1e4).pow(getBuyableAmount("p", 14).pow(2))))) setBuyableAmount('p', 14, getBuyableAmount('p', 14).add(1))
@@ -592,6 +601,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(x)).mul(n(2).pow(x.pow(2)).pow(getBuyableAmount(this.layer, this.id).gte(130) ? getBuyableAmount(this.layer, this.id).sub(30).mul(0.01) : 1))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `11.在没有第31升级时倍增第31升级效果.倍增前11个升级效果.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -747,7 +757,9 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         },
     },
     passiveGeneration() {
+if (inChallenge("cq", 23))return 0
         if (hasChallenge("p", 11) || hasUpgrade("cq", 35)) return inChallenge("p", 22) ? 1e-5 : hasMilestone("esc", 4) ? '1' : '0.125'
+
         return 0
     },
 

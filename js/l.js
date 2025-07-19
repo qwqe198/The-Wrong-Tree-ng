@@ -1,6 +1,6 @@
 addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
     symbol: `L`, // 这是节点上显示的字母
-    position: 1, // 节点顺序
+    position: 0, // 节点顺序
     startData() {
         return {
             unlocked: true, //是否开始就解锁
@@ -560,7 +560,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
     update(diff) {
 
         if (hasAchievement("rw", 45) && player.l.points.sub(1).gte(n(1e20).mul(n(10).pow(getBuyableAmount("l", 11))).mul(n(2).pow(getBuyableAmount("l", 11).pow(2))))) setBuyableAmount('l', 11, getBuyableAmount('l', 11).add(1))
-
+if (hasAchievement("rw", 77)&&player.l.challenges[11]<player.cq.milestones.length-3)player.l.challenges[11] = player.cq.milestones.length-3
 
     },
 
@@ -617,9 +617,8 @@ if (hasMilestone("t", 13)) gain = gain.mul(buyableEffect("t", 11).add(1))
             let kept = ["unlocked", "auto"]
             if (hasAchievement("rw", 47)) {
                 kept.push("buyables")
-
-
             }
+ 
             layerDataReset(this.layer, kept)
         }
     },
