@@ -6,7 +6,7 @@ addLayer("rw", {
     },
     color: "yellow",
     row: "side",
-    layerShown() { return hasMilestone("cq", 1) },
+    layerShown() { return hasMilestone("cq", 1)||hasAchievement("rw", 81) },
     tooltip() { // Optional, tooltip displays when the layer is locked
         return ("任务")
     },
@@ -257,6 +257,16 @@ addLayer("rw", {
             name: "终于到来",
             done() { return player.cq.challenges[23] >= 1 },
             tooltip: "完成1次简单试炼6，奖励：你的扩张次数不会小于战力里程碑数量-3，隐藏简单试炼1，2，解锁新的战力里程碑",
+        },
+81: {
+            name: "更多奖励，但也更难缠了",
+            done() { return player.grz.points.gte(1) },
+            tooltip: "击杀1只感染者，奖励：在所有重置中保留试炼",
+        },
+82: {
+            name: "第二次2",
+            done() { return player.grz.points.gte(2) },
+            tooltip: "击杀2只感染者，奖励：咕咕咕。",
         },
     },
     tabFormat: [

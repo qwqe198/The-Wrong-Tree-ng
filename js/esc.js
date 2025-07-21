@@ -181,7 +181,7 @@ if(inChallenge("cq", 23))return  n(ez6escReq[player.esc.points.toNumber()])
     doReset(resettingLayer) {
         if (layers[resettingLayer].row > layers[this.layer].row) {
             let kept = ["unlocked", "auto"]
-            if (hasAchievement("rw", 45)) {
+            if (resettingLayer == "cq" &&hasAchievement("rw", 45)) {
                 kept.push("milestones")
                 kept.push(" upgrades")
 

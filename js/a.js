@@ -277,7 +277,7 @@ addLayer("a", {
             canAfford() { return player.a.points.gte(this.cost()) },
             buy() {
                 player.a.points = player.a.points.sub(this.cost())
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(hasUpgrade("grz", 11)?2:1))
             },
             title() {
                 return "数字生命"
@@ -448,6 +448,6 @@ addLayer("a", {
         return 0
     },
      update(diff) {
- if (hasUpgrade("cq", 32) && player.a.points.sub(1).gte(n(hasMilestone("l", 32) ? "1e10000" : "1e14000").mul(n(1e308).pow(getBuyableAmount("a", 11))).mul(n(1e10).pow(getBuyableAmount("a", 11).pow(2))))) setBuyableAmount("a", 11, getBuyableAmount("a", 11).add(1))
+ if (hasUpgrade("cq", 32) && player.a.points.sub(1).gte(n(hasMilestone("l", 32) ? "1e10000" : "1e14000").mul(n(1e308).pow(getBuyableAmount("a", 11))).mul(n(1e10).pow(getBuyableAmount("a", 11).pow(2))))) setBuyableAmount("a", 11, getBuyableAmount("a", 11).add(hasUpgrade("grz", 11)?2:1))
 }
 })

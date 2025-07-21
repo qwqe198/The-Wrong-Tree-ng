@@ -229,7 +229,7 @@ if (hasAchievement("rw", 77)) mult = mult.mul(2)
         },
  23: {
             requirementDescription: "300战力",
-            effectDescription() { return "解锁第2个副本(咕咕咕）"  },
+            effectDescription() { return "解锁第2个副本"  },
             done() { return player.cq.points.gte(300)&&hasAchievement("rw", 77) },
 unlocked() { return hasAchievement("rw", 77) },
         },
@@ -906,9 +906,9 @@ unlocked() { return hasAchievement("rw", 77) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row > layers[this.layer].row) {
             let kept = ["unlocked", "auto"]
-            if (resettingLayer == "cq" && hasUpgrade("cq", 31)) {
+           
                 kept.push("challenges")
-            }
+            
             layerDataReset(this.layer, kept)
         }
     },
