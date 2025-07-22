@@ -30,7 +30,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
     layerShown() { return hasMilestone("esc", 8) || hasMilestone("cq", 1) },
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     tabFormat: {
-        生命里程碑: {
+        里程碑: {
             buttonStyle() { return { 'color': 'lightblue' } },
             content:
                 ["main-display",
@@ -42,7 +42,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         },
 
 
-        生命挑战: {
+        挑战: {
             buttonStyle() { return { 'color': 'lightblue' } },
             unlocked() { return hasMilestone("l", 10) },
             content:
@@ -52,7 +52,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
 
                 ],
         },
-        生命可购买: {
+        可购买: {
             buttonStyle() { return { 'color': 'lightblue' } },
             unlocked() { return player.l.challenges[11] >= 10 },
             content:

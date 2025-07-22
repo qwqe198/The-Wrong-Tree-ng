@@ -272,6 +272,10 @@ addLayer("rw", {
             done() { return player.grz.points.gte(4) },
             tooltip: "击杀4只感染者，奖励：自动购买cq层级升级。",
         },
+84:{         name: "新的购买",
+            done() { return player.grz.points.gte(6) },
+            tooltip: "击杀6只感染者，奖励：IN层级升级15对感染力量生效。",
+        },
     },
     tabFormat: [
         "blank",

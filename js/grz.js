@@ -18,6 +18,20 @@ ll: new ExpantaNum(0),
 
         return 0
     },
+  milestones: {
+        1: {
+            requirementDescription: "6感染者",
+
+            done() { return player.grz.points.gte(6) },
+
+            effectDescription() {
+
+
+                return "解锁购买项" 
+            },
+        },
+  
+    },
 onPrestige(resettingLayer) {
         player.a1.points = n(0)
 player.a1.upgrades = []
@@ -27,8 +41,8 @@ player.a1.buyables[13] = zero
     },
     effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量,点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
     lleff() {
-        let eff = player.grz.ll.add(1).log10().mul(0.005).add(1)
-        if(eff.gte(1.03))eff=eff.mul(0.3).add(n(1.03).mul(0.7))
+        let eff = player.grz.ll.add(1).log10().mul(0.001).add(1)
+        if(eff.gte(1.01))eff=eff.mul(0.1).add(n(1.01).mul(0.9))
         return eff
     },
 llgain() {
@@ -38,13 +52,15 @@ if (hasUpgrade("grz", 22))pow=pow.mul(upgradeEffect("grz", 22))
       if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(1e10).log10().log10())  
 if (hasUpgrade("grz", 21))gain=gain.mul(upgradeEffect("grz", 21))
 if (hasUpgrade("grz", 23))gain=gain.mul(upgradeEffect("grz", 23))
+gain = gain.mul(buyableEffect("grz", 11))
+if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
         return gain
     },
 pthc() {
         let gain =n("1e50000") 
         gain=gain.pow(this.lleff())
 if (hasUpgrade("grz", 13))gain=gain.mul(upgradeEffect("grz", 13))
-if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(10).log(10).pow(22))
+if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(10).log(10).pow(7))
         return gain
     },
 upgrades: {
@@ -81,7 +97,7 @@ currencyDisplayName: "感染力量",
             cost() { return new OmegaNum(2000) },
             unlocked() { return true },
 effect() {
-                var eff = player.grz.ll.add(1).pow(33)
+                var eff = player.grz.ll.add(1).pow(5)
                 
                 return eff
             },
@@ -100,7 +116,7 @@ effect1() {
                 return eff
             },
 effect2() {
-                var eff = player.points.add(10).log10().pow(22)
+                var eff = player.points.add(10).log10().pow(7)
                 
                 return eff
             },
@@ -179,6 +195,29 @@ currencyDisplayName: "感染力量",
             currencyInternalName: "ll",
             currencyLayer: "grz"
         },
+24: {
+            description: "每个升级使战力获取x1.1.",
+            cost() { return new OmegaNum(25000000) },
+            unlocked() { return true },
+effect() {
+                var eff = n(1.1).pow(player.a1.upgrades.length)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+25: {
+            description: "咕咕咕.",
+            cost() { return new OmegaNum(1e11) },
+            unlocked() { return true },
+
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
     },
     exponent: 5,
     baseAmount() { return player.cq.points },//基础资源数量
@@ -205,6 +244,70 @@ getNextAt() {
                 player.grz.ll = player.grz.ll.add(this.llgain().mul(diff))
 
         },
+buyables: {
+        11: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n( "1e8").mul(n(2).pow(x)).mul(n(1.0001).pow(x.pow(2)))
 
+                return c
+            },
+            display() { return `感染力量获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}感染力量<br>数量:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.grz.ll.gte(this.cost()) },
+            buy() {
+                player.grz.ll = player.grz.ll.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "力量加成"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+var base = n(2)
+                var eff = n(base).pow(x)
+
+                return eff
+            },
+            unlocked() { return true },
+        },
+    },
+ tabFormat: {
+        主界面: {
+            buttonStyle() { return { 'color': 'green' } },
+           
+            content:
+                ["main-display",
+
+                    "prestige-button", "resource-display",
+                    "upgrades",
+
+
+                ],
+        },
+        里程碑: {
+            buttonStyle() { return { 'color': 'green' } },
+            content:
+                ["main-display",
+
+                    "prestige-button", "resource-display",
+                    "milestones",
+
+                ],
+        },
+
+
+
+        购买项: {
+            buttonStyle() { return { 'color': 'green' } },
+            unlocked() { return hasMilestone("grz", 1) },
+            content:
+                ["main-display",
+
+                    "prestige-button", "resource-display",
+                    "buyables",
+
+
+                ],
+                
+        },
+    },
 
 })

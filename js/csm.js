@@ -109,6 +109,7 @@ addLayer("csm", { //这是代码中的节点代码 例如player.p可以调用该
         effect() {
                 var eff = player.csm.ati.add(1)
 eff=eff.pow(buyableEffect('csm', 12))
+ if (eff.gte(1e100)) eff = expPow(eff.mul(10), 0.5).mul("1e90")
                 return eff
         },
         atigain() {

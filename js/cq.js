@@ -106,6 +106,7 @@ if (hasUpgrade("grz", 15))eff = eff.mul(upgradeEffect("grz", 15))
         if (hasMilestone("lcb", 5)) mult = mult.mul(n(2).pow(player.lcb.points.sub(4)).min(100).max(0))
 if (hasAchievement("rw", 77)) mult = mult.mul(2)
 if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
+if (hasUpgrade("grz", 24))mult = mult.mul(upgradeEffect("grz", 24))
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
