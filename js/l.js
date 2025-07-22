@@ -580,6 +580,7 @@ if (hasAchievement("rw", 77)&&player.l.challenges[11]<player.cq.milestones.lengt
         var gain = player.p.points.add(10).log10().div(7950).pow((hasMilestone("lcb", 2) && player.l.challenges[11] >= 10 ? player.l.challenges[11] - 8 : 2) + player.cq.challenges[11] * 0.5)
         if (hasMilestone("l", 10)) gain = gain.mul(tmp.l.challenges[11].rewardEffect)
         if (hasMilestone("esc", 9)) gain = gain.mul(2)
+if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
         if (hasMilestone("lcb", 3)) gain = gain.mul(n(1.1).pow(player.l.points.add(10).log(10).floor().min(100)))
         if (hasUpgrade("p", 61)) gain = gain.mul(10)
         if (hasUpgrade("p", 62)) gain = gain.mul(50)

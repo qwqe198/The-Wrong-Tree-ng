@@ -266,7 +266,11 @@ addLayer("rw", {
 82: {
             name: "第二次2",
             done() { return player.grz.points.gte(2) },
-            tooltip: "击杀2只感染者，奖励：咕咕咕。",
+            tooltip: "击杀2只感染者，奖励：保留25战力里程碑。",
+        },
+83:{         name: "再来两次",
+            done() { return player.grz.points.gte(4) },
+            tooltip: "击杀4只感染者，奖励：自动购买cq层级升级。",
         },
     },
     tabFormat: [

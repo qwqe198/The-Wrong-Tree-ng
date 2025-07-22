@@ -1,5 +1,5 @@
 addLayer("grz", { //这是代码中的节点代码 例如player.p可以调用该层级的数据 尽量使用顺手的字母什么的 不建议数字开头
-    symbol: `感染者`, // 这是节点上显示的字母
+    symbol: `IN`, // 这是节点上显示的字母
     position: 0, // 节点顺序
     startData() {
         return {
@@ -18,15 +18,26 @@ ll: new ExpantaNum(0),
 
         return 0
     },
+onPrestige(resettingLayer) {
+        player.a1.points = n(0)
+player.a1.upgrades = []
+player.a1.buyables[11] = zero
+player.a1.buyables[12] = zero
+player.a1.buyables[13] = zero
+    },
     effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量,点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
     lleff() {
         let eff = player.grz.ll.add(1).log10().mul(0.005).add(1)
-        
+        if(eff.gte(1.03))eff=eff.mul(0.3).add(n(1.03).mul(0.7))
         return eff
     },
 llgain() {
-        let gain = player.grz.points
+let pow =n(2)
+if (hasUpgrade("grz", 22))pow=pow.mul(upgradeEffect("grz", 22))
+        let gain = player.grz.points.pow(pow)
       if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(1e10).log10().log10())  
+if (hasUpgrade("grz", 21))gain=gain.mul(upgradeEffect("grz", 21))
+if (hasUpgrade("grz", 23))gain=gain.mul(upgradeEffect("grz", 23))
         return gain
     },
 pthc() {
@@ -46,7 +57,7 @@ currencyDisplayName: "感染力量",
             currencyLayer: "grz",
 effect() {
                 var eff = player.grz.ll.add(1).log10().mul(0.004).add(1)
-                
+                if (hasUpgrade("grz", 16))eff=eff.pow(upgradeEffect("grz", 16))
                 return eff
             },
             effectDisplay() { return `^ ${format(this.effect())}` },
@@ -94,6 +105,76 @@ effect2() {
                 return eff
             },
  effectDisplay() { return `x${format(this.effect1())} ,x ${format(this.effect2())} ` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+15: {
+            description: "基于感染者加成生命，血量，增量，无瑕点数，变形虫，战力获取.",
+            cost() { return new OmegaNum(15000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.points
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+16: {
+            description: "基于b加成升级11效果.",
+            cost() { return new OmegaNum(20000) },
+            unlocked() { return true },
+effect() {
+                var eff = layers.a.effect().pow(0.2)
+                
+                return eff
+            },
+ effectDisplay() { return `^ ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+21: {
+            description: "基于重置点加成感染力量获取.",
+            cost() { return new OmegaNum(30000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.a.points.add(1e10).log10().log10()
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+22: {
+            description: "基于感染力量加成感染者基础.",
+            cost() { return new OmegaNum(400000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(10).log10().mul(0.015).add(1)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+23: {
+            description: "基于战力加成感染力量获取.",
+            cost() { return new OmegaNum(1000000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.cq.points.add(1).pow(0.5)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
 currencyDisplayName: "感染力量",
             currencyInternalName: "ll",
             currencyLayer: "grz"

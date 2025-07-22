@@ -77,7 +77,7 @@ if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) gain = gain.pow(0.25
 	if (player.esc.points.gte(6)) gain = expPow(gain.mul(10), 0.8).div(10)
 	if (gain.gte("1e15000")) gain = expPow(gain.mul(10), 0.8).mul("1e14000")//sc1
 if (hasUpgrade("grz", 11))gain=gain.pow(upgradeEffect("grz", 11))
-if (gain.gte("1e50000")) gain = expPow(gain.mul(10), 0.8).mul("1e44257")//sc2
+if (gain.gte("1e50000")) gain = expPow(gain.mul(10), 0.7).mul("1e48054")//sc2
 	//加强疫苗 
 	if (inChallenge("t", 11)) gain = gain.add(10).log10().div(9)
 	if (hasMilestone("esc", 12) && hasUpgrade("i", 11)) gain = gain.mul(upgradeEffect("i", 11).add(10).log10().pow(1.25))
@@ -86,6 +86,7 @@ if (gain.gte("1e50000")) gain = expPow(gain.mul(10), 0.8).mul("1e44257")//sc2
 	if (hasChallenge("cq", 22)) gain = gain.mul(3 ** player.cq.challenges[22])
 	if (hasUpgrade("cq", 64)) gain = gain.mul(upgradeEffect("cq", 64))
 	if (hasAchievement("rw", 66)) gain = gain.mul(player.i.points.add(10).log10())
+if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
 	if (player.csm.points.gte(1)) gain = gain.div(1e4)
 	//上限
 	if (gain.gte(layers.grz.pthc())) gain = gain.min(layers.grz.pthc())

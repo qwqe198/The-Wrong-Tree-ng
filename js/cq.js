@@ -87,6 +87,7 @@ onPrestige(resettingLayer) {
     effect() {
         let eff = player.cq.points.max(0)
         if (hasAchievement("rw", 15)) eff = eff.mul(1.5)
+if (hasUpgrade("grz", 15))eff = eff.mul(upgradeEffect("grz", 15))
         eff = eff.mul(buyableEffect("cq", 11))
         eff = eff.mul(tmp.cq.challenges[11].rewardEffect)
         if (hasMilestone("t", 5)) eff = eff.mul(buyableEffect("t", 11).add(1))
@@ -104,6 +105,7 @@ onPrestige(resettingLayer) {
         mult = new ExpantaNum(1)
         if (hasMilestone("lcb", 5)) mult = mult.mul(n(2).pow(player.lcb.points.sub(4)).min(100).max(0))
 if (hasAchievement("rw", 77)) mult = mult.mul(2)
+if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -215,7 +217,7 @@ if (hasAchievement("rw", 77)) mult = mult.mul(2)
         20: {
             requirementDescription: "25战力",
             effectDescription: "解锁副本，元性质获取^1.15但是移除点数奇点",
-            done() { return player.cq.points.gte(25) }
+            done() { return player.cq.points.gte(25)||player.grz.points.gte(2) }
         },
         21: {
             requirementDescription: "30战力",
@@ -926,7 +928,7 @@ unlocked() { return hasAchievement("rw", 77) },
 
 
     },
-
+autoUpgrade() { return hasAchievement("rw", 83) },
 
 
 })

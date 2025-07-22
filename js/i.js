@@ -316,6 +316,7 @@ eff=eff.pow(buyableEffect('csm', 11))
                 if (hasUpgrade("i", 15)) gain = gain.mul(getBuyableAmount("i", 12).add(1))
                 if (hasUpgrade("i", 25)) gain = gain.mul(getBuyableAmount("i", 13).add(1))
                 if (hasUpgrade("i", 35)) gain = gain.mul(getBuyableAmount("i", 11).add(1))
+if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
                 if (hasUpgrade("i", 12) && hasUpgrade("i", 44)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
                 gain = gain.pow(buyableEffect('i', 13))
                 //乘数
