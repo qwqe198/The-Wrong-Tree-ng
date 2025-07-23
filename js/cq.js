@@ -234,6 +234,461 @@ if (hasUpgrade("grz", 26))mult = mult.mul(upgradeEffect("grz", 26))
             done() { return player.cq.points.gte(300)&&hasAchievement("rw", 77) },
 unlocked() { return hasAchievement("rw", 77) },
         },
+24: {
+            requirementDescription: "21扩张完成",
+
+            done() { return player.l.challenges[11] >= 21 },
+            effectDescription() {
+
+
+                return "鸽子作者画大饼 转生增量x2"
+            },
+        },
+25: {
+    requirementDescription: "22扩张完成",
+    done() { return player.l.challenges[11] >= 22 },
+    effectDescription() { return "还没做" },
+},
+26: {
+    requirementDescription: "23扩张完成",
+    done() { return player.l.challenges[11] >= 23 },
+    effectDescription() { return "还没做" },
+},
+27: {
+    requirementDescription: "24扩张完成",
+    done() { return player.l.challenges[11] >= 24 },
+    effectDescription() { return "还没做" },
+},
+28: {
+    requirementDescription: "25扩张完成",
+    done() { return player.l.challenges[11] >= 25 },
+    effectDescription() { return "还没做" },
+},
+29: {
+    requirementDescription: "26扩张完成",
+    done() { return player.l.challenges[11] >= 26 },
+    effectDescription() { return "还没做" },
+},
+30: {
+    requirementDescription: "27扩张完成",
+    done() { return player.l.challenges[11] >= 27 },
+    effectDescription() { return "还没做" },
+},
+31: {
+    requirementDescription: "28扩张完成",
+    done() { return player.l.challenges[11] >= 28 },
+    effectDescription() { return "还没做" },
+},
+32: {
+    requirementDescription: "29扩张完成",
+    done() { return player.l.challenges[11] >= 29 },
+    effectDescription() { return "还没做" },
+},
+33: {
+    requirementDescription: "30扩张完成",
+    done() { return player.l.challenges[11] >= 30 },
+    effectDescription() { return "还没做" },
+},
+34: {
+    requirementDescription: "31扩张完成",
+    done() { return player.l.challenges[11] >= 31 },
+    effectDescription() { return "还没做" },
+},
+35: {
+    requirementDescription: "32扩张完成",
+    done() { return player.l.challenges[11] >= 32 },
+    effectDescription() { return "还没做" },
+},
+36: {
+    requirementDescription: "33扩张完成",
+    done() { return player.l.challenges[11] >= 33 },
+    effectDescription() { return "还没做" },
+},
+37: {
+    requirementDescription: "34扩张完成",
+    done() { return player.l.challenges[11] >= 34 },
+    effectDescription() { return "还没做" },
+},
+38: {
+    requirementDescription: "35扩张完成",
+    done() { return player.l.challenges[11] >= 35 },
+    effectDescription() { return "还没做" },
+},
+39: {
+    requirementDescription: "36扩张完成",
+    done() { return player.l.challenges[11] >= 36 },
+    effectDescription() { return "还没做" },
+},
+40: {
+    requirementDescription: "37扩张完成",
+    done() { return player.l.challenges[11] >= 37 },
+    effectDescription() { return "还没做" },
+},
+41: {
+    requirementDescription: "38扩张完成",
+    done() { return player.l.challenges[11] >= 38 },
+    effectDescription() { return "还没做" },
+},
+42: {
+    requirementDescription: "39扩张完成",
+    done() { return player.l.challenges[11] >= 39 },
+    effectDescription() { return "还没做" },
+},
+43: {
+    requirementDescription: "40扩张完成",
+    done() { return player.l.challenges[11] >= 40 },
+    effectDescription() { return "还没做" },
+},
+44: {
+    requirementDescription: "41扩张完成",
+    done() { return player.l.challenges[11] >= 41 },
+    effectDescription() { return "还没做" },
+},
+45: {
+    requirementDescription: "42扩张完成",
+    done() { return player.l.challenges[11] >= 42 },
+    effectDescription() { return "还没做" },
+},
+46: {
+    requirementDescription: "43扩张完成",
+    done() { return player.l.challenges[11] >= 43 },
+    effectDescription() { return "还没做" },
+},
+47: {
+    requirementDescription: "44扩张完成",
+    done() { return player.l.challenges[11] >= 44 },
+    effectDescription() { return "还没做" },
+},
+48: {
+    requirementDescription: "45扩张完成",
+    done() { return player.l.challenges[11] >= 45 },
+    effectDescription() { return "还没做" },
+},
+49: {
+    requirementDescription: "46扩张完成",
+    done() { return player.l.challenges[11] >= 46 },
+    effectDescription() { return "还没做" },
+},
+50: {
+    requirementDescription: "47扩张完成",
+    done() { return player.l.challenges[11] >= 47 },
+    effectDescription() { return "还没做" },
+},
+51: {
+    requirementDescription: "48扩张完成",
+    done() { return player.l.challenges[11] >= 48 },
+    effectDescription() { return "还没做" },
+},
+52: {
+    requirementDescription: "49扩张完成",
+    done() { return player.l.challenges[11] >= 49 },
+    effectDescription() { return "还没做" },
+},
+53: {
+    requirementDescription: "50扩张完成",
+    done() { return player.l.challenges[11] >= 50 },
+    effectDescription() { return "还没做" },
+},
+54: {
+    requirementDescription: "51扩张完成",
+    done() { return player.l.challenges[11] >= 51 },
+    effectDescription() { return "还没做" },
+},
+55: {
+    requirementDescription: "52扩张完成",
+    done() { return player.l.challenges[11] >= 52 },
+    effectDescription() { return "还没做" },
+},
+56: {
+    requirementDescription: "53扩张完成",
+    done() { return player.l.challenges[11] >= 53 },
+    effectDescription() { return "还没做" },
+},
+57: {
+    requirementDescription: "54扩张完成",
+    done() { return player.l.challenges[11] >= 54 },
+    effectDescription() { return "还没做" },
+},
+58: {
+    requirementDescription: "55扩张完成",
+    done() { return player.l.challenges[11] >= 55 },
+    effectDescription() { return "还没做" },
+},
+59: {
+    requirementDescription: "56扩张完成",
+    done() { return player.l.challenges[11] >= 56 },
+    effectDescription() { return "还没做" },
+},
+60: {
+    requirementDescription: "57扩张完成",
+    done() { return player.l.challenges[11] >= 57 },
+    effectDescription() { return "还没做" },
+},
+61: {
+    requirementDescription: "58扩张完成",
+    done() { return player.l.challenges[11] >= 58 },
+    effectDescription() { return "还没做" },
+},
+62: {
+    requirementDescription: "59扩张完成",
+    done() { return player.l.challenges[11] >= 59 },
+    effectDescription() { return "还没做" },
+},
+63: {
+    requirementDescription: "60扩张完成",
+    done() { return player.l.challenges[11] >= 60 },
+    effectDescription() { return "还没做" },
+},
+64: {
+    requirementDescription: "61扩张完成",
+    done() { return player.l.challenges[11] >= 61 },
+    effectDescription() { return "还没做" },
+},
+65: {
+    requirementDescription: "62扩张完成",
+    done() { return player.l.challenges[11] >= 62 },
+    effectDescription() { return "还没做" },
+},
+66: {
+    requirementDescription: "63扩张完成",
+    done() { return player.l.challenges[11] >= 63 },
+    effectDescription() { return "还没做" },
+},
+67: {
+    requirementDescription: "64扩张完成",
+    done() { return player.l.challenges[11] >= 64 },
+    effectDescription() { return "还没做" },
+},
+68: {
+    requirementDescription: "65扩张完成",
+    done() { return player.l.challenges[11] >= 65 },
+    effectDescription() { return "还没做" },
+},
+69: {
+    requirementDescription: "66扩张完成",
+    done() { return player.l.challenges[11] >= 66 },
+    effectDescription() { return "还没做" },
+},
+70: {
+    requirementDescription: "67扩张完成",
+    done() { return player.l.challenges[11] >= 67 },
+    effectDescription() { return "还没做" },
+},
+71: {
+    requirementDescription: "68扩张完成",
+    done() { return player.l.challenges[11] >= 68 },
+    effectDescription() { return "还没做" },
+},
+72: {
+    requirementDescription: "69扩张完成",
+    done() { return player.l.challenges[11] >= 69 },
+    effectDescription() { return "还没做" },
+},
+73: {
+    requirementDescription: "70扩张完成",
+    done() { return player.l.challenges[11] >= 70 },
+    effectDescription() { return "还没做" },
+},
+74: {
+    requirementDescription: "71扩张完成",
+    done() { return player.l.challenges[11] >= 71 },
+    effectDescription() { return "还没做" },
+},
+75: {
+    requirementDescription: "72扩张完成",
+    done() { return player.l.challenges[11] >= 72 },
+    effectDescription() { return "还没做" },
+},
+76: {
+    requirementDescription: "73扩张完成",
+    done() { return player.l.challenges[11] >= 73 },
+    effectDescription() { return "还没做" },
+},
+77: {
+    requirementDescription: "74扩张完成",
+    done() { return player.l.challenges[11] >= 74 },
+    effectDescription() { return "还没做" },
+},
+78: {
+    requirementDescription: "75扩张完成",
+    done() { return player.l.challenges[11] >= 75 },
+    effectDescription() { return "还没做" },
+},
+79: {
+    requirementDescription: "76扩张完成",
+    done() { return player.l.challenges[11] >= 76 },
+    effectDescription() { return "还没做" },
+},
+80: {
+    requirementDescription: "77扩张完成",
+    done() { return player.l.challenges[11] >= 77 },
+    effectDescription() { return "还没做" },
+},
+81: {
+    requirementDescription: "78扩张完成",
+    done() { return player.l.challenges[11] >= 78 },
+    effectDescription() { return "还没做" },
+},
+82: {
+    requirementDescription: "79扩张完成",
+    done() { return player.l.challenges[11] >= 79 },
+    effectDescription() { return "还没做" },
+},
+83: {
+    requirementDescription: "80扩张完成",
+    done() { return player.l.challenges[11] >= 80 },
+    effectDescription() { return "还没做" },
+},
+84: {
+    requirementDescription: "81扩张完成",
+    done() { return player.l.challenges[11] >= 81 },
+    effectDescription() { return "还没做" },
+},
+85: {
+    requirementDescription: "82扩张完成",
+    done() { return player.l.challenges[11] >= 82 },
+    effectDescription() { return "还没做" },
+},
+86: {
+    requirementDescription: "83扩张完成",
+    done() { return player.l.challenges[11] >= 83 },
+    effectDescription() { return "还没做" },
+},
+87: {
+    requirementDescription: "84扩张完成",
+    done() { return player.l.challenges[11] >= 84 },
+    effectDescription() { return "还没做" },
+},
+88: {
+    requirementDescription: "85扩张完成",
+    done() { return player.l.challenges[11] >= 85 },
+    effectDescription() { return "还没做" },
+},
+89: {
+    requirementDescription: "86扩张完成",
+    done() { return player.l.challenges[11] >= 86 },
+    effectDescription() { return "还没做" },
+},
+90: {
+    requirementDescription: "87扩张完成",
+    done() { return player.l.challenges[11] >= 87 },
+    effectDescription() { return "还没做" },
+},
+91: {
+    requirementDescription: "88扩张完成",
+    done() { return player.l.challenges[11] >= 88 },
+    effectDescription() { return "还没做" },
+},
+92: {
+    requirementDescription: "89扩张完成",
+    done() { return player.l.challenges[11] >= 89 },
+    effectDescription() { return "还没做" },
+},
+93: {
+    requirementDescription: "90扩张完成",
+    done() { return player.l.challenges[11] >= 90 },
+    effectDescription() { return "还没做" },
+},
+94: {
+    requirementDescription: "91扩张完成",
+    done() { return player.l.challenges[11] >= 91 },
+    effectDescription() { return "还没做" },
+},
+95: {
+    requirementDescription: "92扩张完成",
+    done() { return player.l.challenges[11] >= 92 },
+    effectDescription() { return "还没做" },
+},
+96: {
+    requirementDescription: "93扩张完成",
+    done() { return player.l.challenges[11] >= 93 },
+    effectDescription() { return "还没做" },
+},
+97: {
+    requirementDescription: "94扩张完成",
+    done() { return player.l.challenges[11] >= 94 },
+    effectDescription() { return "还没做" },
+},
+98: {
+    requirementDescription: "95扩张完成",
+    done() { return player.l.challenges[11] >= 95 },
+    effectDescription() { return "还没做" },
+},
+99: {
+    requirementDescription: "96扩张完成",
+    done() { return player.l.challenges[11] >= 96 },
+    effectDescription() { return "还没做" },
+},
+100: {
+    requirementDescription: "97扩张完成",
+    done() { return player.l.challenges[11] >= 97 },
+    effectDescription() { return "还没做" },
+},
+101: {
+    requirementDescription: "98扩张完成",
+    done() { return player.l.challenges[11] >= 98 },
+    effectDescription() { return "还没做" },
+},
+102: {
+    requirementDescription: "99扩张完成",
+    done() { return player.l.challenges[11] >= 99 },
+    effectDescription() { return "还没做" },
+},
+103: {
+    requirementDescription: "100扩张完成",
+    done() { return player.l.challenges[11] >= 100 },
+    effectDescription() { return "还没做" },
+},
+104: {
+    requirementDescription: "101扩张完成",
+    done() { return player.l.challenges[11] >= 101 },
+    effectDescription() { return "还没做" },
+},
+105: {
+    requirementDescription: "102扩张完成",
+    done() { return player.l.challenges[11] >= 102 },
+    effectDescription() { return "还没做" },
+},
+106: {
+    requirementDescription: "103扩张完成",
+    done() { return player.l.challenges[11] >= 103 },
+    effectDescription() { return "还没做" },
+},
+107: {
+    requirementDescription: "104扩张完成",
+    done() { return player.l.challenges[11] >= 104 },
+    effectDescription() { return "还没做" },
+},
+108: {
+    requirementDescription: "105扩张完成",
+    done() { return player.l.challenges[11] >= 105 },
+    effectDescription() { return "还没做" },
+},
+109: {
+    requirementDescription: "106扩张完成",
+    done() { return player.l.challenges[11] >= 106 },
+    effectDescription() { return "还没做" },
+},
+110: {
+    requirementDescription: "107扩张完成",
+    done() { return player.l.challenges[11] >= 107 },
+    effectDescription() { return "还没做" },
+},
+111: {
+    requirementDescription: "108扩张完成",
+    done() { return player.l.challenges[11] >= 108 },
+    effectDescription() { return "还没做" },
+},
+112: {
+    requirementDescription: "109扩张完成",
+    done() { return player.l.challenges[11] >= 109 },
+    effectDescription() { return "还没做" },
+},
+113: {
+    requirementDescription: "110扩张完成",
+    done() { return player.l.challenges[11] >= 110 },
+    effectDescription() { return "还没做" },
+},
     },
     upgrades: {
         10000: {
