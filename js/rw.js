@@ -276,6 +276,11 @@ addLayer("rw", {
             done() { return player.grz.points.gte(6) },
             tooltip: "击杀6只感染者，奖励：IN层级升级15对感染力量生效。",
         },
+85: {
+            name: "两行升级",
+            done() { return hasUpgrade("grz", 26) },
+            tooltip: "获得两行感染者升级，奖励：转生增量x10，解锁前3个灌注的第二个效果",
+        },
     },
     tabFormat: [
         "blank",

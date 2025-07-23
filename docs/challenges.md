@@ -68,7 +68,7 @@ Individual Challenges can have these features:
 
 The old goal system uses these features:
 
-- goal: **deprecated**, A Decimal for the amount of currency required to beat the challenge. By default, the goal is in basic Points. The goal can also be a function if its value changes.
+- goal: **deprecated**, A ExpantaNum for the amount of currency required to beat the challenge. By default, the goal is in basic Points. The goal can also be a function if its value changes.
 
 - currencyDisplayName: **deprecated**. the name to display for the currency for the goal
 

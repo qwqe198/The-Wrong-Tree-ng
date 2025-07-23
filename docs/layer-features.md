@@ -10,15 +10,15 @@ You can make almost any value dynamic by using a function in its place, includin
 
 - name: **optional**. used in reset confirmations (and the default infobox title). If absent, it just uses the layer's id.
 
-- startData(): A function to return the default save data for this layer. Add any variables you have to it. Make sure to use `Decimal` values rather than normal numbers.
+- startData(): A function to return the default save data for this layer. Add any variables you have to it. Make sure to use `ExpantaNum` values rather than normal numbers.
 
     Standard values:
         - Required:
             - unlocked: a bool determining if this layer is unlocked or not
-            - points: a Decimal, the main currency for the layer
+            - points: a ExpantaNum, the main currency for the layer
         - Optional:
-            - total: A Decimal, tracks total amount of main prestige currency. Always tracked, but only shown if you add it here.
-            - best: A Decimal, tracks highest amount of main prestige currency. Always tracked, but only shown if you add it here.
+            - total: A ExpantaNum, tracks total amount of main prestige currency. Always tracked, but only shown if you add it here.
+            - best: A ExpantaNum, tracks highest amount of main prestige currency. Always tracked, but only shown if you add it here.
             - unlockOrder: used to keep track of relevant layers unlocked before this one.
             - resetTime: A number, time since this layer was last prestiged (or reset by another layer)
 
@@ -95,7 +95,7 @@ You can make almost any value dynamic by using a function in its place, includin
 
 - baseAmount(): A function that gets the current value of the base resource.
 
-- requires: A Decimal, the amount of the base needed to gain 1 of the prestige currency. Also the amount required to unlock the layer. You can instead make this a function, to make it harder if another layer was unlocked first (based on unlockOrder).
+- requires: A ExpantaNum, the amount of the base needed to gain 1 of the prestige currency. Also the amount required to unlock the layer. You can instead make this a function, to make it harder if another layer was unlocked first (based on unlockOrder).
 
 - exponent: Used as described above.
 
@@ -135,7 +135,7 @@ You can make almost any value dynamic by using a function in its place, includin
 
 - position: **optional**. Determines the horizontal position of the layer in its row in a standard tree. By default, it uses the layer id, and layers are sorted in alphabetical order.
 
-- branches: **optional**. An array of layer/node ids. On a tree, a line will appear from this layer to all of the layers in the list. Alternatively, an entry in the array can be a 2-element array consisting of the layer id and a color value. The color value can either be a string with a hex color code, or a number from 1-3 (theme-affected colors). A third element in the array optionally specifies line width.
+- branches: **optional**. An array of layer/node ids. On a tree, a line will appear from this layer to all of the layers in the list. Alternatively, an entry in the array can be a 2-element array consisting of the layer id and a color value. The color value can either be a string with a hex color code, or a number from 1-3 (theme-affected colors).
 
 - nodeStyle: **optional**. A CSS object, where the keys are CSS attributes, which styles this layer's node on the tree.
 
@@ -177,7 +177,7 @@ componentStyles: {
 
 - previousTab: **optional**, a layer's id. If a layer has a previousTab, the layer will always have a back arrow and pressing the back arrow on this layer will take you to the layer with this id. 
 
-- deactivated: **optional**, if this is true, hasUpgrade, hasChallenge, hasAchievement, and hasMilestone will return false for things in the layer, and you will be unable to buy or click things, or gain achievements/milestones on the layer. You will have to disable effects of buyables, the innate layer effect, and possibly other things yourself.
+- deactivated: **optional**, if this is true, hasUpgrade, hasChallenge, hasAchievement, and hasMilestone will return false for things in the layer, and you will be unable to buy or click things on the layer. You will have to disable effects of buyables, the innate layer effect, and possibly other things yourself.
 
 ## Custom Prestige type  
 (All of these can also be used by other prestige types)

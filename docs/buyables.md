@@ -2,7 +2,7 @@
 
 Buyables are usually things that can be bought multiple times with scaling costs. They come with optional buttons that can be used for respeccing or selling buyables, among other things.
 
-The amount of a buyable owned is a `Decimal`. 
+The amount of a buyable owned is a `OmegaNum`. 
 
 Useful functions for dealing with buyables and implementing their effects:
 
@@ -16,7 +16,7 @@ Buyables should be formatted like this:
 ```js
 buyables: {
     11: {
-        cost(x) { return new Decimal(1).mul(x) },
+        cost(x) { return new OmegaNum(1).mul(x) },
         display() { return "Blah" },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
@@ -33,7 +33,7 @@ Features:
 
 - title: **optional**. displayed at the top in a larger font. It can also be a function that returns updating text.
 
-- cost(): cost for buying the next buyable. Can have an optional argument "x" to calculate the cost of the x+1th purchase. (x is a `Decimal`).
+- cost(): cost for buying the next buyable. Can have an optional argument "x" to calculate the cost of the x+1th purchase. (x is a `OmegaNum`).
     Can return an object if there are multiple currencies.
                     
 - effect(): **optional**. A function that calculates and returns the current values of bonuses of this buyable.  Can have an optional argument "x" to calculate the effect of having x of the buyable.. 
@@ -54,8 +54,6 @@ Features:
 - purchaseLimit: **optional**. The limit on how many of the buyable can be bought. The default is no limit.
 
 - marked: **optional** Adds a mark to the corner of the buyable. If it's "true" it will be a star, but it can also be an image URL.
-
-- tooltip: **optional**. Adds a tooltip to this buyable, appears when it is hovered over. Can use basic HTML. Default is no tooltip. If this returns an empty value, that also disables the tooltip.
 
 - layer: **assigned automagically**. It's the same value as the name of this layer, so you can do `player[this.layer].points` or similar.
 
@@ -80,7 +78,3 @@ You can use these features along with it:
 - showRespec(): **optional**. A function determining whether or not to show the button, if respecBuyables is defined. Defaults to true if absent.
 
 - respecMessage: **optional**. A custom confirmation message on respec, in place of the default one.
-
-
-
-- branches: **optional**, This is primarially useful for buyable trees. An array of buyable ids. A line will appear from this buyable to all of the buyables in the list. Alternatively, an entry in the array can be a 2-element array consisting of the buyable id and a color value. The color value can either be a string with a hex color code, or a number from 1-3 (theme-affected colors). A third element in the array optionally specifies line width.

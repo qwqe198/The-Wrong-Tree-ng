@@ -31,7 +31,7 @@ mult = mult.pow(buyableEffect('csm', 13))
 if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
         if (hasAchievement("rw", 62)) mult = mult.mul(13)
         if (hasAchievement("rw", 66)) mult = mult.mul(player.i.points.add(10).log10())
-if(mult.gte(1e15))mult=mult.root(5).mul(1e12)
+if(mult.gte(1e15))mult=mult.root(7.5).mul(1e13)
         return mult.floor()
     },
     effectDescription() {

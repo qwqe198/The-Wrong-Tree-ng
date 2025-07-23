@@ -6,15 +6,13 @@ function getStartOptions() {
 	return {
 		autosave: true,
 		msDisplay: "always",
-		theme: "default",
+		theme: null,
 		hqTree: false,
 		offlineProd: true,
 		hideChallenges: false,
 		showStory: true,
 		forceOneTab: false,
 		oldStyle: false,
-		tooltipForcing: true,
-		hideMilestonePopups: false,
 	}
 }
 
@@ -28,7 +26,6 @@ function toggleOpt(name) {
 	if (name == "oldStyle")
 		updateStyle();
 }
-
 var styleCooldown = 0;
 function updateStyle() {
 	styleCooldown = 1;
@@ -36,7 +33,6 @@ function updateStyle() {
 	css.href = options.oldStyle ? "oldStyle.css" : "style.css";
 	needCanvasUpdate = true;
 }
-
 function changeTreeQuality() {
 	var on = options.hqTree;
 	document.body.style.setProperty('--hqProperty1', on ? "2px solid" : "4px solid");
@@ -44,9 +40,8 @@ function changeTreeQuality() {
 	document.body.style.setProperty('--hqProperty2b', on ? "0px 0px 20px var(--background)" : "");
 	document.body.style.setProperty('--hqProperty3', on ? "2px 2px 4px rgba(0, 0, 0, 0.25)" : "none");
 }
-
 function toggleAuto(toggle) {
-	Vue.set(player[toggle[0]], [toggle[1]], !player[toggle[0]][toggle[1]]);
+	player[toggle[0]][toggle[1]] = !player[toggle[0]][toggle[1]];
 	needCanvasUpdate=true
 }
 
@@ -57,9 +52,7 @@ const MS_SETTINGS = ["always", "last", "automation", "incomplete", "never"];
 function adjustMSDisp() {
 	options.msDisplay = MS_SETTINGS[(MS_SETTINGS.indexOf(options.msDisplay) + 1) % 5];
 }
-
 function milestoneShown(layer, id) {
-	id = toNumber(id)
 	complete = player[layer].milestones.includes(id);
 	auto = layers[layer].milestones[id].toggles;
 
@@ -68,10 +61,10 @@ function milestoneShown(layer, id) {
 			return true;
 			break;
 		case "last":
-			return auto || !complete || player[layer].lastMilestone == id;
+			return (auto) || !complete || player[layer].lastMilestone === id;
 			break;
 		case "automation":
-			return auto || !complete;
+			return (auto) || !complete;
 			break;
 		case "incomplete":
 			return !complete;

@@ -7,7 +7,7 @@ Custom tab layouts can be used to do basically anything in a tab window, especia
 ```js
 tabFormat: [
     "main-display",
-    ["prestige-button"],
+    ["prestige-button", function() { return "Melt your points into " }],
     "blank",
     ["display-text",
         function() { return 'I have ' + format(player.points) + ' pointy points!' },
@@ -27,10 +27,6 @@ These are the existing components, but you can create more in [components.js](/j
 
 - display-text: Displays some text (can use basic HTML). The argument is the text to display. It can also be a function that returns updating text.
 
-- display-image: Displays an image. The argument is the url of the image.
-
-- h-line, v-line: Display a horizontal or vertical divider line, respectively.
-
 - raw-html: Displays some basic HTML, can also be a function.
 
 - blank: Adds empty space. The default dimensions are 8px x 17px. The argument changes the dimensions. If it's a single value (e.g. "20px"), that determines the height. If you have a pair of arguments, the first is width and the second is height.
@@ -43,14 +39,14 @@ These are the existing components, but you can create more in [components.js](/j
 
 - resource-display: The text that displays the currency that this layer is based on, as well as the best and/or total values for this layer's prestige currency (if they are put in `startData` for this layer).
 
-- prestige-button: The button to reset for a currency in this layer.
+- prestige-button: The argument is a string that the prestige button should say before the amount of currency you will gain. It can also be a function that returns updating text.
 
 - text-input: A text input box. The argument is the name of the variable in player[layer] that the input is for, player[layer][argument]
-    (Works with strings, numbers, and Decimals!)
+    (Works with strings, numbers, and OmegaNums!)
 
 - slider: Lets the user input a value with a slider. The argument a 3-element array: [name, min, max].
     The name is the name of the variable in player[layer] that the input  is for, and min and max are the limits of the slider.
-    (Does not work for Decimal values)
+    (Does not work for OmegaNum values)
 
 - drop-down: Lets the user input a value with a dropdown menu. The argument a 2-element array: [name, options].
     The name is the name of the variable in player[layer] that the input is for, and options is an array of strings for options you can use.
@@ -66,7 +62,7 @@ These are the existing components, but you can create more in [components.js](/j
 - tree: Displays a tree. The argument is an array of arrays containing the names of the nodes in the tree (first by row, then by column)
     [See here for more information on tree layouts and nodes!](trees-and-tree-customization.md)
 
-- upgrade-tree, buyable-tree, clickable-tree: Displays a tree of upgrades/buyables/clickables from this layer. The argument is an array of arrays containing the ids of the upgrade/etc in the tree (first by row, then by column). A tree can only have one type of component in it.
+- upgrade-tree: Displays a of upgrades from this layer. The argument is an array of arrays containing the ids of the upgrades in the tree (first by row, then by column)
 
 - toggle: A toggle button that toggles a bool value. The argument is a pair that identifies the location in player of the bool to toggle, e.g. `[layer, id]`. 'layer' also affects the color of the toggle.
 

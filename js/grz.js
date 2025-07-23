@@ -48,6 +48,7 @@ player.a1.buyables[13] = zero
 llgain() {
 let pow =n(2)
 if (hasUpgrade("grz", 22))pow=pow.mul(upgradeEffect("grz", 22))
+if (hasUpgrade("grz", 25))pow=pow.mul(upgradeEffect("grz", 25))
         let gain = player.grz.points.pow(pow)
       if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(1e10).log10().log10())  
 if (hasUpgrade("grz", 21))gain=gain.mul(upgradeEffect("grz", 21))
@@ -74,6 +75,7 @@ currencyDisplayName: "感染力量",
 effect() {
                 var eff = player.grz.ll.add(1).log10().mul(0.004).add(1)
                 if (hasUpgrade("grz", 16))eff=eff.pow(upgradeEffect("grz", 16))
+if(eff.gte(1.1))eff=eff.pow(0.5).mul(n(1.1).pow(0.5))
                 return eff
             },
             effectDisplay() { return `^ ${format(this.effect())}` },
@@ -210,10 +212,29 @@ currencyDisplayName: "感染力量",
             currencyLayer: "grz"
         },
 25: {
-            description: "咕咕咕.",
-            cost() { return new OmegaNum(1e11) },
+            description: "战力加成感染者基础.",
+            cost() { return new OmegaNum(3e11) },
             unlocked() { return true },
-
+effect() {
+                var eff = player.cq.points.add(1).pow(0.025)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+26: {
+            description: "基于变形虫加成战力获取.",
+            cost() { return new OmegaNum(1.313e13) },
+            unlocked() { return true },
+effect() {
+                var eff = player.a1.points.add(1).pow(0.022)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
 currencyDisplayName: "感染力量",
             currencyInternalName: "ll",
             currencyLayer: "grz"
@@ -247,7 +268,7 @@ getNextAt() {
 buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n( "1e8").mul(n(2).pow(x)).mul(n(1.0001).pow(x.pow(2)))
+                var c = n( "1e8").mul(n(2).pow(x)).mul(n(1.005).pow(x.pow(2)))
 
                 return c
             },

@@ -21,7 +21,7 @@ addNode("spook", {
 // A "ghost" layer which offsets f in the tree
 addNode("g", {
     symbol: "TH",
-    branches: [["c", "red", 4]],
+    branches: ["c"],
     color: '#6d3678',
     layerShown: true,
     canClick() {return player.points.gte(10)},
@@ -42,7 +42,7 @@ addNode("h", {
     tooltipLocked() {return "Restore your points to " + player.c.otherThingy},
     row: "side",
     canClick() {return player.points.lt(player.c.otherThingy)},
-    onClick() {player.points = new Decimal(player.c.otherThingy)}
+    onClick() {player.points = new OmegaNum(player.c.otherThingy)}
 }, 
 )
 

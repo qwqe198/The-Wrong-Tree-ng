@@ -5,8 +5,8 @@ var systemComponents = {
 			<div class="upgRow">
 				<div v-for="tab in Object.keys(data)">
 					<button v-if="data[tab].unlocked == undefined || data[tab].unlocked" v-bind:class="{tabButton: true, notify: subtabShouldNotify(layer, name, tab), resetNotify: subtabResetNotify(layer, name, tab)}"
-					v-bind:style="[{'border-color': tmp[layer].color}, (subtabShouldNotify(layer, name, tab) ? {'box-shadow': 'var(--hqProperty2a), 0 0 20px '  + (data[tab].glowColor || defaultGlow)} : {}), tmp[layer].componentStyles['tab-button'], data[tab].buttonStyle]"
-						v-on:click="function(){player.subtabs[layer][name] = tab; updateTabFormats(); needCanvasUpdate = true;}"><span v-html="tab"></span></button>
+					v-bind:style="[{'border-color': tmp[layer].color}, (data[tab].glowColor && subtabShouldNotify(layer, name, tab) ? {'box-shadow': 'var(--hqProperty2a), 0 0 20px '  + data[tab].glowColor} : {}), tmp[layer].componentStyles['tab-button'], data[tab].buttonStyle]"
+						v-on:click="function(){player.subtabs[layer][name] = tab; updateTabFormats(); needCanvasUpdate = true;}">{{tab}}</button>
 				</div>
 			</div>
 		`
@@ -18,7 +18,7 @@ var systemComponents = {
 		<button v-if="nodeShown(layer)"
 			v-bind:id="layer"
 			v-on:click="function() {
-				if (shiftDown && options.forceTooltips) player[layer].forceTooltip = !player[layer].forceTooltip
+				if (shiftDown) player[layer].forceTooltip = !player[layer].forceTooltip
 				else if(tmp[layer].isLayer) {
 					if (tmp[layer].leftTab) {
 						showNavTab(layer, prev)
@@ -29,8 +29,6 @@ var systemComponents = {
 				}
 				else {run(layers[layer].onClick, layers[layer])}
 			}"
-
-
 			v-bind:class="{
 				treeNode: tmp[layer].isLayer,
 				treeButton: !tmp[layer].isLayer,
@@ -47,18 +45,18 @@ var systemComponents = {
 				front: !tmp.scrolled,
 			}"
 			v-bind:style="constructNodeStyle(layer)">
-			<span class="nodeLabel" v-html="(abb !== '' && tmp[layer].image === undefined) ? abb : '&nbsp;'"></span>
+			<span v-html="(abb !== '' && tmp[layer].image === undefined) ? abb : '&nbsp;'"></span>
 			<tooltip
       v-if="tmp[layer].tooltip != ''"
 			:text="(tmp[layer].isLayer) ? (
-				player[layer].unlocked ? (tmp[layer].tooltip ? tmp[layer].tooltip : formatWhole(player[layer].points, false, 3) + ' ' + tmp[layer].resource)
-				: (tmp[layer].tooltipLocked ? tmp[layer].tooltipLocked : 'Reach ' + formatWhole(tmp[layer].requires) + ' ' + tmp[layer].baseResource + ' to unlock (You have ' + formatWhole(tmp[layer].baseAmount) + ' ' + tmp[layer].baseResource + ')')
+				player[layer].unlocked ? (tmp[layer].tooltip ? tmp[layer].tooltip : formatWhole(player[layer].points) + ' ' + tmp[layer].resource)
+				: (tmp[layer].tooltipLocked ? tmp[layer].tooltipLocked : '达到 ' + formatWhole(tmp[layer].requires) + ' ' + tmp[layer].baseResource + ' 以解锁 (你有 ' + formatWhole(tmp[layer].baseAmount) + ' ' + tmp[layer].baseResource + ')')
 			)
 			: (
 				tmp[layer].canClick ? (tmp[layer].tooltip ? tmp[layer].tooltip : 'I am a button!')
 				: (tmp[layer].tooltipLocked ? tmp[layer].tooltipLocked : 'I am a button!')
 			)"></tooltip>
-			<node-mark :layer='layer' :data='tmp[layer].marked'></node-mark></span>
+			<node-mark :layer='layer' :data='layers[layer].marked'></node-mark></span>
 		</button>
 		`
 	},
@@ -106,13 +104,13 @@ var systemComponents = {
 		template: `			
 		<div class="overlayThing" style="padding-bottom:7px; width: 90%; z-index: 1000; position: relative">
 		<span v-if="player.devSpeed && player.devSpeed != 1" class="overlayThing">
-			<br>Dev Speed: {{format(player.devSpeed)}}x<br>
+			<br>时间加速: {{format(player.devSpeed)}}x<br>
 		</span>
 		<span v-if="player.offTime !== undefined"  class="overlayThing">
-			<br>Offline Time: {{formatTime(player.offTime.remain)}}<br>
+			<br>离线加速剩余时间: {{formatTime(player.offTime.remain)}}<br>
 		</span>
 		<br>
-		<span v-if="player.points.lt('1e1000')"  class="overlayThing">You have </span>
+		<span v-if="player.points.lt('1e1000')"  class="overlayThing">你有 </span>
 		<h2  class="overlayThing" id="points">{{format(player.points)}}</h2>
 		<span v-if="player.points.lt('1e1e6')"  class="overlayThing"> {{modInfo.pointsName}}</span>
 		<br>
@@ -122,131 +120,55 @@ var systemComponents = {
 	`
     },
 
-	'info-tab': {
-		template: `
-		<div>
-		<h2>{{modInfo.name}}</h2>
-		<br>
-		<h3>{{VERSION.withName}}</h3>
-		<span v-if="modInfo.author">
-		<br>
-		Made by {{modInfo.author}}	
-		</span>
-		<br>
-		The Modding Tree <a v-bind:href="'https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md'" target="_blank" class="link" v-bind:style = "{'font-size': '14px', 'display': 'inline'}" >{{TMT_VERSION.tmtNum}}</a> by Acamaeda
-		<br>
-		The Prestige Tree made by Jacorb and Aarex
-			<br><br>
-		<span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
-		<a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>
-		<a class="link" href="http://discord.gg/wwQfgPa" target="_blank" v-bind:style="{'font-size': '16px'}">Main Prestige Tree server</a><br>
-
-		<button class="opt" onclick="player.modTab = !player.modTab"><span>{{player.modTab ? "Show info tab":"Show mod selection tab"}}</button>
-
-		<span v-if="player.modTab">
+    'info-tab': {
+        template: `
+        <div>
+        <h2>{{modInfo.name}}</h2>
+        <br>
+        <h3>{{VERSION.withName}}</h3>
+        <span v-if="modInfo.author">
+            <br>
+            作者: {{modInfo.author}}	
+        </span>
+        <br>
+        模组树 <a v-bind:href="'https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md'" target="_blank" class="link" v-bind:style = "{'font-size': '14px', 'display': 'inline'}" >{{TMT_VERSION.tmtNum}}</a> 制作者为Acamaeda
+        <br>
+        声望树作者 Jacorb 和 Aarex
 		<br><br>
-		Enter Modes: 
-		<table>
-			<tr>
-				
-			</tr>
-		</table>
+		<div class="link" onclick="showTab('changelog-tab')">模组树更新记录(本树更新记录请点右上版本号)</div><br>
+        <span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
+        <a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">模组树Discord</a><br>
+        <a class="link" href="http://discord.gg/wwQfgPa" target="_blank" v-bind:style="{'font-size': '16px'}">声望树Discord</a><br>
 		<br><br>
-		</span>
-		
-		<span v-if="!player.modTab">
-		<br>
-		Time Played: {{ formatTime(player.timePlayed) }}<br>
-		<h1 style='color: #FF0066'>Shift to see details!</h1><br>
-		Toggles:
-		<table>
-			<tr>
-				<td><button class="opt" onclick="toggleShift()">Force toggle shift<span><bdi style='color:#CC0033'><br>{{shiftDown?"Down":"Up"}}</bdi></span></button></td>
-				<td><button class="opt" onclick="toggleControl()">Force toggle control<span><bdi style='color:#CC0033'><br>{{controlDown?"Down":"Up"}}</bdi></span></button></td>
-				<td><button class="opt" onclick="toggleUndulating()">Toggle Undulating Colors<span><bdi style='color:#CC0033'><br>{{player.undulating?"On":"Off"}}</bdi></span></button></td>
-				<td><button class="opt" onclick="toggleArrowHotkeys()">Toggle Arrow Hotkeys<span><bdi style='color:#CC0033'><br>{{player.arrowHotkeys?"On":"Off"}}</bdi></span></button></td>
-				<td><button class="opt" onclick="player.spaceBarPauses = !player.spaceBarPauses">Toggle space bar pausing<span><bdi style='color:#CC0033'><br>{{player.spaceBarPauses?"Yes":"No"}}</bdi></span></button></td>
-				<td><button class="opt" onclick="player.paused = !player.paused">Toggle pause<span><bdi style='color:#CC0033'><br>{{player.paused?"Paused":"Running"}}</bdi></span></button></td>
-			</tr>
-		</table>
-		Others:
-		<table>
-			<tr>
-				<td><button class="opt" onclick="save()">Save<span><br>{{formatTime((new Date().getTime()-player.lastSave)/1000, true)}}</span></button></td>
-				<td><button class="opt" onclick="player.showBuiltInSaves = true">Show built in saves</button></td>
-				<td><button class="opt" onclick="setUpPGSettings()">Make your settings the same as the dev</button></td>
-				<span v-if="player.keepGoing"><td><button class="opt" onclick="player.keepGoing = false">Re-show endgame screen</button></td></span>
-			</tr>
-		</table>
-		
-		<br><br>
-		<h2 style='color: #00FF99'>Hotkeys</h2><br>
-		<span v-for="key in hotkeys" v-if="player[key.layer].unlocked && tmp[key.layer].hotkeys[key.id].unlocked"><span v-html="getDescriptionFromKey(key)"></span><br></span>
-		<br><br>
-
-		<h2 style='color: #7D5D9E'>Acknowledgements</h2><br>
-		Thank you to <b>Jacorb</b> for letting me use his multi save code!<br>
-		Thank you to <b>Lordshinjo</b> for a specific and accurate bug report on "autobuying"<br>buyables and helping to subsequently fix.<br>
-
-		<br><br><span v-if="player.showBuiltInSaves">
-			<h2 style='color: #00FF99'>Built in saves</h2><br>
-			<bdi style='color: #F16105'>Warning: Scrolling past here may contains spoilers.</bdi><br><br>
-
-			<button class="opt" onclick="player.CUSTOM_SAVES_PAGE = Math.max(0, player.CUSTOM_SAVES_PAGE - (player.shiftAlias ? 5 : 1))">Previous<br>page<br>(Shift 5x)</button>
-			<button class="opt" onclick="player.CUSTOM_SAVES_PAGE = Math.min(Math.floor(CUSTOM_SAVE_IDS.length / 20), player.CUSTOM_SAVES_PAGE + (player.shiftAlias ? 5 : 1))">Next<br>page<br>(Shift 5x)</button>
-			<br>
-			<span>Page {{player.CUSTOM_SAVES_PAGE+1}} / {{1+Math.floor(CUSTOM_SAVE_IDS.length / 20)}}</span>
-			<br><br>
-
-			<template v-for="(key, i) in CUSTOM_SAVES_IDS">
-				<table>
-					<tr v-if="i >= 20 * player.CUSTOM_SAVES_PAGE && i < (player.CUSTOM_SAVES_PAGE + 1) * 20">
-						<button class="savebutton" v-on:click="importSave(key, false, true)">
-							Import '{{key.replace("EX: ", "")}}' save
-						</button>
-					</tr>
-				</table>
-			</template> 
-		</span>
-		<br><br><br><br>
-		</span>
-
-		</div>
-	`
-	},
+        游玩时长: {{ formatTime(player.timePlayed) }}<br><br>
+        <h3>快捷键</h3><br>
+        <span v-for="key in hotkeys" v-if="player[key.layer].unlocked && tmp[key.layer].hotkeys[key.id].unlocked"><br>{{key.description}}</span></div>
+    `
+    },
 
     'options-tab': {
         template: `
-	<div>
         <table>
             <tr>
-                <td><button class="opt" onclick="save()">Save</button></td>
-                <td><button class="opt" onclick="toggleOpt('autosave')">Autosave: {{ options.autosave?"ON":"OFF" }}</button></td>
-                <td><button class="opt" onclick="hardReset()">HARD RESET</button></td>
+                <td><button class="opt" onclick="save()">存档</button></td>
+                <td><button class="opt" onclick="toggleOpt('autosave')">自动存档: {{ options.autosave?"已开启":"已关闭" }}</button></td>
+                <td><button class="opt" onclick="hardReset()">硬重置(删除存档)</button></td>
             </tr>
             <tr>
-                <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>
-                <td><button class="opt" onclick="importSave()">Import</button></td>
-                <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="exportSave()">导出存档(复制到黏贴板)</button></td>
+                <td><button class="opt" onclick="importSave()">导入存档</button></td>
+                <td><button class="opt" onclick="toggleOpt('offlineProd')">离线进度: {{ options.offlineProd?"已开启":"已关闭" }}</button></td>
             </tr>
             <tr>
-                <td><button class="opt" onclick="switchTheme()">Theme: {{ getThemeName() }}</button></td>
-                <td><button class="opt" onclick="adjustMSDisp()">Show Milestones: {{ MS_DISPLAYS[MS_SETTINGS.indexOf(options.msDisplay)]}}</button></td>
-                <td><button class="opt" onclick="toggleOpt('hqTree')">High-Quality Tree: {{ options.hqTree?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="switchTheme()">背景主题: {{ getThemeName() }}</button></td>
+                <td><button class="opt" onclick="adjustMSDisp()">显示里程碑: {{ MS_DISPLAYS[MS_SETTINGS.indexOf(options.msDisplay)]}}</button></td>
+                <td><button class="opt" onclick="toggleOpt('hqTree')">高质量树: {{ options.hqTree?"已开启":"已关闭" }}</button></td>
             </tr>
             <tr>
-                <td><button class="opt" onclick="toggleOpt('hideChallenges')">Completed Challenges: {{ options.hideChallenges?"HIDDEN":"SHOWN" }}</button></td>
-                <td><button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true">Single-Tab Mode: {{ options.forceOneTab?"ALWAYS":"AUTO" }}</button></td>
-		<td><button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true">Shift-Click to Toggle Tooltips: {{ options.forceTooltips?"ON":"OFF" }}</button></td>
-	    </tr> 
-	    <tr>
-	    	<td><button class="opt" onclick="toggleOpt('hideMilestonePopups'); needsCanvasUpdate = false">Popups are: {{ options.hideMilestonePopups?"HIDDEN":"SHOWN" }}</button></td>
-		<td><button class="opt" onclick="showAllSaves()">Show your saves</button></td>
-		<td></td>
-	    </tr>
-        </table>
-	<saves></saves>
-	</div>`
+                <td><button class="opt" onclick="toggleOpt('hideChallenges')">已完成挑战: {{ options.hideChallenges?"隐藏":"显示" }}</button></td>
+                <td><button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true">节点内容占据整个屏幕: {{ options.forceOneTab?"永远这样":"自动调节" }}</button></td>
+			</tr> 
+        </table>`
     },
 
     'back-button': {
@@ -292,4 +214,3 @@ var systemComponents = {
 	}
 
 }
-

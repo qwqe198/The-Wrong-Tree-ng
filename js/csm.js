@@ -114,7 +114,7 @@ eff=eff.pow(buyableEffect('csm', 12))
         },
         atigain() {
                 var eff = player.csm.points
-
+if (hasAchievement("rw", 85))eff=eff.mul(10)
                 return eff
         },
         tabFormat: {

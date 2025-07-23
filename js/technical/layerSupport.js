@@ -1,12 +1,12 @@
 var layers = {}
-
-const decimalZero = new Decimal(0)
-const decimalOne = new Decimal(1)
-const decimalNaN = new Decimal(NaN)
-
-const defaultGlow = "#ff0000"
-
-
+const ExpantaNum = OmegaNum
+const EN = ExpantaNum
+const ExpantaNumZero = new ExpantaNum(0)
+const ExpantaNumOne = new ExpantaNum(1)
+const ExpantaNumNaN = new ExpantaNum(NaN)
+const OmegaNumZero = ExpantaNumZero
+const OmegaNumOne= ExpantaNumOne
+const OmegaNumNaN = ExpantaNumNaN
 function layerShown(layer){
     return tmp[layer].layerShown;
 }
@@ -124,7 +124,7 @@ function setupLayer(layer){
                 if (layers[layer].buyables[thing].unlocked === undefined)
                     layers[layer].buyables[thing].unlocked = true
                 layers[layer].buyables[thing].canBuy = function() {return canBuyBuyable(this.layer, this.id)}
-                if (layers[layer].buyables[thing].purchaseLimit === undefined) layers[layer].buyables[thing].purchaseLimit = new Decimal(Infinity)
+                if (layers[layer].buyables[thing].purchaseLimit === undefined) layers[layer].buyables[thing].purchaseLimit = new OmegaNum(Infinity)
         
             }  
     
@@ -180,17 +180,17 @@ function setupLayer(layer){
     if(!layers[layer].componentStyles) layers[layer].componentStyles = {}
     if(layers[layer].symbol === undefined) layers[layer].symbol = layer.charAt(0).toUpperCase() + layer.slice(1)
     if(layers[layer].unlockOrder === undefined) layers[layer].unlockOrder = []
-    if(layers[layer].gainMult === undefined) layers[layer].gainMult = decimalOne
-    if(layers[layer].gainExp === undefined) layers[layer].gainExp = decimalOne
-    if(layers[layer].directMult === undefined) layers[layer].directMult = decimalOne
+    if(layers[layer].gainMult === undefined) layers[layer].gainMult = OmegaNumOne
+    if(layers[layer].gainExp === undefined) layers[layer].gainExp = OmegaNumOne
+    if(layers[layer].directMult === undefined) layers[layer].directMult = OmegaNumOne
     if(layers[layer].type === undefined) layers[layer].type = "none"
     if(layers[layer].base === undefined || layers[layer].base <= 1) layers[layer].base = 2
-    if(layers[layer].softcap === undefined) layers[layer].softcap = new Decimal("e1e7")
-    if(layers[layer].softcapPower === undefined) layers[layer].softcapPower = new Decimal("0.5")
+    if(layers[layer].softcap === undefined) layers[layer].softcap = new OmegaNum("e1e7")
+    if(layers[layer].softcapPower === undefined) layers[layer].softcapPower = new OmegaNum("0.5")
     if(layers[layer].displayRow === undefined) layers[layer].displayRow = layers[layer].row
     if(layers[layer].name === undefined) layers[layer].name = layer
     if(layers[layer].layerShown === undefined) layers[layer].layerShown = true
-    if(layers[layer].glowColor === undefined) layers[layer].glowColor = defaultGlow
+    if(layers[layer].glowColor === undefined) layers[layer].glowColor = "#ff0000"
 
     let row = layers[layer].row
 
@@ -289,7 +289,6 @@ addLayer("options-tab", {
 })
 
 addLayer("changelog-tab", {
-    tabFormat: ["changelog"],
-    //tabFormat() {return ([["raw-html", modInfo.changelog]])},
+    tabFormat() {return ([["raw-html", modInfo.changelog]])},
     row: "otherside"
 })

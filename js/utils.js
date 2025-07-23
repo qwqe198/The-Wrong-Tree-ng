@@ -1,66 +1,3 @@
-function combineStrings(l){
-	let a = ""
-	for (i = 0; i < l.length; i++){
-		if (i != 0) a += ", "
-		a += l[i]
-	}
-	return a
-}
-
-// ***************************
-
-function improveName(s){
-	let x = s.split("_")
-	ret = ""
-	let uppercaseWord = function(s){
-		a = s.toLowerCase()
-		return a.slice(0,1).toUpperCase() + a.slice(1,)
-	}
-	for (i = 0; i < x.length; i++){
-		if (i > 0) ret += " "
-		ret += uppercaseWord(x[i])
-	}
-	return ret
-}
-
-function convertToB16(n){
-        let codes = {
-                0: "0",
-                1: "1",
-                2: "2",
-                3: "3",
-                4: "4",
-                5: "5",
-                6: "6",
-                7: "7",
-                8: "8",
-                9: "9",
-                10: "A",
-                11: "B",
-                12: "C",
-                13: "D",
-                14: "E",
-                15: "F",
-        }
-        let x = n % 16
-        return codes[(n-x)/16] + codes[x]
-}
-
-var currentDelta = 0
-
-function getUndulatingColor(period = Math.sqrt(760)){
-	if (!player.undulating) return "000000"
-        let t = new Date().getTime()
-	currentDelta += .2
-        let a = Math.sin(t / 1e3 / period * 2 * Math.PI + 0 + currentDelta) 
-        let b = Math.sin(t / 1e3 / period * 2 * Math.PI + 2 + currentDelta)
-        let c = Math.sin(t / 1e3 / period * 2 * Math.PI + 4 + currentDelta)
-        a = convertToB16(Math.floor(a*128) + 128)
-        b = convertToB16(Math.floor(b*128) + 128)
-        c = convertToB16(Math.floor(c*128) + 128)
-        return String(a) + String(b) + String(c)
-}
-
 // ************ Big Feature related ************
 
 function respecBuyables(layer) {
@@ -75,41 +12,40 @@ function respecBuyables(layer) {
 function canAffordUpgrade(layer, id) {
 	let upg = tmp[layer].upgrades[id]
 	if(tmp[layer].deactivated) return false
-	if (tmp[layer].upgrades[id].canAfford === false) return false
+	if (tmp[layer].upgrades[id].canAfford !== undefined) return tmp[layer].upgrades[id].canAfford
 	let cost = tmp[layer].upgrades[id].cost
-	if (cost !== undefined) return canAffordPurchase(layer, upg, cost)
-	return true
+	return canAffordPurchase(layer, upg, cost)
 }
 
 function canBuyBuyable(layer, id) {
 	let b = temp[layer].buyables[id]
-	let c = player[layer].buyables[id]
-	if (c == undefined) console.log(layer, id)
-	return (b.unlocked && b.canAfford && c.lt(b.purchaseLimit))
+	return (b.unlocked && run(b.canAfford, b) && player[layer].buyables[id].lt(b.purchaseLimit) && !tmp[layer].deactivated)
 }
 
-function layerChallengeCompletions(layer){
-	let a = 0
-	for (i in player[layer].challenges){
-		a += player[layer].challenges[i]
-	}
-	return a
-}
+
 
 function canAffordPurchase(layer, thing, cost) {
+
 	if (thing.currencyInternalName) {
 		let name = thing.currencyInternalName
-		if (thing.currencyLocation) return !(thing.currencyLocation[name].lt(cost))
+		if (thing.currencyLocation) {
+			return !(thing.currencyLocation[name].lt(cost))
+		}
 		else if (thing.currencyLayer) {
 			let lr = thing.currencyLayer
 			return !(player[lr][name].lt(cost))
 		}
-		else return !(player[name].lt(cost))
-	} else return !(player[layer].points.lt(cost))
+		else {
+			return !(player[name].lt(cost))
+		}
+	}
+	else {
+		return !(player[layer].points.lt(cost))
+	}
 }
 
 function buyUpgrade(layer, id) {
-	return buyUpg(layer, id)
+	buyUpg(layer, id)
 }
 
 function buyUpg(layer, id) {
@@ -117,11 +53,11 @@ function buyUpg(layer, id) {
 	let upg = tmp[layer].upgrades[id]
 	if (!player[layer].unlocked) return
 	if (!tmp[layer].upgrades[id].unlocked) return
-	if (player[layer].upgrades.includes(Number(id))) return
-	if (tmp[layer].deactivated) return 
+	if (player[layer].upgrades.includes(id)) return
 	if (upg.canAfford === false) return
 	let pay = layers[layer].upgrades[id].pay
-	if (pay !== undefined) run(pay, layers[layer].upgrades[id])
+	if (pay !== undefined)
+		run(pay, layers[layer].upgrades[id])
 	else {
 		let cost = tmp[layer].upgrades[id].cost
 
@@ -146,10 +82,10 @@ function buyUpg(layer, id) {
 			player[layer].points = player[layer].points.sub(cost)
 		}
 	}
-	player[layer].upgrades.push(Number(id));
-	if (upg.onPurchase != undefined) run(upg.onPurchase, upg)
+	player[layer].upgrades.push(id);
+	if (upg.onPurchase != undefined)
+		run(upg.onPurchase, upg)
 	needCanvasUpdate = true
-	return true
 }
 
 function buyMaxBuyable(layer, id) {
@@ -190,13 +126,13 @@ function clickGrid(layer, id) {
 
 // Function to determine if the player is in a challenge
 function inChallenge(layer, id) {
-	if (tmp[layer].deactivated) return false
 	let challenge = player[layer].activeChallenge
 	if (!challenge) return false
 	id = toNumber(id)
 	if (challenge == id) return true
 
-	if (layers[layer].challenges[challenge].countsAs) return tmp[layer].challenges[challenge].countsAs.includes(id) || false
+	if (layers[layer].challenges[challenge].countsAs)
+		return tmp[layer].challenges[challenge].countsAs.includes(id) || false
 	return false
 }
 
@@ -204,39 +140,36 @@ function inChallenge(layer, id) {
 
 var onTreeTab = true
 
-function getFullEffectDescription(layer){
-        let str = run(layers[layer].effectDescription, layers[layer])
-        if (str != "") return ", " + str
-        return str
-}
-
 function showTab(name, prev) {
 	if (LAYERS.includes(name) && !layerunlocked(name)) return
 	if (player.tab !== name) clearParticles(function(p) {return p.layer === player.tab})
-	/*if (tmp[name] && player.tab === name && isPlainObject(tmp[name].tabFormat)) {
+	if (tmp[name] && player.tab === name && isPlainObject(tmp[name].tabFormat)) {
 		player.subtabs[name].mainTabs = Object.keys(layers[name].tabFormat)[0]
-	}*/
+	}
 	var toTreeTab = name == "none"
 	player.tab = name
 	if (tmp[name] && (tmp[name].row !== "side") && (tmp[name].row !== "otherside")) player.lastSafeTab = name
 	updateTabFormats()
 	needCanvasUpdate = true
 	document.activeElement.blur()
+
 }
 
 function showNavTab(name, prev) {
-	//console.log(prev)
+	console.log(prev)
 	if (LAYERS.includes(name) && !layerunlocked(name)) return
 	if (player.navTab !== name) clearParticles(function(p) {return p.layer === player.navTab})
 	if (tmp[name] && tmp[name].previousTab !== undefined) prev = tmp[name].previousTab
 	var toTreeTab = name == "tree-tab"
-	//console.log(name + prev)
+	console.log(name + prev)
 	if (name!== "none" && prev && !tmp[prev]?.leftTab == !tmp[name]?.leftTab) player[name].prevTab = prev
-	else if (player[name]) player[name].prevTab = ""
+	else if (player[name])
+		player[name].prevTab = ""
 	player.navTab = name
 	updateTabFormats()
 	needCanvasUpdate = true
 }
+
 
 function goBack(layer) {
 	let nextTab = "none"
@@ -246,11 +179,12 @@ function goBack(layer) {
 
 	if (tmp[layer].leftTab) showNavTab(nextTab, layer)
 	else showTab(nextTab, layer)
+
 }
 
 function layOver(obj1, obj2) {
 	for (let x in obj2) {
-		if (obj2[x] instanceof Decimal) obj1[x] = new Decimal(obj2[x])
+		if (obj2[x] instanceof OmegaNum) obj1[x] = new OmegaNum(obj2[x])
 		else if (obj2[x] instanceof Object) layOver(obj1[x], obj2[x]);
 		else obj1[x] = obj2[x];
 	}
@@ -260,14 +194,15 @@ function prestigeNotify(layer) {
 	if (layers[layer].prestigeNotify) return layers[layer].prestigeNotify()
 	
 	if (isPlainObject(tmp[layer].tabFormat)) {
-		for (subtab in tmp[layer].tabFormat) {
+		for (subtab in tmp[layer].tabFormat){
 			if (subtabResetNotify(layer, 'mainTabs', subtab))
 				return true
 		}
 	}
 	for (family in tmp[layer].microtabs) {
-		for (subtab in tmp[layer].microtabs[family]) {
-			if (subtabResetNotify(layer, family, subtab)) return true
+		for (subtab in tmp[layer].microtabs[family]){
+			if (subtabResetNotify(layer, family, subtab))
+				return true
 		}
 	}
 	if (tmp[layer].autoPrestige || tmp[layer].passiveGeneration) return false
@@ -285,8 +220,7 @@ function subtabShouldNotify(layer, family, id) {
 	let subtab = {}
 	if (family == "mainTabs") subtab = tmp[layer].tabFormat[id]
 	else subtab = tmp[layer].microtabs[family][id]
-	
-	if (!subtab.unlocked) return false
+
 	if (subtab.embedLayer) return tmp[subtab.embedLayer].notify
 	else return subtab.shouldNotify
 }
@@ -320,31 +254,22 @@ function toNumber(x) {
 }
 
 function updateMilestones(layer) {
-	if (tmp[layer].deactivated || !player[layer].unlocked) return
-	shouldPopup = !options.hideMilestonePopups && (tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined)
 	for (id in layers[layer].milestones) {
 		if (!(hasMilestone(layer, id)) && layers[layer].milestones[id].done()) {
-			if (!tmp[layer].milestones[id].unlocked) continue
-			player[layer].milestones.push(Number(id))
+			player[layer].milestones.push(id)
 			if (layers[layer].milestones[id].onComplete) layers[layer].milestones[id].onComplete()
-			if (shouldPopup) {
-				doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 3, tmp[layer].color);
-			}
-			player[layer].lastMilestone = Number(id)
+			if (tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "获得里程碑!", 3, tmp[layer].color);
+			player[layer].lastMilestone = id
 		}
 	}
 }
 
 function updateAchievements(layer) {
-	if (tmp[layer].deactivated || !player[layer].unlocked) return
 	for (id in layers[layer].achievements) {
-		if (!isPlainObject(layers[layer].achievements[id])) continue
-		if (hasAchievement(layer, Number(id))) continue
-		//if (layer != "ach" && !tmp[layer].achievements[id].unlocked) return // none more should be unlockable
-		if (layers[layer].achievements[id].done()) {
-			player[layer].achievements.push(Number(id))
+		if (isPlainObject(layers[layer].achievements[id]) && !(hasAchievement(layer, id)) && layers[layer].achievements[id].done()) {
+			player[layer].achievements.push(id)
 			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
-			if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "Achievement Gotten!", 3, tmp[layer].color);
+			if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "获得成就!", 3, tmp[layer].color);
 		}
 	}
 }
@@ -373,6 +298,30 @@ function addTime(diff, layer) {
 	else data.timePlayed = time
 }
 
+shiftDown = false
+ctrlDown = false
+
+document.onkeydown = function (e) {
+	if (player === undefined) return;
+	if (gameEnded && !player.keepGoing) return;
+	shiftDown = e.shiftKey
+	ctrlDown = e.ctrlKey
+	let key = e.key
+	if (ctrlDown) key = "ctrl+" + key
+	if (onFocused) return
+	if (ctrlDown && hotkeys[key]) e.preventDefault()
+	if (hotkeys[key]) {
+		let k = hotkeys[key]
+		if (player[k.layer].unlocked && tmp[k.layer].hotkeys[k.id].unlocked)
+			k.onPress()
+	}
+}
+
+document.onkeyup = function (e) {
+	shiftDown = e.shiftKey
+	ctrlDown = e.ctrlKey
+}
+
 var onFocused = false
 function focused(x) {
 	onFocused = x
@@ -391,12 +340,13 @@ document.title = modInfo.name
 
 // Converts a string value to whatever it's supposed to be
 function toValue(value, oldValue) {
-	if (oldValue instanceof Decimal) {
-		value = new Decimal(value)
-		if (checkDecimalNaN(value)) return decimalZero
+	if (oldValue instanceof OmegaNum) {
+		value = new OmegaNum (value)
+		if (value.eq(OmegaNumNaN)) return OmegaNumZero
 		return value
 	}
-	if (!isNaN(oldValue)) return parseFloat(value) || 0
+	if (!isNaN(oldValue)) 
+		return parseFloat(value) || 0
 	return value
 }
 
@@ -443,14 +393,16 @@ function run(func, target, args = null) {
 	if (isFunction(func)) {
 		let bound = func.bind(target)
 		return bound(args)
-	} else return func;
+	}
+	else
+		return func;
 }
 
 function gridRun(layer, func, data, id) {
 	if (isFunction(layers[layer].grid[func])) {
 		let bound = layers[layer].grid[func].bind(layers[layer].grid)
 		return bound(data, id)
-	} else return layers[layer].grid[func];
+	}
+	else
+		return layers[layer].grid[func];
 }
-
-

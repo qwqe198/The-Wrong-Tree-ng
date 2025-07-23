@@ -26,10 +26,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
 
         return 0
     },
-onPrestige(resettingLayer) {
-        player.esc.points = n(0)
 
-    },
     tabFormat: {
         里程碑: {
             buttonStyle() { return { 'color': 'yellow' } },
@@ -107,6 +104,7 @@ if (hasUpgrade("grz", 15))eff = eff.mul(upgradeEffect("grz", 15))
 if (hasAchievement("rw", 77)) mult = mult.mul(2)
 if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("grz", 24))mult = mult.mul(upgradeEffect("grz", 24))
+if (hasUpgrade("grz", 26))mult = mult.mul(upgradeEffect("grz", 26))
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)

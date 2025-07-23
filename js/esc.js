@@ -186,6 +186,17 @@ if(inChallenge("cq", 23))return  n(ez6escReq[player.esc.points.toNumber()])
                 kept.push(" upgrades")
 
             }
+            if (resettingLayer == "t" &&hasAchievement("rw", 45)) {
+                kept.push("milestones")
+                kept.push(" upgrades")
+
+            }
+            if (resettingLayer == "a1" &&hasAchievement("rw", 45)) {
+                kept.push("milestones")
+                kept.push(" upgrades")
+
+            }
+
             layerDataReset(this.layer, kept)
         }
     },

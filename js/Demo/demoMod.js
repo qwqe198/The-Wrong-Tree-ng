@@ -2,18 +2,16 @@ let modInfo = {
 	name: "The Modding Tree",
 	id: "modbase",
 	pointsName: "points",
-	modFiles: ["Demo/layers/c.js", "Demo/layers/f.js", "Demo/layers/a.js", "Demo/demoTree.js"],
-
-
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new OmegaNum (10), // Used for hard resets and new players
+	
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.6.6",
+	num: "2.6",
 	name: "Fixed Reality",
 }
 
@@ -28,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 var doNotCallTheseFunctionsEveryTick = ["doReset", "buy", "onPurchase", "blowUpEverything"]
 
 function getStartPoints(){
-    return new Decimal(modInfo.initialStartPoints)
+    return new OmegaNum(modInfo.initialStartPoints)
 }
 
 // Determines if it should show points/sec
@@ -39,9 +37,9 @@ function canGenPoints(){
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
-		return new Decimal(0)
+		return new OmegaNum(0)
 
-	let gain = new Decimal(1)
+	let gain = new OmegaNum(1)
 	if (hasUpgrade("c", 12)) gain = gain.times(upgradeEffect("c", 12))
 	return gain
 }
@@ -49,7 +47,7 @@ function getPointGen() {
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
 	weather: "Yes",
-	happiness: new Decimal(72),
+	happiness: new OmegaNum(72),
 }}
 
 // Display extra things at the top of the page
@@ -61,16 +59,12 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("11"))
+	return player.points.gte(new OmegaNum("e280000000"))
 }
 
 
 
 // Less important things beyond this point!
-
-// Style for the background, can be a function
-var backgroundStyle = {
-}
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
