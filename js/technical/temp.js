@@ -11,7 +11,8 @@ var activeFunctions = [
 	"effectDescription", "display", "fullDisplay", "effectDisplay", "rewardDisplay",
 	"tabFormat", "content",
 	"onComplete", "onPurchase", "onEnter", "onExit", "done",
-	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay"
+	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",
+	"getMinigameMaximum", "maxTimes", "exitMinigame", 
 ]
 
 var noCall = doNotCallTheseFunctionsEveryTick
@@ -25,8 +26,10 @@ var traversableClasses = []
 function setupTemp() {
 	tmp = {}
 	tmp.pointGen = {}
+	tmp.backgroundStyle = {}
 	tmp.displayThings = []
 	tmp.scrolled = 0
+	tmp.gameEnded = false
 	funcs = {}
 	
 	setupTempData(layers, tmp, funcs)
@@ -43,8 +46,8 @@ function setupTemp() {
 	}
 
 	tmp.other = {
-		lastPoints: player.points || OmegaNumZero,
-		oomps: OmegaNumZero,
+		lastPoints: player.points || decimalZero,
+		oomps: decimalZero,
 		screenWidth: 0,
 		screenHeight: 0,
     }
@@ -54,12 +57,12 @@ function setupTemp() {
 	temp = tmp
 }
 
+const boolNames = ["unlocked", "deactivated"]
+
 function setupTempData(layerData, tmpData, funcsData) {
 	for (item in layerData){
-		if (layerData[item] == null) {
-			tmpData[item] = null
-		}
-		else if (layerData[item] instanceof OmegaNum)
+		if (layerData[item] == null) tmpData[item] = null
+		else if (layerData[item] instanceof Decimal)
 			tmpData[item] = layerData[item]
 		else if (Array.isArray(layerData[item])) {
 			tmpData[item] = []
@@ -77,7 +80,8 @@ function setupTempData(layerData, tmpData, funcsData) {
 		}
 		else if (isFunction(layerData[item]) && !activeFunctions.includes(item)){
 			funcsData[item] = layerData[item]
-			tmpData[item] = OmegaNumOne // The safest thing to put probably?
+			if (boolNames.includes(item)) tmpData[item] = false
+			else tmpData[item] = decimalOne // The safest thing to put probably?
 		} else {
 			tmpData[item] = layerData[item]
 		}
@@ -85,11 +89,10 @@ function setupTempData(layerData, tmpData, funcsData) {
 }
 
 
-function updateTemp() {
-	if (tmp === undefined)
-		setupTemp()
+function updateTemp(noError = false) {
+	if (tmp === undefined) setupTemp()
 
-	updateTempData(layers, tmp, funcs)
+	updateTempData(layers, tmp, funcs, undefined, noError, true)
 
 	for (layer in layers){
 		tmp[layer].resetGain = getResetGain(layer)
@@ -99,50 +102,72 @@ function updateTemp() {
 		tmp[layer].trueGlowColor = tmp[layer].glowColor
 		tmp[layer].notify = shouldNotify(layer)
 		tmp[layer].prestigeNotify = prestigeNotify(layer)
+		if (tmp[layer].passiveGeneration === true) tmp[layer].passiveGeneration = 1 // new Decimal(true) = decimalZero
 
 	}
 
 	tmp.pointGen = getPointGen()
+	tmp.backgroundStyle = readData(backgroundStyle)
+
 	tmp.displayThings = []
 	for (thing in displayThings){
 		let text = displayThings[thing]
 		if (isFunction(text)) text = text()
 		tmp.displayThings.push(text) 
 	}
+	if (checkWordData()) player.wordsSpelled ++
+
+	updateAllBuyableExtras()
+	updateAllBuyableEffects()
 }
 
-function updateTempData(layerData, tmpData, funcsData, useThis) {
+function updateTempData(layerData, tmpData, funcsData, useThis, noError = false, firstStep = false) {
 	for (item in funcsData){
+		if (firstStep && !noError) {
+			if (layers[item].deactivated) {
+				if (layers[item].deactivated()) {
+					tmp[item].deactivated = true
+					tmp[item].layerShown = layers[item].layerShown()
+					continue
+				}
+			}
+		}
 		if (Array.isArray(layerData[item])) {
 			if (item !== "tabFormat" && item !== "content") // These are only updated when needed
-				updateTempData(layerData[item], tmpData[item], funcsData[item], useThis)
+				updateTempData(layerData[item], tmpData[item], funcsData[item], useThis, noError)
 		}
 		else if ((!!layerData[item]) && (layerData[item].constructor === Object) || (typeof layerData[item] === "object") && traversableClasses.includes(layerData[item].constructor.name)){
-			updateTempData(layerData[item], tmpData[item], funcsData[item], useThis)
+			updateTempData(layerData[item], tmpData[item], funcsData[item], useThis, noError)
 		}
 		else if (isFunction(layerData[item]) && !isFunction(tmpData[item])){
 			let value
 
 			if (useThis !== undefined) value = layerData[item].bind(useThis)()
 			else value = layerData[item]()
+			if (value !== value || checkDecimalNaN(value)){
+				if (!NaNalert && !noError) {
+					console.log(value, layerData, funcsData, tmpData, useThis)
+					confirm("Invalid value found in tmp, named '" + item + "'. Please let the creator of this mod know with a screenshot of the console and the save! You can refresh the page, and you will be un-NaNed.")
+					clearInterval(interval);
+					NaNalert = true;
+					return
+				}
+			}
 			Vue.set(tmpData, item, value)
 		}
 	}	
 }
 
-function updateChallengeTemp(layer)
-{
+function updateChallengeTemp(layer){
 	updateTempData(layers[layer].challenges, tmp[layer].challenges, funcs[layer].challenges)
 }
 
 
-function updateBuyableTemp(layer)
-{
+function updateBuyableTemp(layer){
 	updateTempData(layers[layer].buyables, tmp[layer].buyables, funcs[layer].buyables)
 }
 
-function updateClickableTemp(layer)
-{
+function updateClickableTemp(layer){
 	updateTempData(layers[layer].clickables, tmp[layer].clickables, funcs[layer].clickables)
 }
 
@@ -164,6 +189,6 @@ function setupBuyables(layer) {
 	}
 }
 
-function checkOmegaNumNaN(x) {
-	return (x instanceof OmegaNum) && !x.eq(x)
+function checkDecimalNaN(x) {
+	return (x instanceof Decimal) && !x.eq(x)
 }
