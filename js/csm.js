@@ -38,6 +38,53 @@ addLayer("csm", { //这是代码中的节点代码 例如player.p可以调用该
                 ${`<br><br>转生增量:${format(player.csm.ati)}(${format(this.atigain())}/s),使得增量获取*${format(this.effect())}`}
     
         `},
+ upgrades: {
+        11: {
+            description: "点数灌注2 无瑕点数.",
+            cost() { return new OmegaNum(10000) },
+            unlocked() { return true },
+effect() {
+                var eff = n(1.33).pow(getBuyableAmount(this.layer, 11))
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "转生增量",
+            currencyInternalName: "ati",
+            currencyLayer: "csm"
+
+        },
+12: {
+            description: "增量灌注2 增量获取.",
+            cost() { return new OmegaNum(10000) },
+            unlocked() { return true },
+effect() {
+                var eff = n(getBuyableAmount(this.layer, 12).add(1)).pow(getBuyableAmount(this.layer, 12).mul(getBuyableAmount(this.layer, 12).add(10).log10()))
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "转生增量",
+            currencyInternalName: "ati",
+            currencyLayer: "csm"
+
+        },
+13: {
+            description: "变形虫灌注2 变形虫升级32.",
+            cost() { return new OmegaNum(10000) },
+            unlocked() { return true },
+effect() {
+                var eff = n(0.02).mul(getBuyableAmount(this.layer, 13)).add(1)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "转生增量",
+            currencyInternalName: "ati",
+            currencyLayer: "csm"
+
+        },
+    },
  buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -116,6 +163,7 @@ eff=eff.pow(buyableEffect('csm', 12))
                 var eff = player.csm.points
 if (hasAchievement("rw", 85))eff=eff.mul(10)
 if (hasMilestone("cq", 24))eff=eff.mul(2)
+if (hasUpgrade("grz", 32))eff=eff.mul(upgradeEffect("grz", 15))
                 return eff
         },
         tabFormat: {
@@ -126,10 +174,21 @@ if (hasMilestone("cq", 24))eff=eff.mul(2)
 
                                 "blank",
                                 "buyables",
+                                ],
+                        unlocked() {
+                                return true
+                        },
+                },
+   "升级": {
+                        content: ["main-display",
+
+                                "prestige-button",
+
+
                                 "blank",
                                 "upgrades"],
                         unlocked() {
-                                return true
+                                return hasAchievement("rw", 85)
                         },
                 },
                 "效果": {

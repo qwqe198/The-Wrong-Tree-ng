@@ -38,6 +38,8 @@ player.a1.upgrades = []
 player.a1.buyables[11] = zero
 player.a1.buyables[12] = zero
 player.a1.buyables[13] = zero
+if(player.grz.points.gte(10))player.cq.points=n(300)
+
     },
     effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量,点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
     lleff() {
@@ -53,6 +55,7 @@ if (hasUpgrade("grz", 25))pow=pow.mul(upgradeEffect("grz", 25))
       if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(1e10).log10().log10())  
 if (hasUpgrade("grz", 21))gain=gain.mul(upgradeEffect("grz", 21))
 if (hasUpgrade("grz", 23))gain=gain.mul(upgradeEffect("grz", 23))
+	if (hasAchievement("rw", 86)) gain = gain.mul(10)
 gain = gain.mul(buyableEffect("grz", 11))
 if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
         return gain
@@ -202,7 +205,7 @@ currencyDisplayName: "感染力量",
             cost() { return new OmegaNum(25000000) },
             unlocked() { return true },
 effect() {
-                var eff = n(1.1).pow(player.a1.upgrades.length)
+                var eff = n(1.1).pow(player.grz.upgrades.length)
                 
                 return eff
             },
@@ -227,10 +230,42 @@ currencyDisplayName: "感染力量",
         },
 26: {
             description: "基于变形虫加成战力获取.",
-            cost() { return new OmegaNum(1.313e13) },
+            cost() { return new OmegaNum(1.31e13) },
             unlocked() { return true },
 effect() {
                 var eff = player.a1.points.add(1).pow(0.022)
+                
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+31: {
+            description: "每秒获得100%的战力,禁用战力重置.",
+            cost() { return new OmegaNum(2.52e25) },
+            unlocked() { return true },
+
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+32: {
+            description: "感染者升级15对转生增量生效,自动提升攻防.",
+            cost() { return new OmegaNum(2.72e27) },
+            unlocked() { return true },
+
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+33: {
+            description: "感染力量提升增量获取.",
+            cost() { return new OmegaNum(2.92e29) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(1).log10().pow(10)
                 
                 return eff
             },
@@ -248,6 +283,7 @@ currencyDisplayName: "感染力量",
 
         return mult
     },
+
     gainExp() { // 资源获取指数加成(与exponent相乘)
         var exp = new ExpantaNum(0.5)
        
@@ -255,7 +291,7 @@ currencyDisplayName: "感染力量",
     },
 getNextAt() {
                 let gain = n("500").mul(n("2").pow(player.grz.points))
-
+if(player.grz.points.gte(13))gain=n("500").mul(n("3").pow(player.grz.points))
                 return gain
         },
     layerShown() { return hasMilestone("cq", 23)||player.grz.points.gte(1) },
@@ -265,6 +301,7 @@ getNextAt() {
                 player.grz.ll = player.grz.ll.add(this.llgain().mul(diff))
 
         },
+
 buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {

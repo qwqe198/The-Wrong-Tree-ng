@@ -23,7 +23,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     resource: "战力", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     passiveGeneration() {
-
+ if (hasUpgrade("grz", 31)) return 1
         return 0
     },
 
@@ -33,7 +33,7 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
             content:
                 ["main-display",
 
-                    "prestige-button", "resource-display",
+                    ["prestige-button", "", function () { return hasUpgrade("grz", 31) ? { 'display': 'none' } : {} }], "resource-display",
                     "milestones",
 
                 ],
@@ -1316,7 +1316,7 @@ unlocked() { return hasAchievement("rw", 77) },
         },
         12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n("1000").mul(n("2").pow(x))
+                var c = n(hasUpgrade("grz", 32)?1:1000).mul(n("2").pow(x))
 
                 return c
             },
@@ -1338,7 +1338,7 @@ unlocked() { return hasAchievement("rw", 77) },
         },
         13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n("1000").mul(n("2").pow(x))
+                var c = n(hasUpgrade("grz", 32)?1:1000).mul(n("2").pow(x))
 
                 return c
             },
@@ -1375,9 +1375,9 @@ unlocked() { return hasAchievement("rw", 77) },
 
         if (player.cq.challenges[21] > 3) player.cq.challenges[21] = 3//下版本删
         if (player.cq.challenges[22] > 2) player.cq.challenges[22] = 2
-     
-
-
+      
+if (hasUpgrade("grz", 32))setBuyableAmount('cq', 12, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
+if (hasUpgrade("grz", 32))setBuyableAmount('cq', 13, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
 
 
 

@@ -87,6 +87,7 @@ if (gain.gte("1e50000")) gain = expPow(gain.mul(10), 0.7).mul("1e48054")//sc2
 	if (hasUpgrade("cq", 64)) gain = gain.mul(upgradeEffect("cq", 64))
 	if (hasAchievement("rw", 66)) gain = gain.mul(player.i.points.add(10).log10())
 if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
+if (hasUpgrade("csm", 11))gain=gain.mul(upgradeEffect("csm", 11))
 	if (player.csm.points.gte(1)) gain = gain.div(1e4)
 	//上限
 	if (gain.gte(layers.grz.pthc())) gain = gain.min(layers.grz.pthc())

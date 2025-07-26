@@ -12,7 +12,7 @@ addLayer("a1", { //这是代码中的节点代码 例如player.p可以调用该�
     resource: "变形虫", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     passiveGeneration() {
-
+ if(hasAchievement("rw", 91))return 1
         if (hasUpgrade("a1", 23)) return 1
 
         return 0
@@ -236,6 +236,7 @@ if (eff.gte(10000)) eff = eff.root(4).mul(1000)
             description: "变形虫降低增量强度价格.",
             effect() {
                 var eff = player.a1.points.add(10).log10().mul(0.05).add(1)
+if (hasUpgrade("csm", 13))eff=eff.mul(upgradeEffect("csm", 13))
 
                 return eff
             },
@@ -281,7 +282,7 @@ if (eff.gte(10000)) eff = eff.root(4).mul(1000)
     },
     resetsNothing() { return hasAchievement("rw", 42) },
 
-
+autoUpgrade() { return hasAchievement("rw", 91) },
 
 },
 )

@@ -28,8 +28,8 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n("1000").mul(n(3).pow(x)).mul(n(1.1).pow(x.pow(2)))
-                c = c.div(player.cq.atk)
-                if (hasAchievement("rw", 51)) c = c.div(player.cq.def)
+                c = c.div(player.cq.atk.add(1))
+                if (hasAchievement("rw", 51)) c = c.div(player.cq.def.add(1))
                 return c
             },
             display() { return `需要:${format(this.cost(getBuyableAmount(this.layer, this.id)))}血量<br>层数:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
