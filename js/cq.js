@@ -1378,7 +1378,7 @@ unlocked() { return hasAchievement("rw", 77) },
       
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 12, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 13, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
-
+ if (hasAchievement("rw", 92) && player.l.points.root(0.9).sub(1).gte(n(1e50).mul(n(10000).pow(getBuyableAmount("cq", 11))).mul(n(5).pow(getBuyableAmount("cq", 11).pow(2))))) setBuyableAmount("cq", 11, getBuyableAmount("cq", 11).add(1))
 
 
     },

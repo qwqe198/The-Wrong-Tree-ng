@@ -298,7 +298,12 @@ addLayer("rw", {
         },
 92:{         name: "传染感染",
             done() { return player.grz.points.gte(13) },
-            tooltip: "击杀13只感染者，奖励：自动提升生命（咕咕咕）。",
+            tooltip: "击杀13只感染者，奖励：自动提升生命。",
+        },
+93: {
+            name: "还要更多",
+            done() { return player.grz.points.gte(14) },
+            tooltip: "击杀14只感染者，奖励：点数上限x1e50。",
         },
     },
     tabFormat: [
