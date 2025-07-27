@@ -49,7 +49,7 @@ player.a1.upgrades = []
 player.a1.buyables[11] = zero
 player.a1.buyables[12] = zero
 player.a1.buyables[13] = zero
-if(player.grz.points.gte(10))player.cq.points=n(300)
+
 
     },
     effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量,点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
