@@ -248,7 +248,7 @@ unlocked() { return hasAchievement("rw", 77) },
 25: {
     requirementDescription: "22扩张完成",
     done() { return player.l.challenges[11] >= 22 },
-    effectDescription() { return "在重置时保留战力里程碑" },
+    effectDescription() { return "在重置时保留战力里程碑，如果点数超过1e50950，点数获取在二重软上限后x1e100" },
 },
 26: {
     requirementDescription: "23扩张完成",

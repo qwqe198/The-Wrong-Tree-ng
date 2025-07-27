@@ -46,6 +46,7 @@ function getPointGen() {
 		else gain = gain.div(upgradeEffect("p", 12))
 	}
 	if (hasUpgrade("cq", 11)) gain = gain.mul(3)
+
 	if (hasUpgrade("cq", 42)) gain = gain.mul(upgradeEffect("cq", 42))
 	if (hasAchievement("rw", 21)) gain = gain.mul(2)
 	if (hasUpgrade("cq", 13)) gain = gain.mul(upgradeEffect("cq", 13))
@@ -78,6 +79,7 @@ if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) gain = gain.pow(0.25
 	if (gain.gte("1e15000")) gain = expPow(gain.mul(10), 0.8).mul("1e14000")//sc1
 if (hasUpgrade("grz", 11))gain=gain.pow(upgradeEffect("grz", 11))
 if (gain.gte("1e50000")) gain = expPow(gain.mul(10), 0.7).mul("1e48054")//sc2
+if (hasMilestone("cq", 25)&&gain.gte("1e50950")) gain = gain.mul(1e100)
 	//加强疫苗 
 	if (inChallenge("t", 11)) gain = gain.add(10).log10().div(9)
 	if (hasMilestone("esc", 12) && hasUpgrade("i", 11)) gain = gain.mul(upgradeEffect("i", 11).add(10).log10().pow(1.25))
