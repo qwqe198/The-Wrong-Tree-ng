@@ -75,6 +75,7 @@ gain = gain.mul(buyableEffect("grz", 11))
                 if (hasMilestone("t", 15)) gain = gain.mul(n(1.1).pow(buyableEffect("t", 11)))
      if (hasMilestone("lcb", 6)) gain = gain.mul(n(1.1).pow(player.grz.ll.add(10).log(10).floor().min(100)))
 if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
+if(gain.gte(1e308))gain=gain.log10().add(692).pow(308/3)
         return gain
     },
 pthc() {
