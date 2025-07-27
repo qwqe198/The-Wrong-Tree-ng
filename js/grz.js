@@ -52,7 +52,7 @@ player.a1.buyables[13] = zero
 
 
     },
-    effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量,点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
+    effectDescription() { return `副本2. 你有${format(player.grz.ll)}感染力量(+${format(layers.grz.llgain())}/s),点数上限^${n(this.lleff().mul(10000).floor().div(10000))}.` },
     lleff() {
         let eff = player.grz.ll.add(1).log10().mul(0.001).add(1)
 eff=eff.pow(buyableEffect("grz", 13))
@@ -350,7 +350,7 @@ if(hasUpgrade("grz",52))gain=gain.div(upgradeEffect("grz", 52))
 
   update(diff) {
                 player.grz.ll = player.grz.ll.add(this.llgain().mul(diff))
-player.grz.crgr = getBuyableAmount(this.layer, 11).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3))
+if(hasMilestone("grz", 2))player.grz.crgr = getBuyableAmount(this.layer, 11).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3))
         },
 
 buyables: {
@@ -375,7 +375,7 @@ if(hasUpgrade("grz",51))base=base.add(1)
 x=x.add(getBuyableAmount(this.layer, 12))
 x=x.add(getBuyableAmount(this.layer, 13))
                 var eff = n(base).pow(x)
-if(eff.gte(1e125))eff=eff.root(5).mul(1e100)
+
                 return eff
             },
             unlocked() { return true },
