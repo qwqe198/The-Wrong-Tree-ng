@@ -238,7 +238,7 @@ currencyDisplayName: "感染力量",
             unlocked() { return true },
 effect() {
                 var eff = player.cq.points.add(1).pow(0.025)
-                
+                                if(eff.gte(1.5))eff=eff.pow(0.1).mul(n(1.5).pow(0.9))
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -375,7 +375,7 @@ if(hasUpgrade("grz",51))base=base.add(1)
 x=x.add(getBuyableAmount(this.layer, 12))
 x=x.add(getBuyableAmount(this.layer, 13))
                 var eff = n(base).pow(x)
-
+if(eff.gte(1e130))eff=eff.root(2).mul(1e65)
                 return eff
             },
             unlocked() { return true },
@@ -400,7 +400,7 @@ x=x.add(getBuyableAmount(this.layer, 13))
 var base = n(1.03)
 
                 var eff = n(base).pow(x)
-
+if(eff.gte(5))eff=eff.root(2).mul(n(5).root(2))
                 return eff
             },
             unlocked() { return true },
