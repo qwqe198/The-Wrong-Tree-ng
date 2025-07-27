@@ -263,6 +263,14 @@ eff=eff.pow(buyableEffect('csm', 11))
                                 return getBuyableAmount("i", 13).gte(61)
                         },
                 },
+   45: {
+
+                        description: "传送门升级11对基础增量获得量生效",
+                        cost: n("1e751"),
+                        unlocked() {
+                                return getBuyableAmount("i", 11).gte(418)
+                        },
+                },
         },
         tabFormat: {
                 "主菜单": {
@@ -318,6 +326,7 @@ eff=eff.pow(buyableEffect('csm', 11))
                 if (hasUpgrade("i", 35)) gain = gain.mul(getBuyableAmount("i", 11).add(1))
 if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("grz", 33))gain=gain.mul(upgradeEffect("grz", 33))
+if (hasUpgrade("i", 45))gain=gain.mul(upgradeEffect("csm", 11))
                 if (hasUpgrade("i", 12) && hasUpgrade("i", 44)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
                 gain = gain.pow(buyableEffect('i', 13))
                 //乘数
@@ -336,7 +345,7 @@ if (hasUpgrade("csm", 12))gain=gain.mul(upgradeEffect("csm", 12))
                 gain = gain.mul(layers.csm.effect())
                 //传送门
                 if (player.csm.points.gte(1)) gain = expPow(gain.mul(10), 0.9)
-
+                        if(gain.gte("1e700"))gain = gain.pow(0.5).mul("1e350")
                 if (player.points.lt(1e4)||!inChallenge("t", 11)) gain = n(0)
                gain=gain.min(layers.csm.getNextAt())
 

@@ -69,8 +69,10 @@ pow=pow.mul(buyableEffect("grz", 12))
       if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(1e10).log10().log10())  
 if (hasUpgrade("grz", 21))gain=gain.mul(upgradeEffect("grz", 21))
 if (hasUpgrade("grz", 23))gain=gain.mul(upgradeEffect("grz", 23))
+if (hasUpgrade("grz", 34))gain=gain.mul(upgradeEffect("grz", 34))
 	if (hasAchievement("rw", 86)) gain = gain.mul(10)
 gain = gain.mul(buyableEffect("grz", 11))
+                if (hasMilestone("t", 15)) gain = gain.mul(n(1.1).pow(buyableEffect("t", 11)))
      if (hasMilestone("lcb", 6)) gain = gain.mul(n(1.1).pow(player.grz.ll.add(10).log(10).floor().min(100)))
 if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
         return gain
@@ -210,7 +212,7 @@ currencyDisplayName: "感染力量",
             unlocked() { return true },
 effect() {
                 var eff = player.cq.points.add(1).pow(0.5)
-                
+                if(hasAchievement("rw",95))eff=eff.pow(2)
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -292,6 +294,35 @@ currencyDisplayName: "感染力量",
             currencyInternalName: "ll",
             currencyLayer: "grz"
         },
+34: {
+            description: "基于感染力量提升自身获取.",
+            cost() { return new OmegaNum(1.939e193) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(1).log10()
+                if(hasUpgrade("grz",54))eff=eff.pow(upgradeEffect("grz", 54))
+if(hasUpgrade("grz",55))eff=eff.pow(upgradeEffect("grz", 55))
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
+35: {
+            description: "基于感染力量提升战力获取.",
+            cost() { return new OmegaNum(2.19e219) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(1).log10().add(1).log10()
+
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
 51: {
             description: "“力量获取”的基础增加1",
             cost() { return new OmegaNum(50) },
@@ -316,10 +347,38 @@ currencyDisplayName: "传染感染",
             currencyLayer: "grz"
         },
 53: {
-            description: "“免疫降低”的基础增加0.01（残局）",
+            description: "“免疫降低”的基础增加0.01",
             cost() { return new OmegaNum(350) },
             unlocked() { return true },
 
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+54: {
+            description: "基于里程碑提升感染者升级34效果",
+            cost() { return new OmegaNum(380) },
+            unlocked() { return true },
+effect() {
+                var eff = player.lcb.points.pow(0.5)
+                
+                return eff
+            },
+ effectDisplay() { return `^ ${format(this.effect())}` },
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+55: {
+            description: "基于感染者提升感染者升级34效果",
+            cost() { return new OmegaNum(400) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.points.pow(0.25)
+                
+                return eff
+            },
+ effectDisplay() { return `^ ${format(this.effect())}` },
 currencyDisplayName: "传染感染",
             currencyInternalName: "crgr",
             currencyLayer: "grz"
@@ -422,7 +481,7 @@ if(eff.gte(5))eff=eff.root(2).mul(n(5).root(2))
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
 var base = n(1.04)
-
+if(hasUpgrade("grz",53))base=base.add(0.01)
                 var eff = n(base).pow(x)
 
                 return eff

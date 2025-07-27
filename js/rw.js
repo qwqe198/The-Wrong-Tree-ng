@@ -305,6 +305,21 @@ addLayer("rw", {
             done() { return player.grz.points.gte(14) },
             tooltip: "击杀14只感染者，奖励：点数上限x1e50。",
         },
+  94: {
+            name: "进一步扩张",
+            done() { return player.l.challenges[11] >= 22 },
+            tooltip: "完成22次扩张，奖励：写到战力里程碑那里了",
+        },
+95: {
+            name: "非常吉利的数字",
+            done() { return upgradeEffect("i", 11).gte("1e888888") },
+            tooltip: "增量升级11效果超过1e888888，奖励：感染者升级23效果是原来的平方",
+        },
+96: {
+            name: "2^4",
+            done() { return player.grz.points.gte(16) },
+            tooltip: "击杀16只感染者，奖励：咕咕咕。",
+        },
     },
     tabFormat: [
         "blank",

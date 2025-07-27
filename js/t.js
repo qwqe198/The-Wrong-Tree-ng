@@ -177,6 +177,18 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
 
             done() { return buyableEffect("t", 11).gte(16) }
         },
+        14: {
+            requirementDescription: "18层",
+            effectDescription: "转生增量获取x(1.07^x)",
+
+            done() { return buyableEffect("t", 11).gte(18) }
+        },
+    15: {
+            requirementDescription: "20层",
+            effectDescription: "感染力量获取x(1.1^x)",
+
+            done() { return buyableEffect("t", 11).gte(20) }
+        },
     },
     tabFormat: {
         主要: {

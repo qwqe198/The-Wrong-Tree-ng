@@ -164,6 +164,7 @@ eff=eff.pow(buyableEffect('csm', 12))
 if (hasAchievement("rw", 85))eff=eff.mul(10)
 if (hasMilestone("cq", 24))eff=eff.mul(2)
 if (hasUpgrade("grz", 32))eff=eff.mul(upgradeEffect("grz", 15))
+                if (hasMilestone("t", 14)) eff=eff.mul(n(1.07).pow(buyableEffect("t", 11)))
                 return eff
         },
         tabFormat: {

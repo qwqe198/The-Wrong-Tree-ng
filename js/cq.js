@@ -105,6 +105,7 @@ if (hasAchievement("rw", 77)) mult = mult.mul(2)
 if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("grz", 24))mult = mult.mul(upgradeEffect("grz", 24))
 if (hasUpgrade("grz", 26))mult = mult.mul(upgradeEffect("grz", 26))
+if (hasUpgrade("grz", 35))mult = mult.mul(upgradeEffect("grz", 35))
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -247,7 +248,7 @@ unlocked() { return hasAchievement("rw", 77) },
 25: {
     requirementDescription: "22扩张完成",
     done() { return player.l.challenges[11] >= 22 },
-    effectDescription() { return "还没做" },
+    effectDescription() { return "在重置时保留战力里程碑" },
 },
 26: {
     requirementDescription: "23扩张完成",
@@ -1036,7 +1037,7 @@ unlocked() { return hasAchievement("rw", 77) },
             unlocked() { return hasAchievement("rw", 63) },
             effect() {
                 var eff = player.cq.points.add(1)
-
+if(eff.gte(1e7))eff=eff.log10().add(3).pow(7)
                 return eff
             },
             effectDisplay() { return `x ${format(this.effect())}` },
@@ -1364,7 +1365,7 @@ unlocked() { return hasAchievement("rw", 77) },
             let kept = ["unlocked", "auto"]
            
                 kept.push("challenges")
-            
+              if (hasAchievement("rw", 94)) kept.push("milestones")
             layerDataReset(this.layer, kept)
         }
     },
