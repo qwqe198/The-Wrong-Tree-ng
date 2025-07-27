@@ -42,6 +42,7 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
                 return "爬塔"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
+
                 var eff = x
 if(hasAchievement("rw",96))x=x.max(20)
                 return eff
@@ -214,8 +215,7 @@ if(hasAchievement("rw",96))x=x.max(20)
     },
     update(diff) {
         player.t.points = buyableEffect("t", 11)
-
-
+if(hasAchievement("rw",96))setBuyableAmount("t", 11, getBuyableAmount("t", 11).max(20))
 
 
 
