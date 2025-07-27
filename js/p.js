@@ -453,14 +453,14 @@ if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) eff = n(1)
     update(diff) {
         if (hasUpgrade("p", 32)) player.p.e0 = player.p.e0.add(upgradeEffect("p", 32).mul(diff))
         for (i = 1; i <= buyableEffect('p', 13).toNumber(); i++) player.p[`e${i}`] = player.p[`e${i}`].add(player.p[`e${i - 1}`].pow(1 / 9).div(100).mul(this.condenseEffect(player.p[`e${i + 1}`])).mul(diff))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 5)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(getBuyableAmount("p", 11))).mul(n(2).pow(getBuyableAmount("p", 11).pow(2)).pow(getBuyableAmount("p", 11).gte(130) ? getBuyableAmount("p", 11).sub(30).mul(0.01) : 1)))) setBuyableAmount('p', 11, getBuyableAmount('p', 11).add(hasMilestone("l", 38) ? 5 : 1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 6)) && player.p.e0.sub(1).gte(three.pow(getBuyableAmount("p", 12)).mul(10).pow(getBuyableAmount("p", 12).gte(450) ? getBuyableAmount("p", 12).sub(350).mul(0.01) : 1).pow(hasMilestone("l", 12) ? 10 : 1))) setBuyableAmount('p', 12, getBuyableAmount('p', 12).add(hasMilestone("esc", 9) ? 10 : 1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 7)) && (player.p[`e${buyableEffect('p', 13).toNumber()}`].sub(1)).gte(1e9)) setBuyableAmount('p', 13, getBuyableAmount('p', 13).add(1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 8)) && player.p.points.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e308).mul(n(hasUpgrade("a", 41) ? 1 : 1e49).pow(getBuyableAmount("p", 14))).mul(n(1e4).pow(getBuyableAmount("p", 14).pow(2))))) setBuyableAmount('p', 14, getBuyableAmount('p', 14).add(1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 9)) && player.p.e0.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e100).mul(n(hasUpgrade("a", 41) ? 1 : 1e8).pow(getBuyableAmount("p", 21))).mul(n(100).pow(getBuyableAmount("p", 21).pow(2))))) setBuyableAmount('p', 21, getBuyableAmount('p', 21).add(1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 10)) && player.p.points.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : "1e1800").mul(n(hasUpgrade("a", 41) ? 1 : 1e25).pow(getBuyableAmount("p", 22))).mul(n(10000).pow(getBuyableAmount("p", 22).pow(2))))) setBuyableAmount('p', 22, getBuyableAmount('p', 22).add(1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 11)) && player.p.points.sub(1).gte(n(hasUpgrade("a", 33) ? 1 : "1e5000").mul(n(hasUpgrade("a", 41) ? 1 : 1e100).pow(getBuyableAmount("p", 23))).mul(n(1e10).pow(getBuyableAmount("p", 23).pow(2))))) setBuyableAmount('p', 23, getBuyableAmount('p', 23).add(1))
-        if ((hasMilestone("esc", 7) || hasMilestone("cq", 12)) && player.p.points.sub(1).gte(n("1e10000").mul(n(1e200).pow(getBuyableAmount("p", 24))).mul(n(1e20).pow(getBuyableAmount("p", 24).pow(2))))) setBuyableAmount('p', 24, getBuyableAmount('p', 24).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 5)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?10000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(getBuyableAmount("p", 11))).mul(n(2).pow(getBuyableAmount("p", 11).pow(2)).pow(getBuyableAmount("p", 11).gte(130) ? getBuyableAmount("p", 11).sub(30).mul(0.01) : 1)))) setBuyableAmount('p', 11, getBuyableAmount('p', 11).add(hasMilestone("l", 38) ? 5 : 1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 6)) && player.p.e0.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(three.pow(getBuyableAmount("p", 12)).mul(10).pow(getBuyableAmount("p", 12).gte(450) ? getBuyableAmount("p", 12).sub(350).mul(0.01) : 1).pow(hasMilestone("l", 12) ? 10 : 1))) setBuyableAmount('p', 12, getBuyableAmount('p', 12).add(hasMilestone("esc", 9) ? 10 : 1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 7)) && (player.p[`e${buyableEffect('p', 13).toNumber()}`].sub(1)).gte(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?"1e9000":1e9)) setBuyableAmount('p', 13, getBuyableAmount('p', 13).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 8)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e308).mul(n(hasUpgrade("a", 41) ? 1 : 1e49).pow(getBuyableAmount("p", 14))).mul(n(1e4).pow(getBuyableAmount("p", 14).pow(2))))) setBuyableAmount('p', 14, getBuyableAmount('p', 14).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 9)) && player.p.e0.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : 1e100).mul(n(hasUpgrade("a", 41) ? 1 : 1e8).pow(getBuyableAmount("p", 21))).mul(n(100).pow(getBuyableAmount("p", 21).pow(2))))) setBuyableAmount('p', 21, getBuyableAmount('p', 21).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 10)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : "1e1800").mul(n(hasUpgrade("a", 41) ? 1 : 1e25).pow(getBuyableAmount("p", 22))).mul(n(10000).pow(getBuyableAmount("p", 22).pow(2))))) setBuyableAmount('p', 22, getBuyableAmount('p', 22).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 11)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n(hasUpgrade("a", 33) ? 1 : "1e5000").mul(n(hasUpgrade("a", 41) ? 1 : 1e100).pow(getBuyableAmount("p", 23))).mul(n(1e10).pow(getBuyableAmount("p", 23).pow(2))))) setBuyableAmount('p', 23, getBuyableAmount('p', 23).add(1))
+        if ((hasMilestone("esc", 7) || hasMilestone("cq", 12)) && player.p.points.root(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2?1000:1).sub(1).gte(n("1e10000").mul(n(1e200).pow(getBuyableAmount("p", 24))).mul(n(1e20).pow(getBuyableAmount("p", 24).pow(2))))) setBuyableAmount('p', 24, getBuyableAmount('p', 24).add(1))
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 13)) && player.points.gte("1e5")) player.p.challenges[11]++
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 14)) && player.points.gte("1e60")) player.p.challenges[12]++
         if ((hasMilestone("esc", 7) || hasMilestone("cq", 15)) && player.points.gte("1e200")) player.p.challenges[13]++
@@ -602,7 +602,7 @@ if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) eff = n(1)
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : 1e10).mul(n(hasUpgrade("a", 41) ? 1 : 1e2).pow(x)).mul(n(2).pow(x.pow(2)).pow(getBuyableAmount(this.layer, this.id).gte(130) ? getBuyableAmount(this.layer, this.id).sub(30).mul(0.01) : 1))
-if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(10000)
                 return c
             },
             display() { return `11.在没有第31升级时倍增第31升级效果.倍增前11个升级效果.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -628,6 +628,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = three.pow(x).mul(10).pow(getBuyableAmount(this.layer, this.id).gte(450) ? getBuyableAmount(this.layer, this.id).sub(350).mul(0.01) : 1)
                 if (hasMilestone("l", 12)) c = c.pow(10)
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `倍增重置能量.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置能量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -649,6 +650,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(1e9)
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `解锁下一重压缩能量.<br />当前重数:${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}当前最高重压缩能量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}/8` },
@@ -669,6 +671,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         14: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : 1e308).mul(n(hasUpgrade("a", 41) ? 1 : 1e49).pow(x)).mul(n(1e4).pow(x.pow(2)))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `倍增第一个购买项效果.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -686,6 +689,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         21: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : 1e100).mul(n(hasUpgrade("a", 41) ? 1 : 1e8).pow(x)).mul(n(100).pow(x.pow(2)))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `倍增升级31效果.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置能量<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -704,6 +708,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         22: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : "1e1800").mul(n(hasUpgrade("a", 41) ? 1 : 1e25).pow(x)).mul(n(10000).pow(x.pow(2)))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `26.元套娃.倍增升级35到43效果.<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -723,6 +728,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         23: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n(hasUpgrade("a", 33) ? 1 : "1e5000").mul(n(hasUpgrade("a", 41) ? 1 : 1e100).pow(x)).mul(n(1e10).pow(x.pow(2)))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `倍增升级15效果.<br />^${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
@@ -741,6 +747,7 @@ if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
         24: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var c = n("1e10000").mul(n(1e200).pow(x)).mul(n(1e20).pow(x.pow(2)))
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)c=c.pow(1000)
                 return c
             },
             display() { return `62.这个要8劝退点却提前出现.声望点获取.<br />^${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}重置点<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },

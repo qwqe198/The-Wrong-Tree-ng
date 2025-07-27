@@ -106,6 +106,8 @@ if (hasUpgrade("grz", 15))mult = mult.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("grz", 24))mult = mult.mul(upgradeEffect("grz", 24))
 if (hasUpgrade("grz", 26))mult = mult.mul(upgradeEffect("grz", 26))
 if (hasUpgrade("grz", 35))mult = mult.mul(upgradeEffect("grz", 35))
+if (hasUpgrade("grz", 61))mult = mult.mul(upgradeEffect("grz", 61))
+        if (hasMilestone("cq", 26)) mult = mult.mul(2.3)
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -253,7 +255,7 @@ unlocked() { return hasAchievement("rw", 77) },
 26: {
     requirementDescription: "23扩张完成",
     done() { return player.l.challenges[11] >= 23 },
-    effectDescription() { return "还没做" },
+    effectDescription() { return "战力获取x2.3" },
 },
 27: {
     requirementDescription: "24扩张完成",
@@ -1260,7 +1262,7 @@ if(eff.gte(1e7))eff=eff.log10().add(3).pow(7)
             challengeDescription() {
 
                 let a = "（首次推荐战力：69(不错)）"
-                let b = player.cq.challenges[23] >= 1 ? "劝退点中的分隔符现在非常大。升级13效果反转。重置点和升级重置会在重置点重置时发生" : "劝退点中的分隔符现在非常大,重置点和升级重置会在重置点重置时发生"
+                let b = player.cq.challenges[23] >= 2 ? "劝退点中的分隔符现在非常大。升级13效果反转。同时，p层级购买项的缩放会更加困难。重置点和升级重置会在重置点重置时发生" :player.cq.challenges[23] >= 1 ? "劝退点中的分隔符现在非常大。升级13效果反转。重置点和升级重置会在重置点重置时发生" : "劝退点中的分隔符现在非常大,重置点和升级重置会在重置点重置时发生"
 
 
 

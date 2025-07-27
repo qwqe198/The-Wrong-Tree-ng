@@ -43,7 +43,7 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var eff = x
-
+if(hasAchievement("rw",96))x=x.max(20)
                 return eff
             },
             unlocked() { return true },
@@ -214,7 +214,6 @@ addLayer("t", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     update(diff) {
         player.t.points = buyableEffect("t", 11)
-
 
 
 

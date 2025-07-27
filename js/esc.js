@@ -1,6 +1,6 @@
 var escReq = [1e5, 1e18, 1e200, 'e1000', 'e2750', 'e6000', 'e4350', 'e7625', 'e19590', 'e47137', 'e50000', 'e999999']
 var ez6escReq = ["1e2100", "1e16450", "1e16700", 'e16745', ]
-var ez6escReq2 = ["1e4200", "1e20000", "1e22500", 'e40000', ]
+var ez6escReq2 = ["1e4200", "1e20000", "1e22500", 'e26100', ]
 function isUnl(escPointsRequired) {
     return player.esc.points.gte(escPointsRequired)
 }

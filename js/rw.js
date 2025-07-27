@@ -318,7 +318,27 @@ addLayer("rw", {
 96: {
             name: "2^4",
             done() { return player.grz.points.gte(16) },
-            tooltip: "击杀16只感染者，奖励：咕咕咕。",
+            tooltip: "击杀16只感染者，奖励：你的爬塔层数不会低于20。",
+        },
+97: {
+            name: "你真的买得起吗",
+            done() { return player.cq.challenges[23] >= 2 },
+            tooltip: "完成2次简单试炼6，奖励：进去看看就知道啦",
+        },
+101: {
+            name: "新东西前的最后准备",
+            done() { return hasUpgrade("grz", 61) },
+            tooltip: "买完前5行传染感染升级，奖励：增量^1.1",
+        },
+102: {
+            name: "非常吉利的数字2",
+            done() { return player.i.points.gte("8.88e888") },
+            tooltip: "获得8.88e888增量，奖励：增量获取上限变为传送门需求x1000",
+        },
+103: {
+            name: "感染性疾病",
+            done() { return player.grz.points.gte(18) },
+            tooltip: "击杀18只感染者，奖励：咕咕咕。",
         },
     },
     tabFormat: [

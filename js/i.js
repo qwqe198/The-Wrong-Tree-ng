@@ -342,12 +342,13 @@ if (hasUpgrade("csm", 12))gain=gain.mul(upgradeEffect("csm", 12))
                 if (hasChallenge("cq", 22)) gain = gain.mul(3 ** player.cq.challenges[22])
                 if (hasMilestone("t", 12)) gain = gain.mul(n(1.1).pow(buyableEffect("t", 11)))
                 if (hasAchievement("rw", 65)) gain = gain.pow(1.05)
+                if (hasAchievement("rw", 101)) gain = gain.pow(1.1)
                 gain = gain.mul(layers.csm.effect())
                 //传送门
-                if (player.csm.points.gte(1)) gain = expPow(gain.mul(10), 0.9)
+                if (player.csm.points.gte(1)) gain = expPow(gain.mul(10), n(0.9).pow(player.csm.points))
                         if(gain.gte("1e700"))gain = gain.pow(0.5).mul("1e350")
                 if (player.points.lt(1e4)||!inChallenge("t", 11)) gain = n(0)
-               gain=gain.min(layers.csm.getNextAt())
+               gain=gain.min(layers.csm.getNextAt().mul(hasAchievement("rw",102)?1000:1))
 
                 return gain.floor()
         },

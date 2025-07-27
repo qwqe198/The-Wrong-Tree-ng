@@ -184,7 +184,8 @@ currencyDisplayName: "感染力量",
             unlocked() { return true },
 effect() {
                 var eff = player.a.points.add(1e10).log10().log10()
-                
+                if(hasUpgrade("grz",56))eff=eff.pow(upgradeEffect("grz", 55))
+ if(hasUpgrade("grz",56))eff=eff.pow(upgradeEffect("grz", 54))
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -213,6 +214,8 @@ currencyDisplayName: "感染力量",
 effect() {
                 var eff = player.cq.points.add(1).pow(0.5)
                 if(hasAchievement("rw",95))eff=eff.pow(2)
+  if(hasUpgrade("grz",36))eff=eff.pow(upgradeEffect("grz", 55))
+ if(hasUpgrade("grz",36))eff=eff.pow(upgradeEffect("grz", 54))
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -323,6 +326,15 @@ currencyDisplayName: "感染力量",
             currencyInternalName: "ll",
             currencyLayer: "grz"
         },
+36: {
+            description: "传染感染的第3行升级对升级23生效.",
+            cost() { return new OmegaNum(2.29e229) },
+            unlocked() { return true },
+
+currencyDisplayName: "感染力量",
+            currencyInternalName: "ll",
+            currencyLayer: "grz"
+        },
 51: {
             description: "“力量获取”的基础增加1",
             cost() { return new OmegaNum(50) },
@@ -379,6 +391,29 @@ effect() {
                 return eff
             },
  effectDisplay() { return `^ ${format(this.effect())}` },
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+56: {
+            description: "上两个升级对升级21生效",
+            cost() { return new OmegaNum(425) },
+            unlocked() { return true },
+
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+61: {
+            description: "战力获取基于战力增加",
+            cost() { return new OmegaNum(540) },
+            unlocked() { return true },
+effect() {
+                var eff = player.cq.points.add(1).log10()
+
+                return eff
+            },
+ effectDisplay() { return `x ${format(this.effect())}` },
 currencyDisplayName: "传染感染",
             currencyInternalName: "crgr",
             currencyLayer: "grz"
