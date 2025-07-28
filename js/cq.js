@@ -110,6 +110,7 @@ if (hasUpgrade("grz", 26))mult = mult.mul(upgradeEffect("grz", 26))
 if (hasUpgrade("grz", 35))mult = mult.mul(upgradeEffect("grz", 35))
 if (hasUpgrade("grz", 61))mult = mult.mul(upgradeEffect("grz", 61))
         if (hasMilestone("cq", 26)) mult = mult.mul(2.3)
+if(mult.gte(1e5))mult = mult.pow(0.8).mul(10)
         return mult.floor()
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
