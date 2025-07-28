@@ -225,11 +225,11 @@ currencyDisplayName: "感染力量",
             currencyLayer: "grz"
         },
 24: {
-            description: "每个升级使战力获取x1.1.",
+            description: "每个升级使战力获取x1.15，每秒获得10%战力.",
             cost() { return new OmegaNum(25000000) },
             unlocked() { return true },
 effect() {
-                var eff = n(1.1).pow(player.grz.upgrades.length)
+                var eff = n(1.15).pow(player.grz.upgrades.length)
                 
                 return eff
             },

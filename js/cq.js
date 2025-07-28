@@ -23,7 +23,9 @@ addLayer("cq", { //这是代码中的节点代码 例如player.p可以调用该�
     resource: "战力", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     passiveGeneration() {
+
  if (hasUpgrade("grz", 31)) return 1
+ if (hasUpgrade("grz", 24)) return 0.1
         return 0
     },
 
