@@ -90,7 +90,8 @@ if (hasMilestone("cq", 25)&&gain.gte("1e50950")) gain = gain.mul(1e100)
 	if (hasAchievement("rw", 66)) gain = gain.mul(player.i.points.add(10).log10())
 if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("csm", 11))gain=gain.mul(upgradeEffect("csm", 11))
-	if (player.csm.points.gte(1)) gain = gain.div(1e4)
+	if (player.csm.points.gte(1)&&inChallenge("t", 11)) gain = gain.div(n(1e4).pow(player.csm.points.pow(2)))
+if (player.csm.points.gte(2)&&inChallenge("t", 11)) gain = gain.pow(n(0.95).pow(player.csm.points))
 	//上限
 	if (gain.gte(layers.grz.pthc())) gain = gain.min(layers.grz.pthc())
 	return gain

@@ -28,7 +28,7 @@ addLayer("csm", { //这是代码中的节点代码 例如player.p可以调用该
         row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
         layerShown() { return inChallenge("t", 11) && hasMilestone("esc", 13) },
         getNextAt() {
-                let gain = n("1e700").mul(n("1e300").pow(player.csm.points))
+                let gain = n("1e700").mul(n("1e300").pow(player.csm.points.pow(2)))
 
                 return gain
         },
@@ -60,7 +60,7 @@ currencyDisplayName: "转生增量",
             unlocked() { return true },
 effect() {
                 var eff = n(getBuyableAmount(this.layer, 12).add(1)).pow(getBuyableAmount(this.layer, 12).mul(getBuyableAmount(this.layer, 12).add(10).log10()))
-                
+                 if(hasAchievement("rw",103))eff=eff.pow(2.2222)
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -75,7 +75,7 @@ currencyDisplayName: "转生增量",
             unlocked() { return true },
 effect() {
                 var eff = n(0.02).mul(getBuyableAmount(this.layer, 13)).add(1)
-                
+                                                if(hasAchievement("rw",103))eff=eff.pow(2.2222)
                 return eff
             },
  effectDisplay() { return `x ${format(this.effect())}` },
@@ -196,14 +196,22 @@ if (hasUpgrade("grz", 32))eff=eff.mul(upgradeEffect("grz", 15))
                         content: [
                                 "main-display",
                                 ["display-text", function () {
-                                        return "-无瑕点数获取/1e4，增量获取指数^0.9"
+                                        return `<text style = "color:red">-</text>无瑕点数获取/${n(1e4).pow(player.csm.points.pow(2))}，增量获取指数^${n(0.9).pow(player.csm.points)}`
 
                                 }],
                                 ["display-text", function () {
-                                        return "+解锁转生增量,点数灌注"
+                                        return ` <text style = "color:green">+</text>解锁转生增量,点数灌注`
 
                                 }],
+["display-text", function () {
+                                        return player.csm.points.gte(2)?`<text style = "color:red">-</text>无瑕点数获取^${n(0.95).pow(player.csm.points)}，增量获取^${n(0.5).pow(player.csm.points)}`:``
 
+                                }],
+ ["display-text", function () {
+                                        return player.csm.points.gte(2)?`<text style = "color:green">+</text>解锁增幅器和生成器`:``
+
+
+                                }],
                         ],
                         unlocked() {
                                 return player.csm.points.gte(1)

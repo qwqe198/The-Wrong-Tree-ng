@@ -100,12 +100,16 @@ addLayer("i", { //这是代码中的节点代码 例如player.p可以调用该�
                 11: {
 
                         description: "点数获得量乘以增量数量",
-                        cost: n(2),
+                                 cost() {
+                if (hasAchievement("rw", 105)) return n(0)
+                return n(2)},
                         effect() {
                                 let eff = player.i.points.plus(1)
                                 if (hasUpgrade("i", 21)) eff = eff.pow(2)
                                 if (hasUpgrade("i", 24)) eff = eff.pow(buyableEffect('i', 13))
 eff=eff.pow(buyableEffect('csm', 11))
+eff=eff.pow(layers.bg.effect())
+eff=eff.pow(layers.bg.gpeff())
                                 return eff
                         },
                         unlocked() {
@@ -297,7 +301,7 @@ eff=eff.pow(buyableEffect('csm', 11))
                         content: [
                                 "main-display",
                                 ["display-text", function () {
-                                        return "增量基础获得量的公式是 log10(点数)-3, 低于1e4点数时为零，"
+                                        return "增量基础获得量的公式是 log10(点数)-3, 低于" + format(hasAchievement("rw",105)?1e3:1e4) + "点数时为零，"
                                 }],
                                 ["display-text", function () {
                                         return "这一数字受提高增量基础获得量的升级的影响，效果为累乘，"
@@ -317,7 +321,7 @@ eff=eff.pow(buyableEffect('csm', 11))
         },
 
         getResetGain() {
-                var gain = player.points.log10().sub(3)
+                var gain = player.points.add(1).log10().sub(3).max(0)
 
                 //基础
                 if (hasAchievement("rw", 46) && hasUpgrade("i", 32)) gain = gain.mul(player.i.points.add(10).log10())
@@ -328,6 +332,8 @@ if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
 if (hasUpgrade("grz", 33))gain=gain.mul(upgradeEffect("grz", 33))
 if (hasUpgrade("i", 45))gain=gain.mul(upgradeEffect("csm", 11))
                 if (hasUpgrade("i", 12) && hasUpgrade("i", 44)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
+
+gain=gain.max(1)
                 gain = gain.pow(buyableEffect('i', 13))
                 //乘数
                 if (hasUpgrade("i", 12)) gain = gain.mul(n(1.1).pow(player.i.upgrades.length))
@@ -346,8 +352,9 @@ if (hasUpgrade("csm", 12))gain=gain.mul(upgradeEffect("csm", 12))
                 gain = gain.mul(layers.csm.effect())
                 //传送门
                 if (player.csm.points.gte(1)) gain = expPow(gain.mul(10), n(0.9).pow(player.csm.points))
+if (player.csm.points.gte(2)) gain = gain.pow(n(0.5).pow(player.csm.points))
                         if(gain.gte("1e700"))gain = gain.pow(0.5).mul("1e350")
-                if (player.points.lt(1e4)||!inChallenge("t", 11)) gain = n(0)
+                if (player.points.lt(hasAchievement("rw",105)?1e3:1e4)||!inChallenge("t", 11)) gain = n(0)
                gain=gain.min(layers.csm.getNextAt().mul(hasAchievement("rw",102)?1000:1))
 
                 return gain.floor()

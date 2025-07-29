@@ -75,7 +75,7 @@ gain = gain.mul(buyableEffect("grz", 11))
                 if (hasMilestone("t", 15)) gain = gain.mul(n(1.1).pow(buyableEffect("t", 11)))
      if (hasMilestone("lcb", 6)) gain = gain.mul(n(1.1).pow(player.grz.ll.add(10).log(10).floor().min(100)))
 if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
-if(gain.gte(1e308))gain=gain.log10().add(692).pow(308/3)
+if(gain.gte(1e300))gain=gain.log10().add(700).pow(100)
         return gain
     },
 pthc() {
@@ -407,7 +407,7 @@ currencyDisplayName: "传染感染",
         },
 61: {
             description: "战力获取基于战力增加",
-            cost() { return new OmegaNum(540) },
+            cost() { return new OmegaNum(525) },
             unlocked() { return true },
 effect() {
                 var eff = player.cq.points.add(1).log10()

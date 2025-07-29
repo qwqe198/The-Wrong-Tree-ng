@@ -336,9 +336,24 @@ addLayer("rw", {
             tooltip: "获得8.88e888增量，奖励：增量获取上限变为传送门需求x1000",
         },
 103: {
-            name: "感染性疾病",
+            name: "感染性疾病?",
             done() { return player.grz.points.gte(18) },
-            tooltip: "击杀18只感染者，奖励：咕咕咕。",
+            tooltip: "击杀18只感染者，奖励：第2，3灌注第二个效果^2.2222。",
+        },
+104: {
+            name: "记得点完再重置啊",
+            done() { return player.csm.points.gte(2) },
+            tooltip: "获得2传送门，奖励：在传送门重置时保留传送门里面的东西。",
+        },
+        105: {
+            name: "1e3",
+            done() { return player.points.gte("1e3") && inChallenge("t", 11)&&player.csm.points.gte(2) },
+            tooltip: "在2传送门的加强疫苗中获得1e3点数，奖励：增量重置要求降低至原来的10%",
+        },
+106: {
+            name: "两个资源",
+            done() { return player.bg.points.gte(1) },
+            tooltip: "获得1增幅器和生成器，奖励：咕咕咕。",
         },
     },
     tabFormat: [
