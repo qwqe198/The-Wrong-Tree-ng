@@ -1380,7 +1380,7 @@ if(eff.gte(1e7))eff=eff.log10().add(3).pow(7)
         player.cq.def = upgradeEffect("cq", 10001)
 
         if (player.cq.challenges[21] > 4) player.cq.challenges[21] = 4//下版本删
-        if (player.cq.challenges[22] > 2) player.cq.challenges[22] = 2
+        if (player.cq.challenges[22] > 3) player.cq.challenges[22] = 3
       
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 12, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 13, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
