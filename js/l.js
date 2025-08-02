@@ -87,6 +87,28 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
             },
             unlocked() { return true },
         },
+   12: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n("1e100").mul(n(3).pow(x)).mul(n(1.25).pow(x.pow(2)))
+
+                return c
+            },
+            display() { return `感染力量获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.l.points.gte(this.cost()) },
+            buy() {
+                player.l.points = player.l.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "α → ∂β"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var eff = player.grz.ll.add(2).log(2).pow(x)
+
+                return eff
+            },
+            unlocked() { return true },
+        },
     },
     challenges: {
         11: {
@@ -554,6 +576,16 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 return "我可没说在指数前 α → ∂α生效于p层级升级24"
             },
         },
+  43: {
+            requirementDescription: "1e100生命",
+
+            done() { return player.l.points.gte(1e100) },
+            effectDescription() {
+
+
+                return "在重置时保留所有生命里程碑"
+            },
+        },
     },
 
 
@@ -587,6 +619,7 @@ if (hasUpgrade("grz", 15))gain=gain.mul(upgradeEffect("grz", 15))
         if (hasUpgrade("p", 63)) gain = gain.mul(250)
         if (hasUpgrade("p", 64)) gain = gain.mul(1250)
         if (hasUpgrade("p", 65)) gain = gain.mul(6250)
+        if (hasAchievement("rw", 106)) gain = gain.mul(69)
 if (hasMilestone("t", 13)) gain = gain.mul(buyableEffect("t", 11).add(1))
         if (hasUpgrade("cq", 63)) gain = gain.mul(upgradeEffect("cq", 63))
         if (hasAchievement("rw", 15)) gain = gain.mul(1.5)
@@ -619,7 +652,9 @@ if (hasMilestone("t", 13)) gain = gain.mul(buyableEffect("t", 11).add(1))
             if (hasAchievement("rw", 47)) {
                 kept.push("buyables")
             }
- 
+             if (hasMilestone("l", 43)) {
+                kept.push("milestones")
+            }
             layerDataReset(this.layer, kept)
         }
     },

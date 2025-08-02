@@ -353,7 +353,32 @@ addLayer("rw", {
 106: {
             name: "两个资源",
             done() { return player.bg.points.gte(1) },
-            tooltip: "获得1增幅器和生成器，奖励：咕咕咕。",
+            tooltip: "获得1增幅器和生成器，奖励：生命获取x69。",
+        },
+107: {
+            name: "第二生命可购买",
+            done() { return getBuyableAmount("l", 12).gte(1)},
+            tooltip: "买1次生命可购买12，奖励：移除力量获取和感染者基础购买的一个软上限。",
+        },
+111: {
+            name: "无限感染",
+            done() { return player.grz.ll.gte("1.798e308")},
+            tooltip: "获得1.798e308感染力量，奖励：感染者升级14第一个效果^(感染者+1)。",
+        },
+112: {
+            name: "无限感染x10",
+            done() { return player.grz.ll.gte("1.798e309")},
+            tooltip: "获得1.798e309感染力量，奖励：移除感染者升级22的软上限。",
+        },
+113: {
+            name: "316",
+            done() { return player.grz.ll.gte("3.16e316")},
+            tooltip: "获得3.16e316感染力量，奖励：感染力量在溢出后x1e10。",
+        },
+114: {
+            name: "感染性疾病！",
+            done() { return player.grz.jb.gte(1) },
+            tooltip: "获得1感染性疾病，奖励：咕咕咕。",
         },
     },
     tabFormat: [
