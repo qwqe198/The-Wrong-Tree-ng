@@ -263,7 +263,7 @@ unlocked() { return hasAchievement("rw", 77) },
 27: {
     requirementDescription: "24扩张完成",
     done() { return player.l.challenges[11] >= 24 },
-    effectDescription() { return "还没做" },
+    effectDescription() { return "L层级可购买12效果^2，传染感染+1" },
 },
 28: {
     requirementDescription: "25扩张完成",
@@ -1230,7 +1230,7 @@ if(eff.gte(1e7))eff=eff.log10().add(3).pow(7)
             challengeDescription() {
 
                 let a = "（首次推荐战力：50）你的加成太多了,"
-                let b = player.cq.challenges[22] >= 2 ? " p层级升级11,12,13,14失效，点数^0.25" :player.cq.challenges[22] >= 1 ? " p层级升级11,12,13失效" : "p层级升级11,12失效"
+                let b = player.cq.challenges[22] >= 3 ? " p层级升级11,12,13,14,32失效，点数^0.1" :player.cq.challenges[22] >= 2 ? " p层级升级11,12,13,14失效，点数^0.25" :player.cq.challenges[22] >= 1 ? " p层级升级11,12,13失效" : "p层级升级11,12失效"
 
 
 

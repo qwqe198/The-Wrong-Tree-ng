@@ -1,6 +1,7 @@
 var escReq = [1e5, 1e18, 1e200, 'e1000', 'e2750', 'e6000', 'e4350', 'e7625', 'e19590', 'e47137', 'e50000', 'e999999']
 var ez6escReq = ["1e2100", "1e16450", "1e16700", 'e16745', ]
 var ez6escReq2 = ["1e4200", "1e20000", "1e22500", 'e26100', ]
+var ez6escReq3 = ["1e4200", "1e20000", "1e22500", 'e30000', ]
 function isUnl(escPointsRequired) {
     return player.esc.points.gte(escPointsRequired)
 }
@@ -21,6 +22,7 @@ addLayer("esc", { //这是代码中的节点代码 例如player.p可以调用该
     resource: "劝退点", // 重置获得的资源名称
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires() {
+if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 2)return  n(ez6escReq2[player.esc.points.toNumber()])
 if(inChallenge("cq", 23)&&player.cq.challenges[23] >= 1)return  n(ez6escReq2[player.esc.points.toNumber()])
 if(inChallenge("cq", 23))return  n(ez6escReq[player.esc.points.toNumber()])
         if (inChallenge("esc", 11)) return n(Infinity)

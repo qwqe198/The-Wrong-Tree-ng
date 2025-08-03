@@ -92,7 +92,7 @@ if(hasAchievement("rw",96))x=x.max(20)
             onEnter() {
 
                 doReset("t")
-
+ if(hasAchievement("rw",114))player.csm.points = n(1)
             },
             onExit() {
 

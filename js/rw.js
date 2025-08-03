@@ -378,7 +378,12 @@ addLayer("rw", {
 114: {
             name: "感染性疾病！",
             done() { return player.grz.jb.gte(1) },
-            tooltip: "获得1感染性疾病，奖励：咕咕咕。",
+            tooltip: "获得1感染性疾病，奖励：在进入加强疫苗时保留1传送门。",
+        },
+    115: {
+            name: "好像卡了？",
+            done() { return getBuyableAmount("grz", 41).gte(9) },
+            tooltip: "买9次疾病获取，奖励：扩张要求修改为点数",
         },
     },
     tabFormat: [

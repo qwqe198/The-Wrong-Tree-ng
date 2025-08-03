@@ -275,7 +275,7 @@ if (inChallenge("cq", 22) && player.cq.challenges[22] >= 2) eff = n(1)
                 if (hasUpgrade('p', 34)) eff = eff.mul(upgradeEffect('p', 34))
                 if (hasMilestone("l", 41)) eff = eff.mul(player.l.points.add(1).pow(5).pow(hasMilestone("l", 18) ? layers.a.effect() : 1))
                 if (hasAchievement("rw", 25)) eff = eff.pow(1.025).mul(1e10)
-
+if (inChallenge("cq", 22) && player.cq.challenges[22] >= 3) eff = n(0)
                 return eff
             },
             effectDisplay() { return `+ ${format(this.effect())}/s` },

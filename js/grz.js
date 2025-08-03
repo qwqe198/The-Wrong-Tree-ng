@@ -85,17 +85,23 @@ if (hasUpgrade("grz", 23))gain=gain.mul(upgradeEffect("grz", 23))
 if (hasUpgrade("grz", 34))gain=gain.mul(upgradeEffect("grz", 34))
 	if (hasAchievement("rw", 86)) gain = gain.mul(10)
 gain = gain.mul(buyableEffect("grz", 11))
-gain = gain.mul(buyableEffect("l", 12))
+
                 if (hasMilestone("t", 15)) gain = gain.mul(n(1.1).pow(buyableEffect("t", 11)))
      if (hasMilestone("lcb", 6)) gain = gain.mul(n(1.1).pow(player.grz.ll.add(10).log(10).floor().min(100)))
 if (hasUpgrade("grz", 15)&&hasAchievement("rw", 84))gain=gain.mul(upgradeEffect("grz", 15))
-if(gain.gte(1e300))gain=gain.log10().add(700).pow(100)
+gain = gain.pow(buyableEffect("l", 12))
+if(gain.gte(1e300))gain=gain.log10().add(700).pow(100)//sc
 	if (hasAchievement("rw", 113)) gain = gain.mul(1e10)
         return gain
     },
 jbgain() {
 
-        let gain = player.grz.ll.add(10).log10().sub(327).max(0)
+        let gain = player.grz.ll.add(10).log10().div(327).max(0)
+if(gain.lt(1))gain=n(0)
+gain = gain.mul(upgradeEffect("grz", 83))
+gain = gain.mul(buyableEffect("grz", 41))
+gain = gain.pow(buyableEffect("grz", 41))
+
 
         return gain
     },
@@ -105,6 +111,11 @@ pthc() {
 if (hasUpgrade("grz", 13))gain=gain.mul(upgradeEffect("grz", 13))
 if (hasUpgrade("grz", 14))gain=gain.mul(player.points.add(10).log(10).pow(7))
 if(hasAchievement("rw",93))gain=gain.mul(1e50)
+        return gain
+    },
+crgr() {
+        let gain =n("0") 
+       if(hasMilestone("cq",27))gain=gain.add(1)
         return gain
     },
 upgrades: {
@@ -121,6 +132,7 @@ effect() {
 if(eff.gte(1.1))eff=eff.pow(0.5).mul(n(1.1).pow(0.5))
 if(eff.gte(1.3))eff=eff.pow(0.5).mul(n(1.3).pow(0.5))
 if(eff.gte(1.5))eff=eff.pow(0.2).mul(n(1.5).pow(0.8))
+                if (hasUpgrade("grz", 81))eff=eff.pow(upgradeEffect("grz", 81))
                 return eff
             },
             effectDisplay() { return `^ ${format(this.effect())}` },
@@ -440,6 +452,79 @@ currencyDisplayName: "传染感染",
             currencyInternalName: "crgr",
             currencyLayer: "grz"
         },
+62: {
+            description: "基于感染力量加成力量获取基础",
+            cost() { return new OmegaNum(580) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(10).log10().add(10).log10()
+
+                return eff
+            },
+ effectDisplay() { return `+ ${format(this.effect())}` },
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+63: {
+            description: "咕咕咕",
+            cost() { return new OmegaNum(585) },
+            unlocked() { return true },
+
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
+81: {
+            description: "基于疾病在软上限之后加成主界面的第一个升级效果.",
+            cost() { return new OmegaNum(50000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.jb.add(1).log10().mul(0.01).add(1)
+                
+if(eff.gte(1.1))eff=eff.pow(0.5).mul(n(1.1).pow(0.5))
+if(eff.gte(1.3))eff=eff.pow(0.5).mul(n(1.3).pow(0.5))
+if(eff.gte(1.5))eff=eff.pow(0.2).mul(n(1.5).pow(0.8))
+            
+                return eff
+            },
+effectDisplay() { return `^ ${format(this.effect())}` },
+currencyDisplayName: "疾病",
+            currencyInternalName: "jb",
+            currencyLayer: "grz"
+        },
+82: {
+            description: "基于感染性疾病加成感染力量获取.",
+            cost() { return new OmegaNum(100000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.jb.add(1)
+         eff=expPow(eff.mul(10), 1.2)       
+
+            
+                return eff
+            },
+effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "疾病",
+            currencyInternalName: "jb",
+            currencyLayer: "grz"
+        },
+83: {
+            description: "基于感染力量加成感染性疾病获取.",
+            cost() { return new OmegaNum(15000000) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.ll.add(10).log10().add(10).log10()
+                
+
+            
+                return eff
+            },
+effectDisplay() { return `x ${format(this.effect())}` },
+currencyDisplayName: "疾病",
+            currencyInternalName: "jb",
+            currencyLayer: "grz"
+        },
     },
     exponent: 5,
     baseAmount() { return player.cq.points },//基础资源数量
@@ -467,7 +552,7 @@ if(hasUpgrade("grz",52))gain=gain.div(upgradeEffect("grz", 52))
   update(diff) {
                 player.grz.ll = player.grz.ll.add(this.llgain().mul(diff))
     player.grz.jb = player.grz.jb.add(this.jbgain().mul(diff))
-if(hasMilestone("grz", 2))player.grz.crgr = getBuyableAmount(this.layer, 11).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3))
+if(hasMilestone("grz", 2))player.grz.crgr = getBuyableAmount(this.layer, 11).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3)).add(this.crgr())
                 if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(1e8).mul(n(2).pow(getBuyableAmount("grz", 11)).mul(n(1.005).pow(getBuyableAmount("grz", 11).pow(2)))))) setBuyableAmount('grz', 11, getBuyableAmount('grz', 11).add(1))
                  if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(10).pow(getBuyableAmount("grz", 12).pow(1.3).add(66)))) setBuyableAmount('grz', 12, getBuyableAmount('grz', 12).add(1))
                     if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(10).pow(getBuyableAmount("grz", 13).pow(1.5).add(108)))) setBuyableAmount('grz', 13, getBuyableAmount('grz', 13).add(1))   
@@ -492,6 +577,7 @@ buyables: {
             effect(x = getBuyableAmount(this.layer, this.id)) {
 var base = n(2)
 if(hasUpgrade("grz",51))base=base.add(1)
+if(hasUpgrade("grz",62))base=base.add(upgradeEffect("grz", 62))
 x=x.add(getBuyableAmount(this.layer, 12))
 x=x.add(getBuyableAmount(this.layer, 13))
                 var eff = n(base).pow(x)
@@ -527,6 +613,7 @@ if(eff.gte(5)&&!hasAchievement("rw",107))eff=eff.root(2).mul(n(5).root(2))
         },
 13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
+
                 var c = n( "10").pow(x.pow(1.5).add(108))
 
                 return c
@@ -543,6 +630,31 @@ if(eff.gte(5)&&!hasAchievement("rw",107))eff=eff.root(2).mul(n(5).root(2))
             effect(x = getBuyableAmount(this.layer, this.id)) {
 var base = n(1.04)
 if(hasUpgrade("grz",53))base=base.add(0.01)
+                var eff = n(base).pow(x)
+
+                return eff
+            },
+            unlocked() { return true },
+        },
+41: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+if(x.gte(7))x=x.div(7).pow(2).mul(7)
+                var c = n( "2").pow(x.pow(1.5)).mul(5)
+
+                return c
+            },
+            display() { return `疾病获取基础同时乘以和提高<br />${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />消耗:  ${format(this.cost(getBuyableAmount(this.layer, this.id)))}感染性疾病<br>效果:  ${format(buyableEffect(this.layer, this.id), 2)}x,<br>^${format(buyableEffect(this.layer, this.id), 2)}<br>数量  :${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.grz.jb.gte(this.cost()) },
+            buy() {
+                player.grz.jb = player.grz.jb.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "疾病获取"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+var base = n(1.25)
+
                 var eff = n(base).pow(x)
 
                 return eff
@@ -593,7 +705,7 @@ if(hasUpgrade("grz",53))base=base.add(0.01)
 ["display-text", function () {
  return hasMilestone("grz", 2)?"你有" + format(player.grz.crgr) + "传染感染<br>购买项会给左边的购买项额外等级<br>每个购买项提供1传染感染<br>每个第二排的购买项提供10传染感染":""
                                 }],
-                    "buyables",
+          ["row",[["buyable",11],["buyable",12],["buyable",13]]],         
 
 
                 ],
@@ -634,7 +746,8 @@ if(hasUpgrade("grz",53))base=base.add(0.01)
 ["display-text", function () {
  return "你有" + format(player.grz.jb) + `感染性疾病(+${format(layers.grz.jbgain())}/s)(开始于1.000e327感染力量）`
                                 }],
-
+         ["row",[["upgrade",81],["upgrade",82],["upgrade",83],["upgrade",84],["upgrade",85],["upgrade",86]]],
+          ["row",[["buyable",41],["buyable",42]]],   
 
 
                 ],

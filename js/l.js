@@ -93,7 +93,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
 
                 return c
             },
-            display() { return `感染力量获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
+            display() { return `感染力量获取<br />^${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}生命<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.l.points.gte(this.cost()) },
             buy() {
                 player.l.points = player.l.points.sub(this.cost())
@@ -103,8 +103,8 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 return "α → ∂β"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
-                var eff = player.grz.ll.add(2).log(2).pow(x)
-
+                var eff = x.mul(0.01).add(1)
+if(hasMilestone("cq",27))eff=eff.pow(2)
                 return eff
             },
             unlocked() { return true },
@@ -122,7 +122,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 return a + e + f
             },
             goalDescription() {
-                return "e7950重置点"
+                return hasAchievement("rw",115) ?"e7950点数":"e7950重置点"
             },
             challengeEffect() {
                 let eff = n(0.99).pow(player.l.challenges[11] + 1 - player.cq.challenges[13] * 0.2).mul(10000).floor().div(10000)
@@ -131,7 +131,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
                 return eff
             },
             goal: () => "1e7950",
-            canComplete: () => player.p.points.gte(tmp.l.challenges[11].goal),
+            canComplete: () =>hasAchievement("rw",115) ?player.points.gte("1e7950"):player.p.points.gte("1e7950"),
             rewardDescription() {
 
 
