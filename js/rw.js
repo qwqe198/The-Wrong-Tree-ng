@@ -385,6 +385,21 @@ addLayer("rw", {
             done() { return getBuyableAmount("grz", 41).gte(9) },
             tooltip: "买9次疾病获取，奖励：扩张要求修改为点数",
         },
+116: {
+            name: "力量基础加成",
+            done() { return hasUpgrade("grz", 72) },
+            tooltip: "买完第6行传染感染升级，奖励：感染性疾病获取x1.5",
+        },
+117: {
+            name: "游戏要炸了？",
+            done() { return hasUpgrade("grz", 84) },
+            tooltip: "购买感染性疾病的第四个升级，奖励：不可能的 其实感染者基础在300也有溢出 x->(lg(x+700))*100，免疫降低加成感染者升级25效果，且移除升级的软上限",
+        },
+121: {
+            name: "力量基础！",
+            done() { return getBuyableAmount("grz", 21).gte(2)},
+            tooltip: "买2次力量基础，奖励：咕咕咕。",
+        },
     },
     tabFormat: [
         "blank",

@@ -190,6 +190,12 @@ if(hasAchievement("rw",96))x=x.max(20)
 
             done() { return buyableEffect("t", 11).gte(20) }
         },
+  16: {
+            requirementDescription: "22层",
+            effectDescription: "感染性疾病获取x(1.005^x)",
+
+            done() { return buyableEffect("t", 11).gte(22) }
+        },
     },
     tabFormat: {
         主要: {
