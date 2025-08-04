@@ -89,6 +89,7 @@ addLayer("l", { //这是代码中的节点代码 例如player.p可以调用该�
         },
    12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
+if(x.gte(7))x=x.div(7).pow(2).mul(7)
                 var c = n("1e100").mul(n(3).pow(x)).mul(n(1.25).pow(x.pow(2)))
 
                 return c
@@ -145,6 +146,7 @@ if(hasMilestone("cq",27))eff=eff.pow(2)
                 let eff = player.l.challenges[11] + 1
                 if (hasMilestone("l", 16)) eff = eff ** eff
                 if (hasAchievement("rw", 27)) eff = eff ** 1.05
+                if (hasAchievement("rw", 123)) eff = eff ** buyableEffect("l", 12)
                 return eff
             },
             unlocked() {

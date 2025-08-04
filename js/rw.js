@@ -398,7 +398,22 @@ addLayer("rw", {
 121: {
             name: "力量基础！",
             done() { return getBuyableAmount("grz", 21).gte(2)},
-            tooltip: "买2次力量基础，奖励：咕咕咕。",
+            tooltip: "买2次力量基础，奖励：修改感染者升级21的公式。",
+        },
+122: {
+            name: "深深深入",
+            done() { return hasUpgrade("grz", 63) },
+            tooltip: "购买一个第7行传染感染升级，奖励：修改感染者升级34的公式，感染性疾病获取x2.2222",
+        },
+123: {
+            name: "777",
+            done() { return player.grz.jb.gte(7.77e77) },
+            tooltip: "获得7.77e77感染性疾病，奖励：第2个生命购买项效果对扩张效果生效。",
+        },
+124: {
+            name: "《西游记》",
+            done() { return player.l.challenges[11] >= 25 },
+            tooltip: "完成25次扩张，奖励：解锁魔塔（制作中）",
         },
     },
     tabFormat: [

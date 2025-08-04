@@ -268,7 +268,7 @@ unlocked() { return hasAchievement("rw", 77) },
 28: {
     requirementDescription: "25扩张完成",
     done() { return player.l.challenges[11] >= 25 },
-    effectDescription() { return "还没做" },
+    effectDescription() { return "奖励在任务那里，等等，你好像在哪里看过这个描述" },
 },
 29: {
     requirementDescription: "26扩张完成",
@@ -1381,7 +1381,7 @@ if(eff.gte(1e7))eff=eff.log10().add(3).pow(7)
 
         if (player.cq.challenges[21] > 4) player.cq.challenges[21] = 4//下版本删
         if (player.cq.challenges[22] > 3) player.cq.challenges[22] = 3
-              if (player.cq.challenges[23] > 2) player.cq.challenges[22] = 2
+        if (player.cq.challenges[23] > 2) player.cq.challenges[23] = 2
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 12, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
 if (hasUpgrade("grz", 32))setBuyableAmount('cq', 13, player.cq.hp.add(1).log10().div(0.3010299956639812).floor().add(1))
  if (hasAchievement("rw", 92) && player.l.points.root(0.9).sub(1).gte(n(1e50).mul(n(10000).pow(getBuyableAmount("cq", 11))).mul(n(5).pow(getBuyableAmount("cq", 11).pow(2))))) setBuyableAmount("cq", 11, getBuyableAmount("cq", 11).add(1))

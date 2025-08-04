@@ -51,7 +51,7 @@ jb: new ExpantaNum(0),
             effectDescription() {
 
 
-                return "解锁感染性疾病并自动购买购买项" 
+                return "解锁感染性疾病并自动购买第一行购买项" 
             },
         },
     },
@@ -104,8 +104,10 @@ jbgain() {
         let gain = player.grz.ll.add(10).log10().div(327).max(0)
 if(gain.lt(1))gain=n(0)
 if(hasAchievement("rw",116))gain=gain.mul(1.5)
+if(hasAchievement("rw",122))gain=gain.mul(2.2222)
 if (hasMilestone("t", 16)) gain = gain.mul(n(1.005).pow(buyableEffect("t", 11)))
-gain = gain.mul(upgradeEffect("grz", 83))
+if (hasUpgrade("grz", 83))gain = gain.mul(upgradeEffect("grz", 83))
+if (hasUpgrade("grz", 86))gain = gain.mul(upgradeEffect("grz", 86))
 gain = gain.mul(buyableEffect("grz", 41))
 gain = gain.pow(buyableEffect("grz", 41))
 
@@ -122,6 +124,7 @@ if(hasAchievement("rw",93))gain=gain.mul(1e50)
     },
 crgr() {
         let gain =n("0") 
+gain=gain.add(getBuyableAmount(this.layer, 11)).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3).add(getBuyableAmount(this.layer, 21).mul(10)))
        if(hasMilestone("cq",27))gain=gain.add(1)
         return gain
     },
@@ -225,6 +228,7 @@ currencyDisplayName: "感染力量",
             unlocked() { return true },
 effect() {
                 var eff = player.a.points.add(1e10).log10().log10()
+if(hasAchievement("rw",121))eff = player.a.points.add(1).root(1000)
                 if(hasUpgrade("grz",56))eff=eff.pow(upgradeEffect("grz", 55))
  if(hasUpgrade("grz",56))eff=eff.pow(upgradeEffect("grz", 54))
                 return eff
@@ -345,6 +349,7 @@ currencyDisplayName: "感染力量",
             unlocked() { return true },
 effect() {
                 var eff = player.grz.ll.add(1).log10()
+if(hasAchievement("rw",122))eff = player.grz.ll.add(1).root(10)
                 if(hasUpgrade("grz",54))eff=eff.pow(upgradeEffect("grz", 54))
 if(hasUpgrade("grz",55))eff=eff.pow(upgradeEffect("grz", 55))
                 return eff
@@ -474,6 +479,20 @@ currencyDisplayName: "传染感染",
             currencyInternalName: "crgr",
             currencyLayer: "grz"
         },
+63: {
+            description: "基于感染性疾病加成‘感染者基础’基础",
+            cost() { return new OmegaNum(645) },
+            unlocked() { return true },
+effect() {
+                var eff = player.grz.jb.add(10).log10().add(10).log10().div(100)
+
+                return eff
+            },
+ effectDisplay() { return `+ ${format(this.effect())}` },
+currencyDisplayName: "传染感染",
+            currencyInternalName: "crgr",
+            currencyLayer: "grz"
+        },
 65: {
             description: "基于感染性疾病加成力量获取基础",
             cost() { return new OmegaNum(585) },
@@ -490,7 +509,7 @@ currencyDisplayName: "传染感染",
         },
 72: {
             description: "基于战力加成力量获取基础",
-            cost() { return new OmegaNum(591) },
+            cost() { return new OmegaNum(590) },
             unlocked() { return true },
 effect() {
                 var eff = player.cq.points.add(10).log10().pow(0.7)
@@ -516,7 +535,7 @@ if(eff.gte(1.5))eff=eff.pow(0.2).mul(n(1.5).pow(0.8))
                 return eff
             },
 effectDisplay() { return `^ ${format(this.effect())}` },
-currencyDisplayName: "疾病",
+currencyDisplayName: "感染性疾病",
             currencyInternalName: "jb",
             currencyLayer: "grz"
         },
@@ -527,12 +546,12 @@ currencyDisplayName: "疾病",
 effect() {
                 var eff = player.grz.jb.add(1)
          eff=expPow(eff.mul(10), 1.2)       
-
+  if (eff.gte("1e1000")) eff = expPow(eff.mul(10), n(1).div(3)).mul("1e990")
             
                 return eff
             },
-effectDisplay() { return `x ${format(this.effect())}` },
-currencyDisplayName: "疾病",
+effectDisplay() { return ` ${format(this.effect())}x` },
+currencyDisplayName: "感染性疾病",
             currencyInternalName: "jb",
             currencyLayer: "grz"
         },
@@ -547,8 +566,8 @@ effect() {
             
                 return eff
             },
-effectDisplay() { return `x ${format(this.effect())}` },
-currencyDisplayName: "疾病",
+effectDisplay() { return ` ${format(this.effect())}x` },
+currencyDisplayName: "感染性疾病",
             currencyInternalName: "jb",
             currencyLayer: "grz"
         },
@@ -557,7 +576,32 @@ currencyDisplayName: "疾病",
             cost() { return new OmegaNum(2.828e28) },
             unlocked() { return true },
 
-currencyDisplayName: "疾病",
+currencyDisplayName: "感染性疾病",
+            currencyInternalName: "jb",
+            currencyLayer: "grz"
+        },
+85: {
+            description: "'疾病获取'的基础+0.025.",
+            cost() { return new OmegaNum(3.434e34) },
+            unlocked() { return true },
+
+currencyDisplayName: "感染性疾病",
+            currencyInternalName: "jb",
+            currencyLayer: "grz"
+        },
+86: {
+            description: "基于感染者效果加成感染性疾病获取.",
+            cost() { return new OmegaNum(5.757e57) },
+            unlocked() { return true },
+effect() {
+                var eff = layers.grz.lleff()
+                
+
+            
+                return eff
+            },
+effectDisplay() { return ` ${format(this.effect())}x` },
+currencyDisplayName: "感染性疾病",
             currencyInternalName: "jb",
             currencyLayer: "grz"
         },
@@ -587,8 +631,8 @@ if(hasUpgrade("grz",52))gain=gain.div(upgradeEffect("grz", 52))
 
   update(diff) {
                 player.grz.ll = player.grz.ll.add(this.llgain().mul(diff))
-    player.grz.jb = player.grz.jb.add(this.jbgain().mul(diff))
-if(hasMilestone("grz", 2))player.grz.crgr = getBuyableAmount(this.layer, 11).add(getBuyableAmount(this.layer, 12).mul(2)).add(getBuyableAmount(this.layer, 13).mul(3)).add(this.crgr())
+    player.grz.jb = player.grz.jb.add(this.jbgain().mul(diff)) 
+if(hasMilestone("grz", 2))player.grz.crgr =this.crgr()
                 if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(1e8).mul(n(2).pow(getBuyableAmount("grz", 11)).mul(n(1.005).pow(getBuyableAmount("grz", 11).pow(2)))))) setBuyableAmount('grz', 11, getBuyableAmount('grz', 11).add(1))
                  if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(10).pow(getBuyableAmount("grz", 12).pow(1.3).add(66)))) setBuyableAmount('grz', 12, getBuyableAmount('grz', 12).add(1))
                     if (hasMilestone("grz", 3) && player.grz.ll.sub(1).gte(n(10).pow(getBuyableAmount("grz", 13).pow(1.5).add(108)))) setBuyableAmount('grz', 13, getBuyableAmount('grz', 13).add(1))   
@@ -644,6 +688,7 @@ if(eff.gte(1e130)&&!hasAchievement("rw",107))eff=eff.root(2).mul(1e65)
 x=x.add(getBuyableAmount(this.layer, 13))
 var base = n(1.03)
 if(hasUpgrade("grz",84))base=base.add(0.05)
+if(hasUpgrade("grz",63))base=base.add(upgradeEffect("grz", 63))
                 var eff = n(base).pow(x)
 if(eff.gte(5)&&!hasAchievement("rw",107))eff=eff.root(2).mul(n(5).root(2))
                 return eff
@@ -718,7 +763,7 @@ if(x.gte(7))x=x.div(7).pow(2).mul(7)
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
 var base = n(1.25)
-
+if(hasUpgrade("grz",85))base=base.add(0.025)
                 var eff = n(base).pow(x)
 
                 return eff
