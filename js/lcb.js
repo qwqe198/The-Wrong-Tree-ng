@@ -36,7 +36,9 @@ addLayer("lcb", { //这是代码中的节点代码 例如player.p可以调用该
     row: 99, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     getNextAt() {
         let gain = player.lcb.points
+if(hasAchievement("rw",124))gain=gain.sub(0.725)
         return n("1e40000").pow(n(1.05).pow(gain))
+
     },
     milestones: {
         1: {
@@ -70,9 +72,22 @@ addLayer("lcb", { //这是代码中的节点代码 例如player.p可以调用该
             effectDescription: "当感染力量到e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, e21, e22, e23, e24, e25, e26, e27, e28, e29, e30, e31, e32, e33, e34, e35, e36, e37, e38, e39, e40, e41, e42, e43, e44, e45, e46, e47, e48, e49, e50, e51, e52, e53, e54, e55, e56, e57, e58, e59, e60, e61, e62, e63, e64, e65, e66, e67, e68, e69, e70, e71, e72, e73, e74, e75, e76, e77, e78, e79, e80, e81, e82, e83, e84, e85, e86, e87, e88, e89, e90, e91, e92, e93, e94, e95, e96, e97, e98, e99, e100时,感染力量获取x1.1",
             done() { return player.lcb.points.gte(6) }
         },
+7: {
+            requirementDescription: "第700个里程碑",
+            effectDescription: "当里程碑到7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119, 126, 133, 140, 147, 154, 161, 168, 175, 182, 189, 196, 203, 210, 217, 224, 231, 238, 245, 252, 259, 266, 273, 280, 287, 294, 301, 308, 315, 322, 329, 336, 343, 350, 357, 364, 371, 378, 385, 392, 399, 406, 413, 420, 427, 434, 441, 448, 455, 462, 469, 476, 483, 490, 497, 504, 511, 518, 525, 532, 539, 546, 553, 560, 567, 574, 581, 588, 595, 602, 609, 616, 623, 630, 637, 644, 651, 658, 665, 672, 679, 686, 693, 700时，重置时保留1%的里程碑",
+            done() { return player.lcb.points.gte(7) }
+        },
     },
     resetsNothing: true,
     autoPrestige() { return hasAchievement("rw", 34) },
-
+doReset(resettingLayer) {
+        if (layers[resettingLayer].row > layers[this.layer].row) {
+            let kept = ["unlocked", "auto"]
+           
+                
+              if (hasMilestone("lcb", 7)) kept.push("milestones")
+            layerDataReset(this.layer, kept)
+        }
+    },
 
 })

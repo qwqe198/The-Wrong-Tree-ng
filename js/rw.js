@@ -413,7 +413,7 @@ addLayer("rw", {
 124: {
             name: "《西游记》",
             done() { return player.l.challenges[11] >= 25 },
-            tooltip: "完成25次扩张，奖励：咕咕咕",
+            tooltip: "完成25次扩张，奖励：降低里程碑价格",
         },
     },
     tabFormat: [
@@ -424,4 +424,3 @@ addLayer("rw", {
     ],
 
 })
-
